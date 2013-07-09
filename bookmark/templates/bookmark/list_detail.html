@@ -1,0 +1,75 @@
+{% extends 'site_base.html' %}
+{% load gravatar %}
+{% load i18n %}
+{% load bookmark_tags %}
+{% load compressed %}
+
+{% block head_title %}{{ list.name }}{% endblock %}
+{% block body %}
+    <div class="row bookmarks ">
+        <div class="span3" id="lists">
+            {% with list.user.profile_set.all|first as profile %}
+            <div class="row-fluid">
+                <div class="span4">
+                    <a href="{% url bookmark_profile list.user %}">
+                        <img class="avatar" alt="{{ list.user }}" src="{% gravatar_for_email list.user.email 64 %}&r=r" />
+                    </a>
+                </div>
+                <div class="span8">
+                    <div class="row-fluid">
+                        <a href="{% url bookmark_profile list.user %}">
+                            <h4>{{ list.user }}</h4>
+                        </a>
+                        <small class="muted signature">{{ profile.signature }}</small>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            {% if user != list.user %}
+            <div class="row-fluid">
+                {% with user|is_user_followed:list.user as followed %}
+                    <a href="{% if user.is_authenticated %}javascript:;{% else %}{% url account_login %}{% endif %}" 
+                        class="follow-buttons {% if not followed %} hide {% endif %}{%if user == list.user %}disabled {% else %}{% endif %} 
+                        {% if user.is_authenticated %}
+                            unfollow-button
+                        {% endif %} btn btn-block " 
+                        data-id="{{ followed.id }}">
+                        {% trans "Cancel Following" %}
+                    </a>
+                    <a href="{% if user.is_authenticated %}javascript:;{% else %}{% url account_login %}{% endif %}" 
+                        class="follow-buttons {% if followed %} hide {% endif %}{%if user == list.user %}disabled {% else %} btn-primary {% endif %} 
+                        {% if user.is_authenticated %}
+                            follow-button
+                        {% endif %} btn btn-block " 
+                            data-id="{{ list.user.id }}">
+                        {% trans "Follow" %}
+                    </a>
+                {% endwith %}
+            </div>
+            {% endif %}
+            {% endwith %}
+        </div>
+        <div class="span9 list">
+                <div class="row-fluid list-header">
+                    <h2 class="span10">
+                        <span class="list-name">{{ list.name }}</span> 
+                        &nbsp;<small class="label label-success">
+                        {% if list.public %}<i class="icon-unlock"></i> {% else %}&nbsp;<i class="icon-lock"></i>&nbsp;<% } {% endif %}
+                        </small>
+                    </h2>
+                </div>
+            {% include 'bookmark/includes/bookmarks.html' %}
+        </div>
+    </div>
+    {% include 'bookmark/js/bookmark_form.html' %}
+{% endblock %}
+
+{% block extra_script %}
+<script type="text/javascript" charset="utf-8">
+    var USER_ID = {% if user.id %}{{ user.id }}{% else %}null{% endif %};
+    var USER_NAME  = "{{user.username}}";
+</script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/underscore-min.js" charset="utf-8"></script>
+{% compressed_js 'bookmark_embed' %}
+{% endblock %}
+

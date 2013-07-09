@@ -1,0 +1,152 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-03-12 18:06+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: forms.py:19 forms.py:95
+msgid "Username"
+msgstr ""
+
+#: forms.py:25 forms.py:64
+msgid "Password"
+msgstr ""
+
+#: forms.py:29
+msgid "Password (again)"
+msgstr ""
+
+#: forms.py:41
+msgid "Usernames can only contain letters, numbers and underscores."
+msgstr ""
+
+#: forms.py:45
+msgid "This username is already taken. Please choose another."
+msgstr ""
+
+#: forms.py:52 forms.py:197
+msgid "A user is registered with this email address."
+msgstr ""
+
+#: forms.py:57 forms.py:142 forms.py:171
+msgid "You must type the same password each time."
+msgstr ""
+
+#: forms.py:68
+msgid "Remember Me"
+msgstr ""
+
+#: forms.py:81
+msgid "This account is inactive."
+msgstr ""
+
+#: forms.py:96
+msgid "The username and/or password you specified are not correct."
+msgstr ""
+
+#: forms.py:106 forms.py:148 forms.py:177
+msgid "Email"
+msgstr ""
+
+#: forms.py:107
+msgid "The email address and/or password you specified are not correct."
+msgstr ""
+
+#: forms.py:118
+msgid "Current Password"
+msgstr ""
+
+#: forms.py:122 forms.py:160
+msgid "New Password"
+msgstr ""
+
+#: forms.py:126 forms.py:164
+msgid "New Password (again)"
+msgstr ""
+
+#: forms.py:136
+msgid "Please type your current password."
+msgstr ""
+
+#: forms.py:153
+msgid "Email address can not be found."
+msgstr ""
+
+#: forms.py:179
+msgid "Timezone"
+msgstr ""
+
+#: forms.py:185
+msgid "Language"
+msgstr ""
+
+#: models.py:30
+msgid "user"
+msgstr ""
+
+#: models.py:31
+msgid "timezone"
+msgstr ""
+
+#: models.py:32
+msgid "language"
+msgstr ""
+
+#: models.py:243
+msgid "email address"
+msgstr ""
+
+#: models.py:244
+msgid "email addresses"
+msgstr ""
+
+#: models.py:293
+msgid "email confirmation"
+msgstr ""
+
+#: models.py:294
+msgid "email confirmations"
+msgstr ""
+
+#: views.py:37
+#, python-format
+msgid "Confirmation email sent to %(email)s."
+msgstr ""
+
+#: views.py:41
+#, python-format
+msgid "The code %(code)s is invalid."
+msgstr ""
+
+#: views.py:306
+#, python-format
+msgid "You have confirmed %(email)s."
+msgstr ""
+
+#: views.py:376 views.py:513
+msgid "Password successfully changed."
+msgstr ""
+
+#: views.py:592
+msgid "Account settings updated."
+msgstr ""
+
+#: views.py:676
+#, python-format
+msgid ""
+"Your account is now inactive and your data will be expunged in the next "
+"%(expunge_hours)d hours."
+msgstr ""

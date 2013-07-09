@@ -1,0 +1,20 @@
+{% load endless %}
+{% load i18n %}
+                {% if lists %}
+                    {% paginate 15 lists %}
+                    {% for list in lists %}
+                        {% include 'bookmark/includes/list_box.html' %}
+                    {% endfor %}
+                    <div class="pagination">
+                        <ul>
+                            {% show_pages %}
+                        </ul>
+                    </div>
+                {% else %}
+                    <div class="row-fluid empty-box">
+                        <div class="span12">
+                            <p>{% trans "There are no public lists." %}</p>
+                        </div>
+                    </div>
+                {% endif %}
+

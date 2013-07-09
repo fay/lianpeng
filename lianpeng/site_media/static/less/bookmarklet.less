@@ -1,0 +1,31 @@
+// CSS Reset
+@import "reset.less";
+
+// Core variables and mixins
+@import "variables.less"; // Modify this for custom colors, font-sizes, etc
+@import "mixins.less";
+
+// Grid system and page structure
+@import "scaffolding.less";
+@import "grid.less";
+@import "layouts.less";
+
+// Base CSS
+@import "type.less";
+@import "buttons.less";
+@import "modals.less";
+@import "forms.less";
+@import "close.less";
+@import "close.less";
+@import "labels-badges.less";
+@import "utilities.less"; // Has to be last to override when necessary
+
+@orange: #ff725b;
+@orangeHighlight:     spin(@orange, 20%);
+@bluegray: #8C9CAF;
+.btn-primary {
+  .buttonBackground(@orange, @orange);
+}
+body {
+    background-color:transparent;
+}

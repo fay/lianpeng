@@ -1,0 +1,3 @@
+{% for page in pages %}
+{%if page%}{{page}}{%else%}{%if page == ''%}{%else%}<li><a><span class=endless_separator>...</span></a></li>{%endif%}{%endif%}
+{% endfor %}

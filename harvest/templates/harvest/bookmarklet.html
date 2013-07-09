@@ -1,0 +1,288 @@
+{% load i18n %}
+<!doctype html>
+<html>
+    <head>
+        <meta http-equiv="X-UA-Compatible" content="IE=8" />
+        <title>{% trans "Add new bookmark" %}</title>
+        <style type="text/css">
+            .icon-home {
+                background: url({{ STATIC_URL }}img/home.png) no-repeat;
+                width: 20px;
+                height: 20px;
+                display: inline-block;
+                margin-top: 6px;
+                border-right: 1px solid #ccc;
+                margin-right: 10px;
+                padding-right: 5px;
+            }
+        </style>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/bookmarklet.css" type="text/css" media="screen" charset="utf-8">
+    </head>
+    <body>
+        <div class="modal hide" id="bookmark" tabindex="-1">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3 class="page-title">
+                    <span class="new-title-text">{% trans "Add new bookmark" %}</span> 
+                    <span class="edit-title-text hide">{% trans "Edit bookmark" %}</span> 
+                    <small>
+                        <img class="spinner" src="{{ post_server }}/site_media/static/img/spinner.gif" />
+                        <span class="hide existed label label-success">{% trans "Already bookmarked" %}</span>
+                    </small>
+                    <small class="pull-right">
+                        <a href="{{ post_server }}" target="_blank" class="icon-home"></a>
+                    </small>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <form action="{{ post_url }}" method="post" class="form" accept-charset="utf-8">
+                    <div class="row-fluid">
+                        <input type="text" name="title" class="span12" value="{{ data.title }}">
+                    </div>
+                    <input type="hidden" name="domain" value="{{ data.domain }}">
+                    <input type="hidden" name="url" value="{{ data.url }}">
+                    <div class="row-fluid">
+                        <textarea name="note" placeholder="{% trans "Enter your note for this page." %}" rows="4" class="span12">{{ data.note }}</textarea>
+                    </div>
+                    <div class="row-fluid list-box" id="list-select-box">
+                        <select name="list" id="list" class="span12">
+                        </select>
+                    </div>
+                    <div class="row-fluid hide list-box" id="new-list-input-box">
+                        <div class="span10">
+                            <input type="text" name="" value="" class="span12 new-list-input" placeholder="{% trans "List name" %}">
+                        </div>
+                        <div class="span2">
+                            <a href="javascript:;" class="btn btn-success pull-right confirm">{% trans "Confirm" %}</a>
+                        </div>
+                    </div>
+                    <div class="row-fluid ">
+                        <input type="text" name="tags" class="span12" value="" placeholder="{% trans "Tags: seperate multiple tags with space." %}">
+                    </div>
+                    <div class="row-fluid hide">
+                        <div class="span12 tags-suggestion">
+                            <div class="loading">
+                                <img class="spinner" src="{{ post_server }}/site_media/static/img/spinner.gif" />
+                                {% trans "Fetch recommendating tags" %}
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <div class="login hide">
+                    <div class="alert">
+                        {% blocktrans %}You haven't logged in yet, please <a target="_blank" href="{{ login_url }}" class="btn btn-success">login</a> first.{% endblocktrans %}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <label class="checkbox inline">通过邮件分享：</label>
+                <label class="radio inline">
+                    <input name="share" type="radio" class="share-by-email" value="gmail"/>
+                    <img src="https://mail.google.com/favicon.ico" width="20px"/> Gmail
+                </label>
+                <label class="radio inline">
+                    <input type="radio" name="share" class="share-by-email" value="qqmail" />
+                    <img src="http://rescdn.qqmail.com/zh_CN/htmledition/images/function/qm_open/ico_mail_01_01.png"/> QQ邮箱
+                </label>
+                <a href="#" class="btn btn-primary save">{% trans "Save" %}</a>
+            </div>
+        </div>
+    
+        <script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/jquery.min.js">
+        </script>
+        <script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/bootstrap-modal.js">
+        </script>
+        </script>
+        <script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/json2.min.js">
+        </script>
+        <script type="text/javascript">
+            function sendMessageToContainer(cmd, val) {
+                var url = document.location.href.match(/url=([^&]+)/)[1];
+                url = unescape(url);
+                var cmdHash = '#c=' + cmd;
+                if (val) {
+                    cmdHash += '&v=' + val;
+                }
+                var target = url.replace(/#.*/, '') + cmdHash;
+                parent.location = target;
+            }
+            
+            var method = "POST";
+            var action = $('.form').attr('action');
+            var existed_bookmark;
+            $('#bookmark').modal({keyboard:true});
+            $.ajax({type:'GET', url:$("#bookmark form").attr('action') + "?url=" + encodeURIComponent("{{ data.url }}"), processData: false,
+                xhrFields: {
+                withCredentials: true
+            }}).complete(function(xhr){
+                $('.page-title .spinner').hide();
+                if(xhr.status == 401) {
+                    $('#bookmark .form').hide();
+                    $('#bookmark .login').show();
+                } else {
+                }
+            }).success(function(data){
+                if(data.meta.total_count > 0) {
+                    var bookmark = data.objects[0];
+                    existed_bookmark = bookmark;
+                    $('.page-title .existed').show();
+                    $('.page-title .new-title-text').hide();
+                    $('.page-title .edit-title-text').show();
+                    var fields = ['title', 'domain', 'url', 'tags', 'list'];
+                    for(var i=0;i < fields.length;i ++) {
+                        $('.form [name="' + fields[i] + '"]').val(bookmark[fields[i]]);
+                    }
+                    
+                    action = action + bookmark['id'];
+                    method = "PUT";
+                }
+            });
+            $.ajax({type:'GET', url:"{{ post_server }}" + "/api/v1/list/?limit=100&only_edit=true", processData: false,
+                xhrFields: {
+                    withCredentials: true
+                }
+            }).success(function(data){
+                var select_list_uri = null;
+                if(existed_bookmark) {
+                    select_list_uri = existed_bookmark.list;
+                }
+                for(var i = 0;i < data.objects.length;i++) {
+                    var l = data.objects[i];
+                    var option = '<option value="' + l.resource_uri + '">' +  l.name;
+                    if(l.kind == 3) {
+                        option += ' - ' + l.user_name;
+                    }
+                    $('#bookmark form #list').append(option + '</option>');
+                    if (l.kind == 0 && !select_list_uri ) {
+                        select_list_uri = l.resource_uri;
+                    }
+                }
+                if(select_list_uri) {
+                    $('#bookmark .form #list').val(select_list_uri);
+                    $('#bookmark .form #list').change();
+                }
+                $('#bookmark form #list').append('<option id="new-list" value="new_list">-- {% trans "New list" %} --</option>');
+            });
+            $('#bookmark form #list').change(function(e){
+                if(this.value == 'new_list') {
+                    $('#bookmark form #new-list-input-box').show();
+                }
+            });
+            $('#bookmark form #new-list-input-box .confirm').click(function(){
+                 var new_list_name = $('#bookmark form #new-list-input-box .new-list-input').val();
+                 var data = {name: new_list_name};
+                 data = JSON.stringify(data);
+                 if(new_list_name) {
+                    $.ajax({type:'POST', url:"{{ post_server }}" + "/api/v1/list/", data: data, processData: false,
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        contentType: "application/json",
+                        dataType: "application/json"
+                    }).complete(function(xhr){
+                        var data = $.parseJSON(xhr.responseText);
+                        $('#bookmark form #new-list-input-box').hide();
+                        var option = $('<option value="' + data.resource_uri + '">' +  data.name + '</option>');
+                        $('#bookmark form #new-list').before(option);
+                        $('#bookmark .form #list').val(data.resource_uri);
+                        $('#bookmark .form #list').change();
+                    });
+                 }
+            });
+
+            $('#bookmark').on("hidden", function(){
+                sendMessageToContainer('close');
+            });
+            function form2json(form) {
+                var o = {};
+                var a = $(form).serializeArray();
+                $.each(a, function() {
+                    if (o[this.name] !== undefined) {
+                        if (!o[this.name].push) {
+                            o[this.name] = [o[this.name]];
+                        }
+                        o[this.name].push(this.value || '');
+                    } else {
+                        o[this.name] = this.value || '';
+                    }
+                });
+                return o;
+            }
+            $('#bookmark .save').click(function(){
+                $('#bookmark form').submit();
+            });
+            $('#bookmark input').bind('keypress', function(e){
+                 var code = (e.keyCode ? e.keyCode : e.which);
+                 if(code == 13) { //Enter keycode
+                    $('#bookmark form').submit();
+                 }
+            });
+            $('#bookmark form').submit(function(){
+                if($('#bookmark .save').hasClass('disabled')) {
+                    return false;
+                }
+                $('#bookmark .save').addClass("disabled");
+                var data = form2json(this);
+                var data_str = "";
+                data_str = JSON.stringify(data); //TODO JSON needs to import in IE7
+                $.ajax({type:method, url:action, data:data_str, processData: false,
+                    xhrFields: {
+                      withCredentials: true
+                    },
+                    async: false,
+                    contentType: "application/json",
+                    dataType: "application/json"}).complete(function(xhr){
+                        var data = $.parseJSON(xhr.responseText);
+                        if ($('input[name="share"]:checked')) {
+                            var mail = $('input[name="share"]:checked').val();
+                            var subject = "[莲蓬] 来自好友的分享发现";
+                            var body = "";
+                            var note = data.title;
+                            if (mail) {
+                                if (mail == 'gmail') {
+                                    body = "分享链接：" + data.url + "%0A%0A" + data.title + "%0A%0A" + data.note;
+                                    url = "https://mail.google.com/mail/?view=cm&fs=1&tf=1&source=mailto&su=" + subject +"&body=" + body;
+                                } if (mail == 'qqmail') {
+                                    var p = {
+                                        url: data.url,
+                                        to:'qqmail',
+                                        desc: body, /*默认分享理由(可选)*/
+                                        summary: note,/*摘要(可选)*/
+                                        title: subject,/*分享标题(可选)*/
+                                        site:'',/*分享来源 如：腾讯网(可选)*/
+                                        pics:'' /*分享图片的路径(可选)*/
+                                    };
+                                    var s = [];
+                                    for(var i in p){
+                                        s.push(i + '=' + encodeURIComponent(p[i]||''));
+                                    }
+                                    url = "http://mail.qq.com/cgi-bin/qm_share?" + s.join("&");
+                                }
+                                $('#bookmark .save').attr("href", url).attr('target', '_blank');
+                            }
+                        }
+                        $('#bookmark').modal('hide');
+                    });
+                return false;
+            });
+
+            // fetch suggested tags
+            //$.getJSON("{{ post_server }}" + "/harvest/tag/?url=" + "{{ data.url }}").success(function(data){
+            //    $('.tags-suggestion .loading').hide();
+            //    for(var i = 0;i< data.length;i++) {
+            //        var $tag = $(" <a href='javascript:;' class='label tag label-success'>" + data[i][0] + "</a> "); 
+            //        $('.tags-suggestion').append($tag).append(" ");
+            //        $tag.click(function(){
+            //            var tag = $(this).text();
+            //            var tags = $('.form [name="tags"]').val();
+            //            if(tags) {
+            //                tags += " ";
+            //            }
+            //            tags += tag
+            //            $('.form [name="tags"]').val(tags);
+            //        });
+            //    }
+            //});
+        </script>
+    </body>
+</html>

@@ -1,0 +1,17 @@
+{% extends 'site_base.html' %}
+{% load i18n %}
+{% load bootstrap_tags %}
+{% block head_title %}{% trans "Import" %}{% endblock %}
+{% block body %}
+    <div class="page-title">
+        <h1>{% trans "Import" %}</h1>
+    </div>
+    <hr class="soften">
+    <form enctype="multipart/form-data" method="post" class="form-horizontal" action="{% url bookmark_import %}">
+        {% csrf_token %}
+        {{ import_form|as_bootstrap }}
+        <p class="form-actions">
+        <input type="submit" value="{% trans "Import" %}" class="btn btn-primary">
+        </p>
+    </form> 
+{% endblock %}

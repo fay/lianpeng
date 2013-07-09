@@ -1,0 +1,24 @@
+{% if profile.website %}<p><a href="{{ profile.website }}" target="_blank"><img src="http://g.etfv.co/{{ profile.website }}" width="16"> {{ profile.website }}</a></p>{% endif %}
+{% if profile.douban or profile.weibo or profile.twitter or profile.github or profile.dribble %}
+    <p>
+    {% if profile.douban %}
+    <a href="http://douban.com/people/{{ profile.douban }}/" target="_blank"><img src="http://g.etfv.co/http://douban.com" width="16"></a>
+    &nbsp;
+    {% endif %}
+    {% if profile.weibo%}
+        <a href="http://weibo.com/{{ profile.weibo }}" target="_blank"><img src="http://g.etfv.co/http://weibo.com" width="18"></a>
+        &nbsp;
+    {% endif %}
+    {% if profile.twitter %}
+        <a href="http://twitter.com/{{ profile.twitter }}" target="_blank"><img src="http://g.etfv.co/http://twitter.com" width="19" /></a>
+        &nbsp;
+    {% endif %}
+    {% if profile.github %}
+        <a href="http://github.com/{{ profile.github}}" target="_blank"><img src="http://g.etfv.co/http://github.com" width="16"></a>
+        &nbsp;
+    {% endif %}
+    {% if profile.dribbble %}
+        <a href="http://dribbble.com/{{ profile.dribbble }}" target="_blank"><img src="http://g.etfv.co/http://dribbble.com" width="16"></a>
+    {% endif %}
+    </p>
+{% endif %}

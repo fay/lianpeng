@@ -1,0 +1,17 @@
+{% extends 'theme_bootstrap/base.html' %}
+        {% block body_base %}
+            {% block sidebar %}
+            {% endblock %}
+            <div class="container">
+                {% include "_messages.html" %}
+                {% block body %}
+                {% endblock %}
+                {% block footer_base %}
+                    <hr />
+                    <footer>
+                        {% block footer %}{% endblock %}
+                    </footer>
+                {% endblock %}
+            </div>
+        {% endblock %}
+

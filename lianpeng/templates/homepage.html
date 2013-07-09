@@ -1,0 +1,125 @@
+{% extends "site_base.html" %}
+{% block topbar_base %}
+<div class="">
+    <div class="colourbar"></div>
+    <div class="colourbar2"></div>
+</div>
+{% endblock %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Welcome" %}{% endblock %}
+
+{% block body_class %}welcome{% endblock %}
+{% block extra_head %}
+    <meta name="description"  content="莲蓬是一个社会化书签网站，为你的创意工作和生活建立知识库，结识有趣的人">
+{% endblock %}
+
+{% block body %}
+<div class="row logo-box">
+    <div class="span4 offset1">
+        <span class="logo">{{ SITE_NAME }}</span>
+    </div>
+    <div class="span6">
+        <h1 class="slogan">
+            {% trans "Your online knowledge library of amazing things." %}
+            <br>
+            <small>
+                {% trans "Find, Collect, Research & Share the serendipity on internet." %}
+                <span class="">厚积而薄发</span>
+            </small>
+        </h1>
+        <br>
+        <div class="row">
+            <a href="{% url account_signup %}" class="span2 btn btn-primary btn-large">{% trans "立即注册" %}</a>
+            <a href="{% url bookmark_explore %}" class="span2 btn btn-large">{% trans "Explore" %}</a>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="span4">
+                <p class="login muted">
+                    {% trans "Already has an account?" %}<a href="{% url account_login %}" class="">{% trans "Log in" %}</a>
+                    &nbsp;
+                    ·
+                    &nbsp;
+                    <a href="{% url about %}" class="">了解更多 »</a>
+                </p>
+            </div>
+            <div class="span2 offset1">
+                <p class="">
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row-fluid">
+</div>
+<hr class="soften">
+<div class="row-fluid features">
+    <div class="span12">
+        <div class="row-fluid">
+            <div class="span6 offset1">
+                <h3>发现新大陆</h3>
+                <p class="muted">
+                    发现Hacker News & Startup News上的一个有趣话题？
+                    知乎、Quora上一个涨姿势的问答？
+                    竞争对手的网站、报道？
+                    V2EX上一个热烈讨论？
+                    一篇精彩博文？
+                    最新的Alfred插件？
+                    ...
+                    <br>
+                    <h4>用 <a href="{% url bookmark_tools %}" target="_blank" class="btn btn-primary">收藏工具</a> 保存到莲蓬，整理收藏</h4>
+                </p>
+            </div>
+            <div class="span5 center">
+                <i class="extra-big-icon icon-lightbulb"></i>
+            </div>
+        </div>
+        <hr class="soften">
+        <div class="row-fluid">
+            <div class="span5 offset1 center">
+                <i class="big-icon icon-search"></i>
+            </div>
+            <div class="span6">
+                <h3>标签、搜索</h3>
+                <p class="muted">快速找到以前的收藏。你用到这个功能，因为以前所做的精心收藏现在终于可以派上用场，这就是莲蓬的目标。</p>
+            </div>
+        </div>
+        <hr class="soften">
+        <div class="row-fluid">
+            <div class="span6 offset1">
+                <h3>主题整理和协作分享</h3>
+                <p class="muted">按主题整理成专辑，邀请同事、好友协作编辑，也可以让所有人可见，得到更多关注。</p>
+            </div>
+            <div class="span5 center">
+                <i class="big-icon icon-inbox"></i>
+            </div>
+        </div>
+        <hr class="soften">
+        <div class="row-fluid">
+            <div class="span5 offset1 center">
+                <i class="big-icon icon-group"></i>
+            </div>
+            <div class="span5">
+                <h3>关注兴趣相同的人</h3>
+                <p class="muted">
+                    在莲蓬你可以关注与你兴趣相同的人，互通信息。
+                </p>
+            </div>
+        </div>
+        <hr class="soften">
+        <div class="row-fluid">
+            <div class="span6 offset1">
+                <h3>厚积薄发，打造你的“Facebook”</h3>
+                <p class="muted">持续关注和积累，connect the dots，创造属于自己的产品。
+                <hr>
+                <a class="btn btn-primary btn-large" href="{% url account_signup %}">从现在开始</a></p>
+            </div>
+            <div class="span5 center">
+                <i class="big-icon icon-beaker"></i>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

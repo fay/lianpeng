@@ -1,0 +1,34 @@
+{% load url from future %}
+{% load i18n %}
+<hr>
+<p>
+    {% if notice.unread %}
+    <a class="muted pull-right" href="{% url 'notifications:mark_as_read' notice.slug %}">
+        <i class="icon-ok-circle">
+            {% trans "Mark as read" %}
+        </i>
+    </a>
+    {% endif %}
+    <i class="icon-envelope{% if notice.unread %}-alt{% endif %}"></i>&nbsp;
+    {% if notice.unread %}<b>{% endif%}
+    <a href="{% url "bookmark_profile" notice.actor.username %}" target="_blank">{{ notice.actor }}</a>
+    {% trans notice.verb %}
+    {% if notice.target %}
+        <a href="{{ notice.target.absolute_url }}" target="_blank">{{ notice.target }}</a>
+    {% endif %}
+    {% if notice.unread %}</b>{% endif%}
+    <small class="muted">{{ notice.timesince }}{% trans "ago" %}</small>
+</p>
+{% if notice.description or notice.action_object.actions %}
+    <div class="well well-small">
+        {% if notice.description %}{{ notice.description|linebreaksbr }}{% endif %}
+        {% for action in notice.action_object.actions %}
+        <a class="btn btn-{{ action.action_level }}" href="{{ action.action_url }}">{{ action.action_title }}</a>
+        {% endfor %}
+    </div>
+{% endif %}
+<div class="notice-actions">
+    {% for action in notice.data.actions %}
+      <a class="btn" href="{{ action.href }}">{{ action.title }}</a>
+    {% endfor %}
+</div>

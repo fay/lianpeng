@@ -1,0 +1,45 @@
+{% load gravatar %}
+{% load bookmark_tags %}
+{% load i18n %}
+    {% with user_obj.profile_set.all|first as profile %}
+                    <div class="span4">
+                        <div class="box list" data-link="{% url bookmark_profile username=user_obj.username %}">
+                            <div class="header">
+                                <img class="avatar" alt="{{ user_obj }}" src="{% gravatar_for_email user_obj.email 64 %}&r=r" />
+                            </div>
+                            <div class="detail bookmarks">
+                                <div class="title">
+                                    <h4>
+                                        <a href="javascript:;">{{ user_obj.username }}</a> 
+                                        {% if profile.location %}<small> <i class="icon-map-marker"></i> {{ profile.location }}</small>{% endif %}
+                                    </h4>
+                                    {% if profile.signature %}
+                                    <p class="signature" title="{{ profile.signature }}"><i class="icon-quote-left"></i> {{ profile.signature }}</p>
+                                    {% endif %}
+                                </div>
+                                {% with user_obj|public_lists as lists%}
+                                {% if lists %}
+                                <ul class="unstyled">
+                                    {% for l in lists %}
+                                    <li>
+                                        <a class="bookmark-link" href="javascript:;">
+                                            <i class="icon-circle-blank"></i>
+                                            {{ l.name }}
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
+                                <div class="gradient"></div>
+                                {% else %}
+                                <div class="row-fluid empty-box">
+                                    <div class="span12">
+                                        <p>{% trans "There are no public lists." %}</p>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endwith%}
+                            </div>
+                        </div>
+                    </div>
+    {% endwith %}
+

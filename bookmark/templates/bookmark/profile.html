@@ -1,0 +1,126 @@
+{% extends 'site_base.html' %}
+{% load gravatar %}
+{% load bookmark_tags %}
+{% load i18n %}
+{% load compressed %}
+
+{% block head_title %}{{ current_user }}{% endblock %}
+{% block body %}
+    {% with current_user.profile_set.all|first as profile %}
+    <div class="row" id="profile">
+        <div class="span12 profile-box">
+            <div class="row-fluid user-info-box">
+                 <div class="span3  avatar-box">
+                     <div class="avatar" alt="{{ current_user }}" style="background:url({% gravatar_for_email current_user.email 128 %}&r=r) no-repeat"></div>
+                 </div>
+                 <div class="span9">
+                     <h1 class="username">{{ current_user }}
+                         {% if profile.location %}<small><i class="icon-map-marker"></i> {{ profile.location }} </small>{% endif %}
+                     </h1>
+                     <p class="signature">&nbsp;{% if profile.signature %}<i class="icon-quote-left"></i> {{ profile.signature }}{% endif %}</p>
+                 </div>
+            </div>
+            <div class="row-fluid about">
+                <div class="span9 offset3">
+                    {% if profile.about %}<blockquote>{{ profile.about }}</blockquote>{% endif %}
+                    {% include 'profiles/_social_sites.html' %}
+                    <hr>
+                    {% if user != current_user %}
+                        {% with user|is_user_followed:current_user as followed %}
+                            <a href="{% if user.is_authenticated %}javascript:;{% else %}{% url account_login %}{% endif %}" 
+                                class="follow-buttons {% if not followed %} hide {% endif %}{%if user == current_user %}disabled {% else %}{% endif %} 
+                                {% if user.is_authenticated %}
+                                    unfollow-button
+                                {% endif %} btn btn-large " 
+                                data-id="{{ followed.id }}">
+                                {% trans "Cancel Following" %}
+                            </a>
+                            <a href="{% if user.is_authenticated %}javascript:;{% else %}{% url account_login %}{% endif %}" 
+                                class="follow-buttons {% if followed %} hide {% endif %}{%if user == current_user %}disabled {% else %} btn-primary {% endif %} 
+                                {% if user.is_authenticated %}
+                                    follow-button
+                                {% endif %} btn btn-large " 
+                                data-id="{{ current_user.id }}">
+                                {% trans "Follow" %}
+                            </a>
+                        {% endwith %}
+                    {% else %}
+                    <a href="{% url profile_edit %}" class="btn btn-primary">{% trans "Update my profile" %}</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="user-data">
+                <div class="">
+                    <ul class="nav nav-tabs">
+                        <li><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></li>
+                        <li class="active"><a href="#bookmarks" data-toggle="tab">{% trans "Bookmarks" %}</a></li>
+                        <li><a href="#lists" data-toggle="tab">{% trans "Lists" %}</a></li>
+                        <li><a href="#followers" data-toggle="tab">{% trans "Followers" %}</a></li>
+                        <li><a href="#following" data-toggle="tab">{% trans "Following" %}</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="bookmarks" class="bookmarks">
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    {% include "bookmark/includes/bookmarks.html" %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="lists">
+                            <div class="row">
+                                {% include 'bookmark/includes/lists.html' %}
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="followers">
+                            <div class="row">
+                                {% with current_user.followers.all as followers %}
+                                    {% if followers %}
+                                        {% for follower in followers %}
+                                            {% include 'bookmark/includes/user.html' with user_obj=follower.user %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="row-fluid empty-box">
+                                            <div class="span12">
+                                                <p>{% trans "There are no followers yet." %}</p>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                        </div>
+                      <div class="tab-pane" id="following">
+                            <div class="row">
+                                {% with current_user.following.all as followings %}
+                                    {% if followings %}
+                                        {% for following in followings %}
+                                            {% include 'bookmark/includes/user.html' with user_obj=following.followee %}
+                                        {% endfor %}
+                                    {% else %}
+                                        <div class="row-fluid empty-box">
+                                            <div class="span12">
+                                                <p>{% trans "There are no followings yet." %}</p>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endwith %}
+    {% include 'bookmark/js/bookmark_form.html' %}
+{% endblock %}
+
+{% block extra_script %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/underscore-min.js" charset="utf-8"></script>
+    {% compressed_js 'bookmark_embed' %}
+    <script type="text/javascript" charset="utf-8">
+        var USER_ID = {% if user.id %}{{ user.id }}{% else %}null{% endif %};
+        var USER_URL = "/api/v1/user/" + USER_ID;
+        var USER_NAME  = "{{user.username}}";
+        $('.list').click(function(){window.location.href=$(this).data('link')}); 
+    </script>
+{% endblock %}

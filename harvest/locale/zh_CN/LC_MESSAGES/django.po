@@ -1,0 +1,72 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-04-23 16:46+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+
+#: templates/harvest/bookmarklet.html:6 templates/harvest/bookmarklet.html:16
+msgid "Add new bookmark"
+msgstr "收藏链接"
+
+#: templates/harvest/bookmarklet.html:17
+msgid "Edit bookmark"
+msgstr "编辑收藏"
+
+#: templates/harvest/bookmarklet.html:20
+msgid "Already bookmarked"
+msgstr "已经收藏过"
+
+#: templates/harvest/bookmarklet.html:32
+msgid "Enter your note for this page."
+msgstr "添加笔记"
+
+#: templates/harvest/bookmarklet.html:40
+msgid "List name"
+msgstr "专辑名称"
+
+#: templates/harvest/bookmarklet.html:43
+msgid "Confirm"
+msgstr "确定"
+
+#: templates/harvest/bookmarklet.html:47
+msgid "Tags: seperate multiple tags with space."
+msgstr "标签：多个标签以空格分隔"
+
+#: templates/harvest/bookmarklet.html:53
+msgid "Fetch recommendating tags"
+msgstr "正在获取推荐标签..."
+
+#: templates/harvest/bookmarklet.html:60
+#, python-format
+msgid ""
+"You haven't logged in yet, please <a target=\"_blank\" href=\"%(login_url)s"
+"\" class=\"btn btn-success\">login</a> first."
+msgstr ""
+"您还没有登录，请先 <a target=\"_blank\" href=\"%(login_url)s\" class=\"btn "
+"btn-success\">登录</a>"
+
+#: templates/harvest/bookmarklet.html:65
+msgid "Close"
+msgstr "取消"
+
+#: templates/harvest/bookmarklet.html:66
+msgid "Save"
+msgstr "保存"
+
+#: templates/harvest/bookmarklet.html:131
+msgid "New list"
+msgstr "新专辑"

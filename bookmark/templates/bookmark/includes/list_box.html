@@ -1,0 +1,35 @@
+{% load gravatar %}
+{% load i18n %}
+{% load bookmark_tags %}
+                    <div class="span4">
+                        <div class="box list" data-link="{% url bookmark_list list.id %}">
+                            <div class="header">
+                                <img class="avatar" alt="{{ list.user }}" src="{% gravatar_for_email list.user.email 64 %}&r=r" />
+                            </div>
+                            <div class="detail bookmarks">
+                                <div class="title"><h4><a href="#" title="{{ list.name}}">{{ list.name }}</a> <small> - {{ list.user }}</small></h4></div>
+                                {% with list|list_bookmarks:"3" as bookmarks %}
+                                    {% if bookmarks %}
+                                    <ul class="unstyled">
+                                        {% for bookmark in  bookmarks %}
+                                        <li>
+                                        <a class="bookmark-link" href="javascript:;" title="{{ bookmark.title }}">
+                                                <img src="http://g.etfv.co/http://{{ bookmark.domain }}" width="16"/>
+                                                {{ bookmark.title }}
+                                            </a>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% else %}
+                                    <div class="row-fluid empty-box">
+                                        <div class="span12">
+                                            <p>{% trans "There are no public bookmarks." %}</p>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                {% endwith %}
+                                <div class="gradient"></div>
+                            </div>
+                        </div>
+                    </div>
+

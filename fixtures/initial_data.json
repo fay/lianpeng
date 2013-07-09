@@ -1,0 +1,10 @@
+[
+    {
+        "pk": 1, 
+        "model": "sites.site", 
+        "fields": {
+            "domain": "lianpeng.me", 
+            "name": "莲蓬"
+        }
+    }
+]

@@ -1,0 +1,28 @@
+{% extends "site_base.html" %}
+{% load i18n %}
+{% block head_title %}{% trans "Notifications" %}{% endblock %}
+{% block body %}
+<div class="row-fluid">
+    <div class="span2 columns">
+        <ul class="nav nav-list">
+            <li class="nav-header">{% trans "Notifications" %}</li>
+            <li><a href="{% url notifications:all %}">{% trans "All" %}</a></li>
+            <li><a href="{% url notifications:unread %}">{% trans "Unread" %}</a></li>
+        </ul>
+        <hr>
+        <a href="{% url notifications:mark_all_as_read %}" class="btn btn-primary">{% trans "Mark as all read "%}</a>
+    </div>
+    <div class="span10">
+        {% if notifications %}
+            {% for notice in notifications %}
+               {% include 'notifications/notice.html' %}
+            {% endfor %}
+        {% else %}
+            <div class="empty-box">
+                <p>{% trans "No notifications at the moment" %}</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+

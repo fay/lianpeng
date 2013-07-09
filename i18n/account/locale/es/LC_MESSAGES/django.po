@@ -1,0 +1,165 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+#
+# Translators:
+# Erik Rivera <erik.river@gmail.com>, 2012.
+msgid ""
+msgstr ""
+"Project-Id-Version: django-user-accounts\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-03-12 18:06+0800\n"
+"PO-Revision-Date: 2012-05-15 18:11+0000\n"
+"Last-Translator: Erik Rivera <erik.river@gmail.com>\n"
+"Language-Team: Spanish (Castilian) (http://www.transifex.net/projects/p/"
+"pinax/language/es/)\n"
+"Language: es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: forms.py:19 forms.py:95
+msgid "Username"
+msgstr "Nombre de usuario"
+
+#: forms.py:25 forms.py:64
+msgid "Password"
+msgstr "Contraseña"
+
+#: forms.py:29
+msgid "Password (again)"
+msgstr "Contraseña (repetir)"
+
+#: forms.py:41
+msgid "Usernames can only contain letters, numbers and underscores."
+msgstr ""
+"Los nombres de usuario solo pueden contener letras, números y subguiones"
+
+#: forms.py:45
+msgid "This username is already taken. Please choose another."
+msgstr "Este nombre de usuario ya está en uso. Por favor elija otro."
+
+#: forms.py:52 forms.py:197
+msgid "A user is registered with this email address."
+msgstr "Un usuario se ha registrado con esta dirección de correo electrónico."
+
+#: forms.py:57 forms.py:142 forms.py:171
+msgid "You must type the same password each time."
+msgstr "Debe escribir la misma contraseña cada vez."
+
+#: forms.py:68
+msgid "Remember Me"
+msgstr "Recordarme"
+
+#: forms.py:81
+msgid "This account is inactive."
+msgstr "Esta cuenta está inactiva."
+
+#: forms.py:96
+msgid "The username and/or password you specified are not correct."
+msgstr ""
+"El nombre de usuario y/o la contraseña que ha especificado no son correctas."
+
+#: forms.py:106 forms.py:148 forms.py:177
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: forms.py:107
+msgid "The email address and/or password you specified are not correct."
+msgstr ""
+"La dirección de correo electrónico y/o la contraseña que ha especificado no "
+"son correctas."
+
+#: forms.py:118
+msgid "Current Password"
+msgstr "Contraseña actual"
+
+#: forms.py:122 forms.py:160
+msgid "New Password"
+msgstr "Contraseña nueva"
+
+#: forms.py:126 forms.py:164
+msgid "New Password (again)"
+msgstr "Contraseña nueva (repetir)"
+
+#: forms.py:136
+msgid "Please type your current password."
+msgstr "Por favor escriba su contraseña actual."
+
+#: forms.py:153
+#, fuzzy
+msgid "Email address can not be found."
+msgstr "Correo electrónico no encontrado para ninguna cuenta de usuario."
+
+#: forms.py:179
+msgid "Timezone"
+msgstr "Zona horaria"
+
+#: forms.py:185
+msgid "Language"
+msgstr "Idioma"
+
+#: models.py:30
+msgid "user"
+msgstr "usuario"
+
+#: models.py:31
+msgid "timezone"
+msgstr "zona horaria"
+
+#: models.py:32
+msgid "language"
+msgstr "idioma"
+
+#: models.py:243
+msgid "email address"
+msgstr "correo electrónico"
+
+#: models.py:244
+msgid "email addresses"
+msgstr "correos electrónicos"
+
+#: models.py:293
+msgid "email confirmation"
+msgstr "confirmación de correo electrónico"
+
+#: models.py:294
+msgid "email confirmations"
+msgstr "confirmaciones de correos electrónicos"
+
+#: views.py:37
+#, python-format
+msgid "Confirmation email sent to %(email)s."
+msgstr "La confirmación de correo electrónico se ha enviado a %(email)s."
+
+#: views.py:41
+#, python-format
+msgid "The code %(code)s is invalid."
+msgstr "El código %(code)s no es válido."
+
+#: views.py:306
+#, python-format
+msgid "You have confirmed %(email)s."
+msgstr "Has confirmado %(email)s."
+
+#: views.py:376 views.py:513
+msgid "Password successfully changed."
+msgstr "La contraseña se ha cambiado con éxito."
+
+#: views.py:592
+msgid "Account settings updated."
+msgstr "Los ajustes de la cuenta actualizados."
+
+#: views.py:676
+#, python-format
+msgid ""
+"Your account is now inactive and your data will be expunged in the next "
+"%(expunge_hours)d hours."
+msgstr ""
+
+#~ msgid "Email address not verified for any user account"
+#~ msgstr "Correo electrónico no verificado para ninguna cuenta de usuario."
+
+#~ msgid "Successfully logged in as %(user)s."
+#~ msgstr "Inicio la sesión satisfactoriamente como %(user)s."

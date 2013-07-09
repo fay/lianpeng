@@ -1,0 +1,1 @@
+<li><a class="endless_page_link" href="{%ifequal page.path '/'%}?{{querystring_key}}=1{%else%}{{ page.path }}{%endifequal%}#topsection" rel="{{ querystring_key }}{% if add_nofollow %} nofollow{% endif %}">{{ page.label|safe }}</a></li>

@@ -1,0 +1,24 @@
+{% extends "site_base.html" %}
+{% load kaleo_tags %}
+{% load staticfiles %}
+
+{% block body %}
+<div class="invites">
+    {% invite_form request.user %}
+
+    <div class="sent">
+        <h3>Invitations Sent</h3>
+        {% invites_sent request.user %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+    <script src="{% static "js/eldarion-ajax.min.js" %}"></script>
+    <script type="text/javascript" charset="utf-8">
+        $(document).on("eldarion-ajax:success", [data-prepend-inner], function(evt, $el, data) {
+            var $node = $($el.data("prepend-inner"));
+            $node.data(data.html + $node.html());
+        });
+    </script>
+{% endblock %}

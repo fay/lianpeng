@@ -1,0 +1,39 @@
+{% extends 'site_base.html' %}
+{% load i18n %}
+{% block head_title %}{% trans "帮助" %}{% endblock %}
+{% block body %}
+<div class="page-title">
+    <h1>帮助</h1>
+</div>
+<hr class="soften">
+<div class="row">
+    <div class="span12">
+        <div class="page-header">
+            <h4>安装收藏工具</h4>
+        </div>
+        <p>
+        点击 <a href="{% url bookmark_tools %}" target="_blank" class="">这里</a>，在打开的页面中，拖拽红色按钮到你的浏览器书签栏中，最终效果如下图：
+        </p>
+        <img src="{{ STATIC_URL }}img/tools_screenshot.png" />
+        <div class="page-header">
+            <h4>收藏网页</h4>
+        </div>
+        <p>
+        在浏览网页时，如果希望收藏当前的网页，点击书签栏中前面安装好的收藏按钮：<img src="{{ STATIC_URL }}img/button_help.png" />，此时会有一个窗口弹出，
+        需要你进一步的填写笔记和标签，如果没有特别需要，可以直接点击保存：
+        </p>
+        <p>
+            <img src="{{ STATIC_URL }}img/bookmark_screenshot.png" />
+        </p>
+        <div class="page-header">
+            <h4>查看、管理网页</h4>
+        </div>
+        <p>
+            用收藏工具保存网页之后，您就可以在莲蓬的网站上查看和管理之前的收藏了：
+        </p>
+        <p>
+            <img src="{{ STATIC_URL }}img/home_screenshot.png" />
+        </p>
+    </div>
+</div>
+{% endblock %}

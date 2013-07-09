@@ -1,0 +1,58 @@
+{% extends 'site_base.html' %}
+{% load i18n %}
+{% block head_title %}{% trans "Collect Tools" %}{% endblock %}
+{% block body %}
+<div class="hero-unit center">
+    <div class="row-fluid">
+        <div class="span6 well">
+            <h2 id="chrome-bookmarklet-box"><a target="_blank" class="btn btn-large btn-primary" href="https://chrome.google.com/webstore/detail/%E8%8E%B2%E8%93%AC/bdomhbcbkbldbnechblaaaopghdmdcej"
+                    id="chrome-bookmarklet">安装莲蓬Chrome浏览器插件</a>
+            </h2>
+            <p>
+                莲蓬插件已经在Chrome应用商店发布
+                <br>
+                <span class="label label-success">
+                    适用于谷歌Chrome浏览器
+                </span>
+            </p>
+        </div>
+        <div class="span6 well">
+            <h2 id="bookmarklet-box"><a class="btn btn-large btn-primary" id="bookmarklet">✚ {% trans "Save to " %}{{ SITE_NAME }}</a>
+                <div id="arrow">
+                </div>
+            </h2>
+            <p>
+                {% trans 'Drag bookmarklet to your bookmark toolbar to install.' %}
+                <br>
+                <span class="label label-success">适用于所有浏览器</span>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_script %}
+    <script type="text/javascript" language="javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript">
+		var scriptPath = 'bookmarklet.sinaapp.com/harvest/bookmarklet.js';
+		var postPath = 'bookmarklet.sinaapp.com/harvest/bookmarklet.html';
+		var minVersion = '1.4.2';
+		var initFunction = '__initBookmarklet';
+
+		//
+		// the script that is executed when the bookmarklet is clicked
+		//
+		var bookmarklet = "javascript:function%20__i(){jQueryBookmarklet.init('" + minVersion + "'," + initFunction + ");};(function(__u){var%20__d=document,__b=__d.body;__scriptPath=__u;__postPath=('https:' == document.location.protocol ? 'https://' : 'http://') + '" + postPath + "';try{if(!__b)throw(0);if(typeof(jQueryBookmarklet)!='undefined'){__i();}else{var%20__s=__d.createElement('script');__s.type='text/javascript';__s.src=('https:' == document.location.protocol ? 'https://' : 'http://') + __scriptPath;__s.onload=__s.onreadystatechange=function(){if(__s.readyState||__s.readyState=='loaded'||__s.readyState=='complete'){__s.onreadystatechange=null;__i();}else{__i();}};__d.getElementsByTagName('head')[0].appendChild(__s);}}catch(e){alert('Wait%20till%20page%20has%20loaded%20and%20try%20again')}})('" + scriptPath + "?'+Math.round(Math.random()*10000000));";
+
+		//
+		// set bookmarklet href value
+		//
+		$(document).ready(function () {
+				$('#bookmarklet')
+						.attr('href', bookmarklet)
+						.click(function (event) {
+                            alert("{% trans 'Drag bookmarklet to your bookmark toolbar to install.' %}");
+								event.preventDefault();
+						});
+		});
+    </script>
+{% endblock %}

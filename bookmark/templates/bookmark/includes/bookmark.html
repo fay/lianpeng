@@ -1,0 +1,99 @@
+{% load i18n %}
+{% load gravatar %}
+{% load fluent_comments_tags %}
+                        <hr>
+                        <div class="row-fluid bookmark-entry-box" id="bookmark-{{ bookmark.id }}"  data-id="{{  bookmark.id  }}"
+                            data-tags="{{ bookmark.tags }}" data-note="{{ bookmark.note }}" data-title="{{ bookmark.title }}" 
+                            data-url="{{ bookmark.url }}" data-domain="{{ bookmark.domain }}">
+                            <div class="span1">
+                                <a title="{{ bookmark.user }}" href="{% url bookmark_profile bookmark.user %}">
+                                    <img class="avatar" alt="{{ bookmark.user }}" src="{% gravatar_for_email bookmark.user.email %}&r=r" alt="{{ bookmark.user }}"/>
+                                </a>
+                            </div>
+                            <div class="span11 bookmark-entry">
+                                <div class="row-fluid bookmark-title-box">
+                                    <div class="span11">
+                                        <div class="bookmark-title-wrapper bookmark-title-inner">
+                                            <a href="{{  bookmark.url  }}" title="{{ bookmark.title }}" target="_blank" class="bookmark-title">
+                                                {{  bookmark.title  }}</a>
+                                        </div>
+                                    </div>
+                                    <div class="span1 hide pull-right actions">
+                                        {% if user.is_authenticated and user != bookmark.user %}
+                                        <ul class="pull-right well-small well inline unstyled">
+                                            <li><a href="javascript:;" class="icon-plus save-action"></a></li>
+                                            {% comment %}
+                                            <li class="dropdown">&nbsp;
+                                                <span class="icon-share share-action "  data-toggle="dropdown"></span>
+                                                <ul class="dropdown-menu shares" role="menu" aria-labelledby="dLabel">
+                                                  <li>
+                                                    <a tabindex="-1" href="javascript:;" class="douban">
+                                                        <img src="http://img2.douban.com/pics/fw2douban1.png" alt="推荐到豆瓣" />
+                                                    </a>
+                                                  </li>
+                                                </ul>
+                                            </li>
+                                            <li><a class="icon-edit edit-action" href="javascript:;">&nbsp;</a></li>
+                                            <li><a href="javascript:;" class="icon-remove remove-action">&nbsp;</a></li>
+                                            {% endcomment %}
+                                        </ul>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row-fluid edit-bookmark-box">
+                                    
+                                </div>
+                                {% if bookmark.tags %}
+                                <div class="row-fluid bookmark-tags-box">
+                                    <div class="span12">
+                                        {% for tag in bookmark.tags_splited %}
+                                            {% if tag  %}
+                                            <a class="btn disabled btn-mini tag" href="javascript:;">{{  tag  }}</a>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <div class="row-fluid muted">
+                                    <div class="span12">
+                                            <img src="http://g.etfv.co/http://{{  bookmark.domain  }}" width="16"/>
+                                        {{  bookmark.domain  }} &nbsp;
+                                        <a href="{% url bookmark_profile bookmark.user%}" class="muted"><i class="icon-user"></i> {{ bookmark.user }}</a>
+                                        &nbsp;
+                                        <a href="{% url bookmark_detail bookmark.id %}" class="muted">
+                                            <i class="icon-comment"></i>&nbsp;
+                                            <small>{{ bookmark|comments_count }} {% trans "comments" %}</small>
+                                        </a>
+                                    </div>
+                                </div>
+                                {% if bookmark.note %}
+                                <div class="row-fluid">
+                                    <blockquote class="muted">{{ bookmark.note }}</blockquote>
+                                </div>
+                                {% endif %}
+                                <div class="row-fluid comments-box hide">
+                                    <div class="span12">
+                                        <div class="row-fluid">
+                                            <div class="span12 comments">
+                                            </div>
+                                        </div>
+                                        <div class="row-fluid more-box">
+                                            <div class="span12">
+                                                <button class="btn btn-block more">{% trans "Load more" %}</button>
+                                            </div>
+                                        </div>
+                                        {% if user.is_authenticated %}
+                                        <form action="" method="get" class="row-fluid" accept-charset="utf-8">
+                                            <div class="span12">
+                                                <hr>
+                                                <input type="hidden" name="content_object" value="/api/v1/bookmark/{{ bookmark.id }}">
+                                                <textarea name="comment" rows="3" class="span12"></textarea>
+                                                <p class="pull-right"><input class="btn btn-primary" type="submit" value="{% trans "Publish" %}"></p>
+                                            </div>
+                                        </form>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+

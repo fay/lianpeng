@@ -1,0 +1,52 @@
+{% extends 'site_base.html' %}
+{% load i18n %}
+{% load endless %}
+{% load gravatar %}
+{% load bookmark_tags %}
+
+{% block head_title %}{% trans "Explore" %}{% endblock %}
+{% block body %}
+    <div class="page-title hide">
+        <h1>{% trans "Get lost & find your serendipity." %}</h1>
+        <hr class="soften">
+    </div>
+    <div class="row" id="explore">
+        <div class="span12">
+            <ul class="nav nav-pills filters">
+                {% comment %}
+                <li class="{%if not filter %}active{% endif %}">
+                    <a href="{% url bookmark_explore %}"><i class="icon icon-heart"></i> {% trans "Staff picks" %}</a>
+                </li>
+                {% endcomment %}
+                <li class="{% if filter == 'recent' %}active{% endif %}">
+                    <a href="?filter=recent"><i class="icon icon-time"></i> {% trans "Recent List" %}</a>
+                </li>
+                <li class="{% if filter == 'stream' %}active{% endif %}">
+                    <a href="?filter=stream"><i class="icon icon-bookmark"></i> {% trans "Recent bookmarked" %}</a>
+                </li>
+            </ul>
+            <div class="row">
+                    {% if bookmarks %}
+                    <div class="bookmarks span10">
+                        {% include 'bookmark/includes/bookmarks.html' %}
+                    </div>
+                    {% endif %}
+                    {% if lists %}
+                        {% include 'bookmark/includes/lists.html' %}
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+    {% include 'bookmark/js/bookmark_form.html' %}
+{% endblock %}
+
+{% block extra_script %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/underscore-min.js" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/bookmark_embed.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        var USER_ID = {% if user.id %}{{ user.id }}{% else %}null{% endif %};
+        var USER_URL = "/api/v1/user/" + USER_ID;
+        var USER_NAME  = "{{user.username}}";
+        $('.list').click(function(){window.location.href=$(this).data('link')}); 
+    </script>
+{% endblock %}

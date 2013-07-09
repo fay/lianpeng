@@ -1,0 +1,36 @@
+    <!-- Comment -->
+    <script type="text/html" id="comment-tmpl" charset="utf-8">
+        <%$.each(comments, function(index, comment){ %>
+            <hr>
+            <div class="row-fluid comment-box">
+                <div class="span1">
+                    <a href="/<%-comment.user_name%>" title="<%-comment.user_name%>">
+                        <img class="avatar" src="<%-comment.avatar%>&r=r" /> 
+                    </a>
+                </div>
+                <div class="span11">
+                    <div class="row-fluid">
+                        <div class="span11">
+                            <a href="/<%-comment.user_name%>" title="<%-comment.user_name%>">
+                                <b><%-comment.user_name%></b>&nbsp;
+                            </a>
+                            <span class="muted"><small><%-comment.submit_date%></small></span>
+                        </div>
+                        <%if(comment.user == current_user){%>
+                        <div class="span1 comment-actions hide">
+                            <div class="pull-right">
+                                <a href="javascript:;" class="remove icon-remove" data-id="<%-comment.id%>"></a>
+                            </div>
+                        </div>
+                        <%}%>
+                    </div>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <%-comment.comment%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <%})%>
+    </script>
+

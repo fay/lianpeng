@@ -1,0 +1,60 @@
+.colourbar {
+  z-index: 1;
+  position: absolute;
+  width:100%;
+  height:5px;
+  background: #94e5ee; /* Old browsers */        background: -moz-linear-gradient(left, #94e5ee 0%, #2ccac1 23%, #ffd1a9 48%, #fbb5ae 75%, #d8a3bc 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#94e5ee), color-stop(23%,#2ccac1), color-stop(48%,#ffd1a9), color-stop(75%,#fbb5ae), color-stop(100%,#d8a3bc)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, #94e5ee 0%,#2ccac1 23%,#ffd1a9 48%,#fbb5ae 75%,#d8a3bc 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, #94e5ee 0%,#2ccac1 23%,#ffd1a9 48%,#fbb5ae 75%,#d8a3bc 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, #94e5ee 0%,#2ccac1 23%,#ffd1a9 48%,#fbb5ae 75%,#d8a3bc 100%); /* IE10+ */
+  background: linear-gradient(to right, #94e5ee 0%,#2ccac1 23%,#ffd1a9 48%,#fbb5ae 75%,#d8a3bc 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#94e5ee', endColorstr='#d8a3bc',GradientType=1 ); /* IE6-9 */
+  -webkit-animation:topshine 2s ease;
+}
+.colourbar2 {
+  z-index:2;
+  position: absolute;
+  width:100%;
+  height:5px;
+  background: #94e5ee; /* Old browsers */
+  background: -webkit-linear-gradient(right, #94e5ee 0%,#2ccac1 23%,#ffd1a9 48%,#fbb5ae 75%,#d8a3bc 100%); /* Chrome10+,Safari5.1+ */
+  opacity: 0;
+  -webkit-animation:topslide 2s ease;
+
+}
+/*** Animations ***/
+
+	@-webkit-keyframes button {
+	0%   { background-position: 0 0; }
+	100% { background-position: 0 128px;  }
+	
+	}
+	
+	@-webkit-keyframes logo {
+	0%   { opacity:0; margin-left:15px; }
+	100% { opacity:1.0; }
+	
+	}
+	@-webkit-keyframes delayfade {
+	0%   { opacity:0; margin-left: 10px;  }
+	40%	 { opacity:0; margin-left: 10px; }
+	100% { opacity:1.0; }
+	}
+	@-webkit-keyframes topshine {
+	0%   {opacity:0; height:30px }
+	100% {opacity:1.0}
+	}
+	@-webkit-keyfames gradient {
+	0%   {background-color: :red; }
+	100% {background-color:yellow;}
+	}
+	@-webkit-keyframes topslide {
+	0%   {opacity:1.0; height:30px }
+	100% {opacity:0;}
+	}
+	@-webkit-keyframes bodyslide {
+	0%   {padding-top:20px; }
+	100% {padding-top:0px;}
+	}
+	

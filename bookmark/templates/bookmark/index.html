@@ -1,0 +1,413 @@
+{% extends 'site_base.html'%}
+{% load i18n %}
+{% load compressed %}
+{% load gravatar %}
+{% load agon_tags %}
+
+{% block head_title %}{{ user.username }}{% endblock %}
+{% block extra_style %}
+<!-- <link rel="stylesheet" href="{{ STATIC_URL }}css/flat-ui.css" type="text/css" media="screen" charset="utf-8"> -->
+{% endblock %}
+{% block body %}
+     <div class="row-fluid" id="user-home">
+        <div class="span3 sidebar-width" id="lists">
+            <div class="sidebar-nav-fixed">
+                <div class="row-fluid">
+                    <div class="span4">
+                        <a href="{% url bookmark_profile user %}">
+                            <img class="avatar" alt="{{ user }}" src="{% gravatar_for_email user.email 64 %}&r=r" />
+                        </a>
+                    </div>
+                    <div class="span8">
+                        <a href="{% url bookmark_profile user %}">
+                            <h4>{{ user }}</h4>
+                        </a>
+                        <span><b class="text-warning">{% points_for_object user %}</b> karma</span>
+                    </div>
+                </div>
+                <hr>
+                <div class="sys-lists">
+                    <ul class="nav">
+                        <li id="feed">
+                            <a class="list-name" href="javascript:;">
+                                <i class="icon icon-bullhorn"></i> {% trans "Feed" %}
+                            </a>
+                        </li>
+                        <li id="all-list">
+                            <a class="list-name" href="javascript:;">
+                                <i class="icon icon-bookmark"></i> {% trans "All" %}
+                                <small class="label label-inverse pull-right">
+                                    {{ user.bookmark_set.all.count }}
+                                </small>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <hr class="shared-lists-ul-sep hide">
+                <div class="user-lists">
+                    <ul class="nav shared-lists-ul hide">
+                        <li class="nav-header">{% trans "Shared Lists" %}</li>
+                    </ul>
+                    <ul class="nav lists-ul hide">
+                        <hr>
+                    </ul>
+                    <div class="paginator">
+                    </div>
+                </div>
+                <hr class="user-lists-sep">
+                <a href="javascript:;" class="btn new-list-button">{% trans "New list" %}</a>
+                <form action="" method="get" class="new-list-form hide" accept-charset="utf-8">
+                    <input type="text" name="name" class="list-name" value="">
+                    <p><input type="submit" class="btn btn-primary" value="{% trans "Create" %}"></p>
+                </form>
+            </div>
+        </div>
+        <div class="span9" id="bookmarks">
+        </div>
+     </div>
+
+     <!-- Bookmarks Box template -->
+    <script type="text/html" charset="utf-8" id="list-bookmarks-tmpl">
+        <div class="row-fluid" id="list-bookmarks-<%-list.id%>">
+            <div class="span12 bookmarks">
+                <% if (list.name) {%>
+                <div class="row-fluid list-header">
+                </div>
+                <%}%>
+                <% if(list.id == 'all' || can_edit) {%>
+                <div class="row-fluid add-bookmark-form-box">
+                     <div class="span12">
+                         <form action="" class="add-bookmark-form form-inline" method="post" accept-charset="utf-8">
+                             <input type="text" name="url" value="" class="url span10" placeholder="{% trans "enter url here" %}" />
+                             <input type="submit" class="pull-right btn btn-primary span2" value="{% trans "Add bookmark" %}" />
+                         </form>
+                     </div>
+                </div>
+                <% } %>
+                <div class="row-fluid confirm-add-bookmark-box">
+                    <div class="span12 hide confirm-add-bookmark">
+                    </div>
+                </div>
+                <div class="row-fluid">
+                    <div class="span12 list">
+                        <div class="empty-box hide no-bookmarks">
+                            <p>
+                                <% if(list.id == 'feed') { %> {% trans "No feed.You can find and follow awesome people here:" %}
+                                <a href="{% url bookmark_explore %}">{% trans "Explore" %}</a>
+                                <% } else { %>{% trans "No bookmarks" %}<% } %>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row-fluid">
+                    <div class="span12 paginator">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
+    <script type="text/html" id="list-header-tmpl" charset="utf-8">
+                    <h2 class="span10">
+                        <span class="list-name"><%-list.name%></span> 
+                        &nbsp;<small class="label label-success">
+                            <% if(list.public){ %> <i class="icon-unlock"></i> <% } else {%>&nbsp;<i class="icon-lock"></i>&nbsp;<% } %>
+                        </small>
+                        <small class="label label-warning"><% if (list.kind == 3) {%><i class="icon-group"></i><% } %></small>
+                    </h2>
+                    <div class="span2 list-setting-box">
+                        <% if(can_edit) { %>
+                        <div class="btn-group pull-right">
+                          <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="icon icon-cog"></i>
+                            &nbsp;<span class="caret"></span>
+                          </a>
+                          <ul class="dropdown-menu">
+                            <li><a href="javascript:;" class="edit-list"><i class="icon-edit"></i> {% trans "Edit" %}</a></li>
+                            <%if(list.kind != 3){%>
+                                <li><a href="javascript:;" class="invite-list"><i class="icon-group"></i> {% trans "Invite & Share" %}</a></li>
+                            <%}%>
+                            <%if(list.kind != 0){%>
+                                <li><a href="javascript:;" class="delete-list"><i class="icon-remove"></i> {% trans "Delete" %}</a></li>
+                            <%}%>
+                          </ul>
+                        </div>
+                        <% } %>
+                        <div class="modal hide list-edit-modal">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h3>{% trans "Edit List"%}</h3>
+                            </div>
+                            <div class="modal-body">
+                                <form action="" method="get" accept-charset="utf-8">
+                                  <fieldset>
+                                    <input type="text" placeholder="" name="name" class="span12" value="<%-list.name%>">
+                                    <label class="checkbox">
+                                      <input type="checkbox" name="public" <%if(list.public){ %> checked <% }%>> {% trans "public" %} 
+                                    </label>
+                                  </fieldset>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" class="btn" data-dismiss="modal">{% trans "Close" %}</a>
+                                <a href="#" class="btn btn-primary save">{% trans "Save" %}</a>
+                            </div>
+                        </div>
+                        <div class="modal hide invite-list-modal">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">×</button>
+                                <h3>{% trans "Invite & Share" %}</h3>
+                            </div>
+                            <div class="modal-body">
+                                <table class="table table-striped">
+                                    <tbody id="invitee-list">
+                                    </tbody>
+                                </table>
+                                <div class="row-fluid">
+                                    <form action="" class="span12" method="post" accept-charset="utf-8">
+                                        <div class="well">
+                                            <label>{% trans "Add people, multiple username seperated by comma." %}</label>
+                                            <div class="alert invited alert-error hide">
+                                                {% trans "Already invited" %}
+                                            </div>
+                                            <input type="text" name="invitee" rows="4" class="span9"/ >
+                                            <input type="hidden" name="list" value="<%-list.resource_uri%>">
+                                            <select name="permission" id="permission" class="span3">
+                                                <option value="can_edit">{% trans "Can edit" %}</option>
+                                                <option value="can_view">{% trans "Can view" %}</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <a href="#" class="btn" data-dismiss="modal">{% trans "Cancel" %}</a>
+                                <a href="#" class="btn btn-primary invite">{% trans "Invite" %}</a>
+                            </div>
+                        </div>
+                    </div>
+    </script>
+    <script type="text/html" id="invitee-list-tmpl" charset="utf-8">
+        <% _.each(invitees, function(invitee) {%>
+        <tr>
+            <td>
+                <a href="/<%-invitee.invitee%>" target="_blank"><%-invitee.invitee%></a>
+            </td>
+            <td>
+                    <% if(invitee.status == 0) { %> 
+                        <span class="label label-info">
+                            {% trans "Sent" %} 
+                        </span>
+                    <% } else if(invitee.status == 1) { %>
+                        <span class="label label-success">
+                            {% trans "Accepted" %} 
+                        </span>
+                    <% } else if(invitee.status == 2) { %>
+                        <span class="label">
+                            {% trans "Ignored" %} 
+                        </span>
+                    <% } %>
+            </td>
+            <td>
+                <select name="permission" class="permission" data-id="<%-invitee.id%>">
+                    <option value="can_edit" <% if (invitee.permission == 'can_edit'){ %>selected<% } %>>{% trans "Can edit" %}</option>
+                    <option value="can_view" <% if (invitee.permission == 'can_view'){ %>selected<% } %>>{% trans "Can view" %}</option>
+                </select>
+            </td>
+            <td class="" data-id="<%-invitee.id%>">
+                <a href="javascript:;"><i class="delete icon-remove "></i></a>
+            </td>
+        </tr>
+        <% });%>
+    </script>
+    <!-- Bookmark List Template -->
+    <script type="text/html" id="bookmarks-tmpl" charset="utf-8">
+                <% _.each(bookmarks, function(bookmark){%>
+                    <div class="row-fluid bookmark-entry-box" id="bookmark-<%- bookmark.id %>" data-list-id="<%- list.id%>" data-id="<%- bookmark.id %>">
+                        <div class="span12 bookmark-entry">
+                            <hr>
+                            <% if(list.id != 'feed'){ %>
+                            <div class="hide move">
+                                <i class="icon-move"></i>
+                            </div>
+                            <% } %>
+                            <div class="row-fluid">
+                                <% if(list.id == 'feed'){ %>
+                                <div class="span1">
+                                    <a href="/<%-bookmark.user_name%>" title="<%-bookmark.user_name%>">
+                                        <img class="avatar" alt="<%-bookmark.user_name%>" src="<%-bookmark.user_avatar%>&r=r" />
+                                    </a>
+                                </div>
+                                <% } %>
+                                <div class="span<% if(list.id == 'feed') { %>11<% } else { %>12<% }%>">
+                                    <div class="row-fluid bookmark-title-box">
+                                        <div class="span10">
+                                            <div class="bookmark-title-wrapper bookmark-title-inner">
+                                                <a href="<%- bookmark.url %>" title="<%-bookmark.title%>" target="_blank" class="bookmark-title">
+                                                    <%- bookmark.title %></a>
+                                            </div>
+                                        </div>
+                                        <div class="span2 hide actions">
+                                            <ul class="pull-right inline unstyled well-small well">
+                                                <li data-toggle="tooltip" title="{% trans "Read mode" %}">
+                                                    <a href="javascript:;" class="icon-eye-open preview-action"></a>
+                                                </li>
+                                                <% if(list.id == 'all' || list.id == 'search' || list.id == 'tag' || can_edit){ %>
+                                                    <li class="dropdown" data-toggle="tooltip" title="{% trans "Share" %}">
+                                                        <span class="icon-share-alt share-action " data-toggle="dropdown"></span>
+                                                        <ul class="dropdown-menu shares" role="menu" aria-labelledby="dLabel">
+                                                          <li>
+                                                            <a tabindex="-1" href="javascript:;" class="weibo">
+                                                                <img src="http://www.sinaimg.cn/blog/developer/wiki/LOGO_16x16.png" />
+                                                                分享到微博
+                                                            </a>
+                                                          </li>
+                                                          <li>
+                                                            <a tabindex="-1" href="javascript:;" class="douban">
+                                                                <img src="http://img3.douban.com/pics/douban-icons/favicon_16x16.png" />
+                                                                分享到豆瓣
+                                                            </a>
+                                                          </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li data-toggle="tooltip" title="{% trans "Edit" %}"><a class="icon-edit edit-action" href="javascript:;"></a></li>
+                                                    <li data-toggle="tooltip" title="{% trans "Delete" %}"><a href="javascript:;" class="icon-remove remove-action"></a></li>
+                                                <% } if(list.id == 'feed') { %>
+                                                    <li><a href="javascript:;" class="icon-plus save-action"></a></li>
+                                                <% } %>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="row-fluid edit-bookmark-box">
+                                        
+                                    </div>
+                                    <% if(bookmark.tags) {%>
+                                    <div class="row-fluid bookmark-tags-box">
+                                        <div class="span12">
+                                            <% _.each(bookmark.tags.split(" "), function(tag){ %>
+                                                <% if(tag) {%>
+                                                <a class="btn btn-mini tag" href="javascript:;"><%- tag %></a>&nbsp;
+                                                <% } %>
+                                            <% })%>
+                                        </div>
+                                    </div>
+                                    <%}%>
+                                    <div class="row-fluid muted">
+                                        <div class="span12">
+                                            <img src="http://g.etfv.co/http://<%- bookmark.domain %>" width="16"/>&nbsp;<%- bookmark.domain %>
+                                            &nbsp;
+                                            <a href="/<%-bookmark.user_name%>" target="_blank" class="muted">
+                                                <i class="icon-user"></i>&nbsp;<%-bookmark.user_name%>
+                                            </a>
+                                            &nbsp;
+                                            <a href="javascript:;" class="muted comment-action">
+                                                <i class="icon-comment"></i>&nbsp;<small><%-bookmark.comments_count%> {% trans "comment" %}
+                                                </small>
+                                            </a>
+                                            &nbsp;
+                                            <i class="icon-time"></i>&nbsp;<small class=""><%-bookmark.timesince%></small>
+                                        </div>
+                                    </div>
+                                    <%if(bookmark.note) {%>
+                                    <div class="row-fluid">
+                                        <blockquote class="muted"><%-bookmark.note%></blockquote>
+                                    </div>
+                                    <%}%>
+                                        <div class="row-fluid comments-box hide">
+                                            <div class="span12">
+                                                <div class="row-fluid">
+                                                    <div class="span12 comments">
+                                                    </div>
+                                                </div>
+                                                <div class="row-fluid more-box">
+                                                    <div class="span12">
+                                                        <button class="btn btn-block more">{% trans "Load more" %}</button>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                                <form action="" method="get" class="row-fluid" accept-charset="utf-8">
+                                                    <input type="hidden" name="content_object" value="<%-bookmark.resource_uri%>">
+                                                    <textarea name="comment" rows="3" class="span12"></textarea>
+                                                    <p class="pull-right"><input class="btn btn-primary" type="submit" value="{% trans "Publish" %}"></p>
+                                                </form>
+                                            </div>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% })%>
+    </script>
+    {% include 'bookmark/js/bookmark_form.html' %}
+    <!-- Lists Template -->
+    <script type="text/html" id="list-tmpl" charset="utf-8">
+        <%$.each(lists, function(index, list){ %>
+            <li class="" id="list-<%-list.id%>" data-id="<%-list.id%>">
+                <a class="list-name" title="<%-list.name%>" href="javascript:;">
+                    <span class="row-fluid">
+                        <span class="icon span1 <%if(list.kind == 2){ %>icon-circle-blank
+                            <% } else if(list.kind == 3){ %>
+                            icon-shared-list
+                            <% } else if(list.kind == 0){ %>
+                                icon-inbox
+                            <% } %>"><% if (list.kind == 3){ %><img class="avatar" src="<%- list.user_avatar %>"><% } %></span>
+                        <span class="name-text span10"><%-list.name%></span>
+                        <small class="label label-success count"><%-list.count%></small>
+                        <div class="clearfix">
+                        </div>
+                    </span>
+                </a>
+            </li>
+        <%})%>
+    </script>
+    {% include 'bookmark/js/comment.html' %}
+    <a href="" id="url-template"></a>
+    <div id="preview-box" class="hide ">
+        <div class="action-bar navbar">
+            <div class="navbar-inner">
+                <div class="container">
+                    <a class="brand" href="#">{% trans "Read mode" %} <small class="label label-warning">实验功能，适合纯文字网页</small></a>
+                    <ul class="nav pull-right">
+                        <li class=""><a href="javascript:;" class="close-preview">{% trans "Close" %}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container hide" id="read-box">
+            <div class="page-header">
+                <h2 class="title"></h2>
+                <blockquote class="muted">
+                    <span class="url"></span> 
+                    <a href="" target="_blank" class="icon-external-link external-link"></a>
+                </blockquote>
+            </div>
+            <p class="article">
+            </p>
+        </div>
+    </div>
+{% endblock %}
+{% block extra_script %}
+<script type="text/javascript" src="{{ STATIC_URL }}js/underscore-min.js" charset="utf-8"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/backbone-min.js" charset="utf-8"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/backbone.pagination.js" charset="utf-8"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-bootstrap-pagination.js" charset="utf-8"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/spin.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui-1.10.1.custom.min.js" charset="utf-8"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/noty/jquery.noty.js" charset="utf-8"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/noty/layouts/top.js"></script>
+<!-- You can add more layouts if you want -->
+<script type="text/javascript" src="{{ STATIC_URL }}js/noty/themes/default.js" charset="utf-8"></script>
+<script type="text/javascript" charset="utf-8">
+    var USER_ID = {{user.id}};
+    var USER_URL = "/api/v1/user/" + USER_ID;
+    var USER_NAME  = "{{user.username}}";
+    var TEXTS = {
+        search_title:"{% trans "Search for:" %}",
+        tag_title:"{% trans "Tag:" %}"
+    };
+
+</script>
+{% compressed_js 'main' %}
+{% endblock %}
+{% block footer %}
+{% endblock%}

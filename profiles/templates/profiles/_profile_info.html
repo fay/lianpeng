@@ -1,0 +1,7 @@
+{% load i18n %}
+<div class="profile_info">
+    {% if profile.signature %}<p><b>{% trans "Signature" %}</b>: {{ profile.signature }}</p>{% endif %}
+    {% if profile.about %}<p><b>{% trans "About" %}</b>: {{ profile.about }}</p>{% endif %}
+    {% if profile.location %}<p><b>{% trans "Location" %}</b>: {{ profile.location }}</p>{% endif %}
+    {% include 'profiles/_social_sites.html' %}
+</div>

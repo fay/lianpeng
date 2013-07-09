@@ -1,0 +1,40 @@
+{% extends 'site_base.html' %}
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load url from future %}
+{% block head_title %}{% trans "Complete your account at lianpeng." %}{% endblock %}
+{% block body %}
+<div class="page-title">
+    <img src="{{ STATIC_URL }}img/lp_logo128.png" />
+</div>
+<div class="row-fluid">
+    <div class="span8 offset2">
+        <hr>
+        <div class="buttons">
+            <button class="btn btn-large btn-block btn-primary new-account" type="button">{% trans "Create new account" %}</button>
+            <a class="btn btn-large btn-block existed-account" href="{% url 'redirect_to_login' %}?next={% url 'socialauth_complete' backend %}">{% trans "Bind to existed account" %}</a>
+        </div>
+        <form id="signup_form" method="post" action="{% url "bind_user" %}" autocapitalize="off" 
+            class="form-horizontal form hide"{% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+            <h3 class="center muted">{% trans "Complete your account at lianpeng." %}</h3>
+            <fieldset>
+                {% csrf_token %}
+                {{ form|as_bootstrap }}
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">{% trans "Continue" %}</button>
+                </div>
+            </fieldset>
+        </form>
+        
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_script %}
+    <script type="text/javascript" charset="utf-8">
+        $('.buttons .new-account').click(function(){
+            $('.buttons').hide();
+            $('#signup_form').slideDown();
+        });
+    </script>
+{% endblock %}

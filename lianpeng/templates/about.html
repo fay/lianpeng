@@ -1,0 +1,65 @@
+{% extends 'site_base.html' %}
+{% load i18n %}
+{% block head_title %}{% trans "关于莲蓬" %}{% endblock %}
+{% block body %}
+<div class="page-title">
+    <img src="{{ STATIC_URL }}img/lp_logo128.png" />
+</div>
+<hr class="soften">
+<div class="row">
+    <div class="span8 offset2">
+        <div class="page-header">
+            <h2>莲蓬能做什么？</h2>
+        </div>
+        <p class="lead">
+            『莲蓬』是为互联网创意工作者建立的网络知识库，方便你收藏和管理每天看到的可能会对将来工作有帮助的网络资源，
+            它可以是<a href="https://medium.com/" target="_blank">Medium</a>上的一篇精彩文章，可以是去泰国旅行的相关攻略和经验帖，
+            或是一个<a href="https://jawbone.com/" target="_blank">创新产品</a> ......
+        </p>
+        <p class="lead">
+        你可以将它们用标签标识它们，便于以后再次访问，
+            也可以按主题归类为一个专辑，比较、研究、沉淀，激发更多创意想法和产品。你甚至可以邀请同事、同学分享你的收藏，
+            共同协作一个主题专辑，而向所有人公开你的专辑则更是被鼓励的。
+        </p>
+        <div class="page-header">
+            <h2>为什么要创建莲蓬？</h2>
+        </div>
+        <p class="lead">
+            我们每天的工作和生活大多离不开互联网，很多时候是因为网络上有很多我们需要的知识、工具、资源。
+            尤其是现在，海量的信息在我们屏幕前，我们有Google Reader，豆瓣，微博，Hacker News，Startup News，V2EX，爱范儿，
+            Solidot，36氪，还有各大门户网站，但大部分内容对我们来说都是noise，对于个人特定的signal，
+            如果不做任何记录，下次需要引用或者可能用到之前看到过的内容时，却再也找不到链接地址，
+            『莲蓬』初步就是解决这个问题。
+        </p>
+        <p class="lead">
+            对我而言，开发『莲蓬』也是解决自己的问题，除了上面的问题之外，还解决自己特定的问题。
+            在看了近3年的Hacker News后，我积累了不少东西，了解了各种成功的、<b class="text-error">失败的</b>startup经验和想法，
+            看他们从“Show HN:...”到“We are hiring”或“Why we failed”，学习他们从小到大技术架构的变迁。在V2EX上也差不多逛了三年，
+            在上面也发现很多牛人分享了自己的作品。
+        </p>
+        <p class="lead">
+            我也希望有个自己的“<a href="/bookmark/7521/" target="_blank">Forever Project</a>”
+            <small class="muted">（没有直接跳转到原文，是希望大家可以发表自己的看法）</small>，像自己的孩子一样，
+            看着它从小到大，一点点的成长，每次commit都是
+            <a href="https://speakerdeck.com/mojombo/optimizing-for-happiness" target="_blank">optimization for happiness</a>。
+            而当你下班回家，看着自己的杰作，仅仅是看着，都很愉悦。这是你技术积累的最高成就，是你情怀的完美表达（情怀不是老罗一个人的）。
+            可能你们大部分人都已经做到了，很羡慕你们，而『莲蓬』才刚刚开始，很简陋，但我想很少有产品一开始就很完美，即便是iphone，
+            如果你仍然感兴趣，请支持『莲蓬』：
+        </p>
+        <div class="center">
+            <a href="/accounts/signup/" class="btn btn-primary btn-large">立即使用莲蓬</a>
+            <br>
+            or
+            <br>
+            <div class="">
+                和我聊聊， <span  class="icon-envelope"> zhifei@lianpeng{DOT}me</span>
+            </div>
+        </div>
+        <hr>
+        <blockquote class="">
+            <p>When you live for a strong purpose, then hard work isn't an option. Its a necessity.</p>
+            <small>Steve Pavalina</small>
+        </blockquote>
+    </div>
+</div>
+{% endblock %}

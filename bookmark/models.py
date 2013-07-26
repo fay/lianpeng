@@ -24,6 +24,7 @@ from guardian.models import UserObjectPermissionBase
 from guardian.models import GroupObjectPermissionBase
 from guardian.shortcuts import assign_perm, remove_perm, get_perms
 from agon.models import award_points, TargetStat
+from misc.utils import find_mentions
 
 class DiffingMixin(object):
 
@@ -286,15 +287,19 @@ def append_to_inbox_list(sender, instance, **kwargs):
 def notify_comment(sender, instance, created, **kwargs):
     if created:
         from django.utils.translation import ugettext_noop as _
-        user = instance.content_object.user
-        from_user = instance.user
-        if user == from_user:
-            return
         comment = instance
-        notify.send(from_user, recipient=user, verb=_('replied'), 
-                    action_object=comment,
-                    description=comment.comment, 
-                    target=comment.content_object)
+        user = comment.content_object.user
+        from_user = comment.user
+        mentions = set(find_mentions(comment.comment) + [from_user.username, user.username]) - set([from_user.username, user.username])
+        users = list(User.objects.filter(username__in=mentions))
+        users.append(user)
+        for user in users:
+            if user == from_user:
+                continue
+            notify.send(from_user, recipient=user, verb=_('replied'), 
+                        action_object=comment,
+                        description=comment.comment, 
+                        target=comment.content_object)
         
 @receiver(post_save, sender=Follow)
 def notify_follow(sender, instance, created, **kwargs):

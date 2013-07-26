@@ -24,6 +24,7 @@ var CommentsView = Backbone.View.extend({
         "submit form": "comment",
         "click .more": 'load_more'
     },
+    participants: [],
     loaded: false,
     current_page: 0,
     count: 0,
@@ -74,8 +75,13 @@ var CommentsView = Backbone.View.extend({
     render: function() {
         var self = this;
         this.$el.show();
+        this.participants = [];
         $.each(this.collection.models, function(index, comment){
             self.add_comment(comment);
+        });
+        $('textarea').atwho({
+              at: "@",
+              data: this.participants,
         });
         this.loaded = true;
         this.current_page += 1;
@@ -89,9 +95,13 @@ var CommentsView = Backbone.View.extend({
     },
     add_comment: function(comment) {
         var template = $('#comment-tmpl').html();
-        var html = _.template(template, {comments: [comment.toJSON()], current_user: USER_URL});
+        var comment_json = comment.toJSON();
+        var html = _.template(template, {comments: [comment_json], current_user: USER_URL});
         var comment_dom = $(html);
         this.$('.comments').append(comment_dom).show();
         var comment_view = new CommentView({model:comment, el:comment_dom});
+        if(this.participants.indexOf(comment_json.user_name) < 0) {
+            this.participants.push(comment_json.user_name);
+        }
     }
 });

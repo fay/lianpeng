@@ -56,8 +56,8 @@
                                 {% endif %}
                                 <div class="row-fluid muted">
                                     <div class="span12">
-                                            <img src="http://g.etfv.co/http://{{  bookmark.domain  }}" width="16"/>
-                                        {{  bookmark.domain  }} &nbsp;
+                                        <a href="{% url bookmark_list_domain bookmark.domain %}" class="muted"><img src="http://g.etfv.co/http://{{  bookmark.domain  }}" width="16"/>
+                                            {{  bookmark.domain  }}</a> &nbsp;
                                         <a href="{% url bookmark_profile bookmark.user%}" class="muted"><i class="icon-user"></i> {{ bookmark.user }}</a>
                                         &nbsp;
                                         <a href="{% url bookmark_detail bookmark.id %}" class="muted">

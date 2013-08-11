@@ -7,6 +7,7 @@
 {% block head_title %}{{ list.name }}{% endblock %}
 {% block body %}
     <div class="row bookmarks ">
+        {% if list %}
         <div class="span3" id="lists">
             {% with list.user.profile_set.all|first as profile %}
             <div class="row-fluid">
@@ -49,12 +50,13 @@
             {% endif %}
             {% endwith %}
         </div>
+        {% endif %}
         <div class="span9 list">
                 <div class="row-fluid list-header">
                     <h2 class="span10">
                         <span class="list-name">{{ list.name }}</span> 
                         &nbsp;<small class="label label-success">
-                        {% if list.public %}<i class="icon-unlock"></i> {% else %}&nbsp;<i class="icon-lock"></i>&nbsp;<% } {% endif %}
+                        {% if list.public %}<i class="icon-unlock"></i> {% else %}&nbsp;<i class="icon-lock"></i>&nbsp; {% endif %}
                         </small>
                     </h2>
                 </div>

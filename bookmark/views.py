@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.db import transaction, IntegrityError
+from django.db.models import Count
 from django.http import HttpResponse, HttpResponseRedirect,Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext
@@ -76,6 +77,20 @@ def list_detail(request, id):
     context['list'] = l
     context['bookmarks'] = l.bookmark_set.order_by('-created_time')
     return render(request, 'bookmark/list_detail.html', context)
+
+def list_domain(request, domain):
+    user = request.user
+    context = {}
+    bookmarks = Bookmark.objects.filter(domain=domain, list__public=True).order_by('-created_time')
+    contributor_counts = bookmarks.values('user').annotate(count=Count('user', distinct=True))
+    contributor_ids = []
+    for contributor_count in contributor_counts:
+        contributor_ids.append(contributor_count['user'])
+    contributors = User.objects.filter(id__in=contributor_ids)
+    context['contributors'] = contributors
+    context['bookmarks'] = bookmarks
+    context['domain'] = domain
+    return render(request, 'bookmark/list_domain.html', context)
 
 def bookmark_detail(request, id):
     bookmark = get_object_or_404(Bookmark, id=id, list__public=True)

@@ -1,24 +1,56 @@
 {% extends "site_base.html" %}
 {% load kaleo_tags %}
+{% load i18n %}
 {% load staticfiles %}
 
-{% block body %}
-<div class="invites">
-    {% invite_form request.user %}
+{% block head_title %}{% trans "Invite" %}{% endblock %}
+{% block extra_style %}
+<style type="text/css" media="screen">
+    #div_id_email_address label {
+        display:none;
+    }
+</style>
+{% endblock %}
 
-    <div class="sent">
-        <h3>Invitations Sent</h3>
-        {% invites_sent request.user %}
+{% block body %}
+<div class="page-title">
+   <h1>{% trans "Invite" %}</h1>
+</div>
+<hr class="soften">
+<div class="row-fluid">
+    <div class="span6">
+        <div class="invites">
+            <label>{% trans "Email address" %}</label>
+            {% invite_form request.user %}
+        </div>
+    </div>
+    <div class="span6">
+            <div class="sent">
+                <h4>{% trans "Invitations Sent" %}</h4>
+                <div class="well">
+                    {% invites_sent request.user %}
+                </div>
+            </div>
+        
     </div>
 </div>
 {% endblock %}
 
 {% block extra_script %}
-    <script src="{% static "js/eldarion-ajax.min.js" %}"></script>
+    <script src="{% static "js/eldarion-ajax-core.js" %}"></script>
+    <script src="{% static "js/eldarion-ajax-handlers.js" %}"></script>
     <script type="text/javascript" charset="utf-8">
-        $(document).on("eldarion-ajax:success", [data-prepend-inner], function(evt, $el, data) {
-            var $node = $($el.data("prepend-inner"));
-            $node.data(data.html + $node.html());
+        $(function () {
+            $(document).on("eldarion-ajax:success", function(evt, $el, data) {
+                if(data.html.indexOf('error') < 0) {
+                    $('#div_id_email_address').removeClass('error');
+                    console.log(data)
+                    $('#div_id_email_address .controls .help-inline').remove();
+                    var success_text = $('<span id="error_id_email_address_1" class="help-inline">邀请成功</span>')
+                    $('#div_id_email_address .controls').append(success_text);
+                    $('#div_id_email_address').addClass('success');
+                }
+            });
         });
     </script>
 {% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'site_base.html' %}
+{% load gravatar %}
+{% load i18n %}
+{% block head_title %}
+{% trans "Sync" %}
+{% endblock %}
+
+{% block body %}
+<div class="page-title">
+    <h1>{% trans "Sync"%}
+        <br>
+        <small>
+            {% trans "Sync third party website's starred item to lianpeng." %}
+        </small>
+    <h1>
+</div>
+<hr class="soften">
+<div class="hero-unit center">
+    <div class="row-fluid">
+        <div class="website span6">
+            <h1 class="icon-github" style="font-size:64px"></h1>
+            <p class="">
+                {% blocktrans %}Sync your starred project on <a href="https://github.com/" target="_blank">Github</a>{% endblocktrans %}
+                <br>
+                {% if github_synced %}
+                    <a href="#" class="btn disabled">{% trans "Synced" %}</a>
+                {% else %}
+                    <a href="{% url bookmark_sync %}?website=github" class="btn btn-primary">{% trans "Sync" %}</a>
+                {% endif %}
+            <p>
+        </div>
+        <div class="website span6">
+            <p><img src="http://img3.douban.com/pics/douban-icons/favicon_48x48.png" /><p>
+            <p class="">
+                {% blocktrans %}
+                    Sync your likings on <a href="http://www.douban.com/" target="_blank">Douban</a>
+                {% endblocktrans %}
+                <br>
+                {% if douban_synced %}
+                    <a href="#" class="btn disabled">{% trans "Synced" %}</a>
+                {% else %}
+                    <a href="#" class="btn btn-primary disabled">{% trans "开发中" %}</a>
+                {% endif %}
+            <p>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

@@ -5,5 +5,6 @@ from django.views.generic.simple import direct_to_template, redirect_to
 
 urlpatterns = patterns("",
     url(r"^bind/", "misc.auth_pipeline.bind", name="bind_user"),
+    url(r"^invite/", "misc.views.invite", name="invite_user"),
     url(r"^redirect_to_login/", "misc.auth_pipeline.redirect_to_login", name="redirect_to_login"),
 )

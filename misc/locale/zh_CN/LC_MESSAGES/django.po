@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-23 07:20+0800\n"
+"POT-Creation-Date: 2013-07-30 10:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 
-#: forms.py:8
+#: forms.py:9
 msgid "Username"
 msgstr ""
 
-#: forms.py:14
+#: forms.py:15
 msgid "Password"
 msgstr ""
 
-#: forms.py:18
+#: forms.py:19
 msgid "Password (again)"
 msgstr ""
 
@@ -47,3 +47,7 @@ msgstr "绑定到现有帐号"
 #: templates/misc/bind.html:24
 msgid "Continue"
 msgstr "继续"
+
+#: templates/misc/invite.html:11
+msgid "Invitations Sent"
+msgstr "已发送的邀请"

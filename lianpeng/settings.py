@@ -180,6 +180,7 @@ INSTALLED_APPS = [
     "tagging",
     "notifications",
     "pagination",
+    "kaleo",
     
     # project
     "misc",
@@ -318,6 +319,7 @@ WEIBO_CLIENT_SECRET = ''
 #SOCIAL_AUTH_LOGIN_REDIRECT_URL = ''
 #NOTIFY_USE_JSONFIELD = True
 
+KALEO_DEFAULT_INVITE_ALLOCATION = 5
 try:
     from local_settings import *
 except ImportError:

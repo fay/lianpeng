@@ -24,7 +24,7 @@ def sync():
 
 @task
 @transaction.commit_on_success
-def sync_github(user):
+def sync_github(user, list_name):
     website = 'github'
     user_social_auth = user.social_auth.get(provider=website)
     github_username = user_social_auth.extra_data['login']
@@ -32,7 +32,6 @@ def sync_github(user):
     if not created and state.state == 2: #: avoid duplicate syncronization
         return
     page = 1
-    list_name = _('Github starred project')
     default_list, created = List.objects.get_or_create(name=list_name, user=user, defaults={"public": True})
     while True:
         resp = urllib2.urlopen('https://api.github.com/users/' + github_username + '/starred?page=' + str(page))

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-11 22:20+0800\n"
+"POT-Creation-Date: 2013-08-13 22:44+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -87,23 +87,19 @@ msgstr "邀请你参与"
 msgid "[%(site_name)s] You have new notification messages"
 msgstr "[%(site_name)s] 您有新的通知消息"
 
-#: tasks.py:35
-msgid "Github starred project"
-msgstr "Github标星项目"
-
-#: tasks.py:72
+#: tasks.py:71
 msgid "Export from Chrome Browser "
 msgstr "Chrome浏览器导出书签"
 
-#: tasks.py:74
+#: tasks.py:73
 msgid "Export from Kippt"
 msgstr "Kippt导出书签"
 
-#: tasks.py:76
+#: tasks.py:75
 msgid "Export from Delicious"
 msgstr "Delicious导出书签"
 
-#: tasks.py:78
+#: tasks.py:77
 msgid "Export from Google Bookmarks"
 msgstr "谷歌导出书签"
 
@@ -115,8 +111,15 @@ msgstr ""
 "您需要通过Email验证才能继续使用莲蓬，在您注册时我们已经发送了一封确认邮件，请"
 "查看您的邮箱。"
 
-#: views.py:155
-#, fuzzy
+#: views.py:128
+msgid "Github starred project"
+msgstr "Github标星项目"
+
+#: views.py:131
+msgid "Syncing is in progress, please wait for while."
+msgstr "正在同步，请稍等片刻。"
+
+#: views.py:160
 msgid ""
 "Upload successfully,                                 we will import your "
 "bookmarks to your account                                 in background."
@@ -372,8 +375,8 @@ msgid ""
 "                "
 msgstr ""
 "\n"
-"                同步您在<a href=\"http://www.douban.com/\" target=\"_blank"
-"\">豆瓣</a>上的“我的喜欢”\n"
+"                同步您在<a href=\"http://www.douban.com/\" target=\"_blank\">"
+"豆瓣</a>上的“我的喜欢”\n"
 "            "
 
 #: templates/bookmark/sync.html:42

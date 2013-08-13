@@ -121,16 +121,21 @@ def sync(request):
         website = request.GET.get('website')
         request.session['redirect_to'] = reverse('bookmark_sync') + "?sync=" + website
         return redirect('socialauth_begin', website)
+    github_synced = False
     if 'sync' in request.GET:
         website = request.GET.get('sync')
         if website == 'github':
-            sync_github.delay(user)
+            list_name = _('Github starred project')
+            sync_github.delay(user, list_name)
+            github_synced = True
+            messages.info(request, _("Syncing is in progress, please wait for while.")) 
 
-    try:
-        state = SyncState.objects.get(user=user, website="github")
-        github_synced = True
-    except SyncState.DoesNotExist:
-        github_synced = False
+    else:
+        try:
+            state = SyncState.objects.get(user=user, website="github")
+            github_synced = True
+        except SyncState.DoesNotExist:
+            github_synced = False
     context = {}
     context['github_synced'] = github_synced
     return render(request, 'bookmark/sync.html', context)

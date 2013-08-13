@@ -170,6 +170,15 @@ class ListInvitation(models.Model):
     class Meta:
         unique_together = (('list', 'user', 'invitee'))
 
+
+class SyncState(models.Model):
+    user = models.ForeignKey(User)
+    website = models.CharField(max_length=16)
+    state = models.IntegerField(choices=((0, 'no sync'), (1, 'synced'), (2, 'syncing')))
+
+    class Meta:
+        unique_together = (("user", "website"), )
+
 @receiver(pre_delete, sender=ListInvitation)
 def delete_permission(sender, instance, **kwargs):
     try:
@@ -219,12 +228,8 @@ def inc_user_karma(sender, instance, created, **kwargs):
     if created:
         now = datetime.datetime.utcnow().replace(tzinfo=utc)
         today = now.date()
-        print today, now
         user = instance.user
         today_count = Bookmark.objects.filter(created_time__gte=today, user=user).count()
-        print today_count
-        for b in Bookmark.objects.filter(created_time__gte=today, user=user):
-            print b.created_time
 
         if today_count < 2:
             try:

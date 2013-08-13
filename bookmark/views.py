@@ -21,11 +21,16 @@ from guardian.shortcuts import assign_perm
 from account.models import EmailAddress
 
 from bookmark.forms import ImportForm, FeedbackForm
-from bookmark.models import List, Bookmark, PickedList, ListInvitation
-from bookmark.tasks import handle_imported_file
+from bookmark.models import List, Bookmark, PickedList, ListInvitation,\
+        SyncState
+from bookmark.tasks import handle_imported_file, sync_github
 
 def index(request, username=None, id=None, query=None, tag=None):
     user = request.user
+    if 'redirect_to' in request.session:
+        redirect_url = request.session['redirect_to']
+        del request.session['redirect_to']
+        return redirect(redirect_url)
     if user.is_authenticated():
         try:
             email = EmailAddress.objects.get(user=user, email=user.email)
@@ -108,6 +113,27 @@ def public_profile(request, username):
     context['lists'] = lists
     context['current_user'] = current_user
     return render(request, 'bookmark/profile.html', context)
+
+@login_required
+def sync(request):
+    user = request.user
+    if 'website' in request.GET:
+        website = request.GET.get('website')
+        request.session['redirect_to'] = reverse('bookmark_sync') + "?sync=" + website
+        return redirect('socialauth_begin', website)
+    if 'sync' in request.GET:
+        website = request.GET.get('sync')
+        if website == 'github':
+            sync_github.delay(user)
+
+    try:
+        state = SyncState.objects.get(user=user, website="github")
+        github_synced = True
+    except SyncState.DoesNotExist:
+        github_synced = False
+    context = {}
+    context['github_synced'] = github_synced
+    return render(request, 'bookmark/sync.html', context)
 
 @login_required
 def import_to(request):

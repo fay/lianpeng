@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-11 12:26+0800\n"
+"POT-Creation-Date: 2013-08-11 22:20+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -66,44 +66,48 @@ msgstr "接受"
 msgid "Ignore"
 msgstr "忽略"
 
-#: models.py:277
+#: models.py:282
 msgid "Inbox"
 msgstr ""
 
-#: models.py:299
+#: models.py:304
 msgid "replied"
 msgstr "回复了"
 
-#: models.py:312
+#: models.py:317
 msgid "followed you"
 msgstr "关注了你"
 
-#: models.py:326
+#: models.py:331
 msgid "invited you to join"
 msgstr "邀请你参与"
 
-#: models.py:335
+#: models.py:340
 #, python-format
 msgid "[%(site_name)s] You have new notification messages"
 msgstr "[%(site_name)s] 您有新的通知消息"
 
-#: tasks.py:19
+#: tasks.py:35
+msgid "Github starred project"
+msgstr "Github标星项目"
+
+#: tasks.py:72
 msgid "Export from Chrome Browser "
 msgstr "Chrome浏览器导出书签"
 
-#: tasks.py:21
+#: tasks.py:74
 msgid "Export from Kippt"
 msgstr "Kippt导出书签"
 
-#: tasks.py:23
+#: tasks.py:76
 msgid "Export from Delicious"
 msgstr "Delicious导出书签"
 
-#: tasks.py:25
+#: tasks.py:78
 msgid "Export from Google Bookmarks"
 msgstr "谷歌导出书签"
 
-#: views.py:38
+#: views.py:43
 msgid ""
 "You need to verify your email address to continue to use Lianpeng.You can "
 "check your email inbox."
@@ -111,7 +115,7 @@ msgstr ""
 "您需要通过Email验证才能继续使用莲蓬，在您注册时我们已经发送了一封确认邮件，请"
 "查看您的邮箱。"
 
-#: views.py:129
+#: views.py:155
 #, fuzzy
 msgid ""
 "Upload successfully,                                 we will import your "
@@ -338,6 +342,43 @@ msgstr "还没有任何粉丝"
 #: templates/bookmark/profile.html:101
 msgid "There are no followings yet."
 msgstr "还没有关注任何人"
+
+#: templates/bookmark/sync.html:5 templates/bookmark/sync.html.py:10
+#: templates/bookmark/sync.html:28
+msgid "Sync"
+msgstr "同步"
+
+#: templates/bookmark/sync.html:13
+msgid "Sync third party website's starred item to lianpeng."
+msgstr "将第三方网站的收藏/标星条目同步到莲蓬"
+
+#: templates/bookmark/sync.html:23
+msgid ""
+"Sync your starred project on <a href=\"https://github.com/\" target=\"_blank"
+"\">Github</a>"
+msgstr ""
+"                同步您在<a href=\"https://github.com/\" target=\"_blank"
+"\">Github</a>上的标星项目"
+
+#: templates/bookmark/sync.html:26 templates/bookmark/sync.html.py:40
+msgid "Synced"
+msgstr "已经同步"
+
+#: templates/bookmark/sync.html:35
+msgid ""
+"\n"
+"                    Sync your likings on <a href=\"http://www.douban.com/\" "
+"target=\"_blank\">Douban</a>\n"
+"                "
+msgstr ""
+"\n"
+"                同步您在<a href=\"http://www.douban.com/\" target=\"_blank"
+"\">豆瓣</a>上的“我的喜欢”\n"
+"            "
+
+#: templates/bookmark/sync.html:42
+msgid "开发中"
+msgstr ""
 
 #: templates/bookmark/tools.html:3
 msgid "Collect Tools"

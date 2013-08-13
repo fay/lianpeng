@@ -2,14 +2,67 @@
 
 import datetime
 import re
+import urllib2
+import json
 from urlparse import urlparse
+
+from django.utils.timezone import utc
+from django.utils.translation import ugettext as _
+from django.db import transaction
 
 from BeautifulSoup import BeautifulSoup
 from celery.task import task
-from django.utils.timezone import utc
-from django.utils.translation import ugettext as _
 
-from bookmark.models import List, Bookmark
+from bookmark.models import List, Bookmark, SyncState
+from social_auth.models import UserSocialAuth
+
+@task
+def sync():
+    usas = UserSocialAuth.objects.filter(provider='github')
+    for social_auth in usas:
+        sync_github.delay(social_auth.user)
+
+@task
+@transaction.commit_on_success
+def sync_github(user):
+    website = 'github'
+    user_social_auth = user.social_auth.get(provider=website)
+    github_username = user_social_auth.extra_data['login']
+    state, created = SyncState.objects.get_or_create(user=user, website=website, defaults={"state": 2})
+    if not created and state.state == 2: #: avoid duplicate syncronization
+        return
+    page = 1
+    list_name = _('Github starred project')
+    default_list, created = List.objects.get_or_create(name=list_name, user=user, defaults={"public": True})
+    while True:
+        resp = urllib2.urlopen('https://api.github.com/users/' + github_username + '/starred?page=' + str(page))
+        data = resp.read()
+        items = json.loads(data)
+        for item in items:
+            url = item['html_url']
+            desc = item['description']
+            language = item.get('language', '')
+            title = item['full_name']
+            try:
+                #: if one of the github project url is saved before, stop iterating and return.
+                Bookmark.objects.get(list=default_list, url=url, user=user)
+                return
+            except Bookmark.DoesNotExist:
+                bookmark = Bookmark(url=url, user=user, note=desc)
+                bookmark.domain = urlparse(url).netloc
+                bookmark.title = title
+                bookmark.list = default_list
+                if language:
+                    bookmark.tags = language.lower()
+                bookmark.save()
+        #: if less than 30, there will no more items, stop fetching data from Github
+        if len(items) < 30:
+            break
+        page += 1
+
+    if state.state != 1:
+        state.state = 1
+        state.save()
 
 @task
 def handle_imported_file(data, user, site):

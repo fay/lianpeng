@@ -117,6 +117,7 @@ MIDDLEWARE_CLASSES = [
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.google.GoogleOAuth2Backend',    
+    'social_auth.backends.contrib.github.GithubBackend',
     'social_auth.backends.contrib.weibo.WeiboBackend',    
     'django.contrib.auth.backends.ModelBackend', # default
     'guardian.backends.ObjectPermissionBackend',
@@ -135,6 +136,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.user.update_user_details'
 )
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
+GITHUB_EXTRA_DATA = [('email', 'email'), ('login', 'login')]
 
 ROOT_URLCONF = "lianpeng.urls"
 
@@ -240,8 +242,15 @@ TASTYPIE_ALLOW_MISSING_SLASH = True
 
 EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
 import djcelery
+from celery.schedules import crontab
 djcelery.setup_loader()
 BROKER_URL = 'amqp://USERNAME:PASSWORD@localhost:5672/lianpeng'
+CELERYBEAT_SCHEDULE = {
+    "runs-every-day": {
+        "task": "bookmark.tasks.sync",
+        "schedule": crontab(minute=0, hour=0),
+    },
+}
 
 EMAIL_HOST = ''#'localhost'
 EMAIL_HOST_PASSWORD = ""

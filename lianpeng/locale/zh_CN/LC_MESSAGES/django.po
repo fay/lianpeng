@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-05 16:38+0800\n"
+"POT-Creation-Date: 2013-08-12 16:09+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,55 +17,60 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 
-#: templates/_account_bar.html:6 templates/homepage.html:35
+#: templates/_account_bar.html:10 templates/homepage.html:35
 msgid "Explore"
 msgstr "探索发现"
 
-#: templates/_account_bar.html:9
+#: templates/_account_bar.html:13
 msgid "Tools"
 msgstr "工具"
 
-#: templates/_account_bar.html:22 templates/site_base.html:50
+#: templates/_account_bar.html:26 templates/site_base.html:51
 msgid "Feedback"
 msgstr "反馈"
 
-#: templates/_account_bar.html:23
+#: templates/_account_bar.html:27
 msgid "Help"
 msgstr "帮助"
 
-#: templates/_account_bar.html:24 templates/notifications/list.html:7
+#: templates/_account_bar.html:29 templates/notifications/list.html:3
+#: templates/notifications/list.html:8
 msgid "Notifications"
 msgstr "通知"
 
 #: templates/_account_bar.html:33
-msgid "My public page"
-msgstr "我的主页"
-
-#: templates/_account_bar.html:34
-msgid "Update my profile"
-msgstr ""
-
-#: templates/_account_bar.html:35
-msgid "Settings"
-msgstr "设置"
-
-#: templates/_account_bar.html:36
-msgid "Import"
-msgstr ""
-
-#: templates/_account_bar.html:39
-msgid "Admin"
+msgid "Invite"
 msgstr ""
 
 #: templates/_account_bar.html:41
-msgid "Log out"
+msgid "My public page"
+msgstr "我的主页"
+
+#: templates/_account_bar.html:42
+msgid "Update my profile"
 msgstr ""
 
-#: templates/_account_bar.html:45 templates/homepage.html:41
-msgid "Log in"
+#: templates/_account_bar.html:43
+msgid "Settings"
+msgstr "设置"
+
+#: templates/_account_bar.html:44
+msgid "Import"
 msgstr ""
 
 #: templates/_account_bar.html:47
+msgid "Admin"
+msgstr ""
+
+#: templates/_account_bar.html:49
+msgid "Log out"
+msgstr ""
+
+#: templates/_account_bar.html:53 templates/homepage.html:41
+msgid "Log in"
+msgstr ""
+
+#: templates/_account_bar.html:55
 msgid "Sign up"
 msgstr ""
 
@@ -101,39 +106,87 @@ msgstr ""
 msgid "Already has an account?"
 msgstr "已经有一个帐号？"
 
-#: templates/site_base.html:45
+#: templates/site_base.html:46
 msgid "now"
 msgstr "刚刚"
 
-#: templates/site_base.html:54
+#: templates/site_base.html:55
 msgid "Help us to make it better."
 msgstr "帮助我们变得更好"
 
-#: templates/site_base.html:57
+#: templates/site_base.html:58
 msgid "Thank for your feedback, we will deal with it carefully."
 msgstr "谢谢您的反馈，我们会认真对待您的建议。"
 
-#: templates/site_base.html:61
+#: templates/site_base.html:62
 msgid "Cancel"
 msgstr ""
 
-#: templates/site_base.html:62
+#: templates/site_base.html:63
 msgid "Confirm"
 msgstr ""
 
-#: templates/notifications/list.html:8
+#: templates/account/email/admin_invite_user.html:4
+msgid "Home"
+msgstr "首页"
+
+#: templates/account/email/admin_invite_user.html:4
+msgid "Invite user"
+msgstr "邀请用户"
+
+#: templates/account/email/admin_invite_user.html:8
+msgid ""
+"Invite a user given an e-mail address. The user will be e-mailed a signup "
+"code to create their account on this website."
+msgstr ""
+
+#: templates/account/email/failure.html:5
+#: templates/account/email/failure.html:9
+msgid "Incorrect Code"
+msgstr "无效的邀请码"
+
+#: templates/account/email/failure.html:12
+#, python-format
+msgid "The code <b>%(code)s</b> is incorrect."
+msgstr "您使用的邀请码<b>%(code)s</b>是无效的。"
+
+#: templates/account/email/failure.html:14
+msgid "You must specify a code."
+msgstr "您必须指定一个邀请码"
+
+#: templates/account/email/failure.html:19
+msgid "Try again:"
+msgstr "重试："
+
+#: templates/account/email/invite_user.txt:2
+msgid ""
+"\n"
+"You have been invited to join %(site_name)s (%(site_domain)s) by "
+"%(inviter)s. Your signup code is %(code)s. You can also click the link below "
+"directly to signup:\n"
+msgstr ""
+"\n"
+"您刚被好友%(inviter)s邀请加入%(site_name)s(%(site_domain)s)。您的邀请码"
+"是%(code)s，您可以直接点击下面的链接直接注册：\n"
+
+#: templates/account/email/invite_user_subject.txt:1
+msgid "[%(site_name)s] Invitation to join from friend."
+msgstr ""
+"[%(site_name)s] 好友邀请"
+
+#: templates/notifications/list.html:9
 msgid "All"
 msgstr ""
 
-#: templates/notifications/list.html:9
+#: templates/notifications/list.html:10
 msgid "Unread"
 msgstr "未读"
 
-#: templates/notifications/list.html:12
+#: templates/notifications/list.html:13
 msgid "Mark as all read "
 msgstr "全部标记为已读"
 
-#: templates/notifications/list.html:21
+#: templates/notifications/list.html:22
 msgid "No notifications at the moment"
 msgstr "目前尚无任何通知消息"
 
@@ -141,7 +194,7 @@ msgstr "目前尚无任何通知消息"
 msgid "Mark as read"
 msgstr "标记为已读"
 
-#: templates/notifications/notice.html:20 templates/notifications/notice.txt:3
+#: templates/notifications/notice.html:20
 msgid "ago"
 msgstr "前"
 

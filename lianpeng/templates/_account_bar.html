@@ -3,6 +3,7 @@
 {% load notifications_tags %}
 {% load gravatar %}
 {% load agon_tags %}
+{% load kaleo_tags %}
 
 <ul class="nav">
     <li>
@@ -29,6 +30,7 @@
             {% if unread_count %}<span class="badge badge-mini badge-success">{{ unread_count }}</span>{% endif %}
             </a>
         </li>
+        <li><a href="{% url invite_user %}">{% trans "Invite" %} {% invites_remaining user %}</a></li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle avatar-nav" data-toggle="dropdown">
                 <img class="avatar" alt="{{ user }}" src="{% gravatar_for_email user.email 32 %}&r=r" />

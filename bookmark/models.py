@@ -175,6 +175,7 @@ class SyncState(models.Model):
     user = models.ForeignKey(User)
     website = models.CharField(max_length=16)
     state = models.IntegerField(choices=((0, 'no sync'), (1, 'synced'), (2, 'syncing')))
+    list = models.ForeignKey(List, null=True)
 
     class Meta:
         unique_together = (("user", "website"), )

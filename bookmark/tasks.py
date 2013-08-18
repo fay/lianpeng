@@ -20,19 +20,26 @@ from social_auth.models import UserSocialAuth
 def sync():
     usas = UserSocialAuth.objects.filter(provider='github')
     for social_auth in usas:
-        sync_github.delay(social_auth.user)
+        states = user.syncstate_set.all()
+        for state in states:
+            if state.list:
+                _sync_github(social_auth.user, state.list, state)
 
 @task
 @transaction.commit_on_success
 def sync_github(user, list_name):
     website = 'github'
-    user_social_auth = user.social_auth.get(provider=website)
-    github_username = user_social_auth.extra_data['login']
     state, created = SyncState.objects.get_or_create(user=user, website=website, defaults={"state": 2})
     if not created and state.state == 2: #: avoid duplicate syncronization
         return
-    page = 1
     default_list, created = List.objects.get_or_create(name=list_name, user=user, defaults={"public": True})
+    _sync_github(user, default_list, state)
+
+def _sync_github(user, default_list, state):
+    website = 'github'
+    user_social_auth = user.social_auth.get(provider=website)
+    github_username = user_social_auth.extra_data['login']
+    page = 1
     while True:
         resp = urllib2.urlopen('https://api.github.com/users/' + github_username + '/starred?page=' + str(page))
         data = resp.read()
@@ -61,6 +68,7 @@ def sync_github(user, list_name):
 
     if state.state != 1:
         state.state = 1
+        state.list = default_list
         state.save()
 
 @task

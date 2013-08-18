@@ -183,6 +183,7 @@ INSTALLED_APPS = [
     "notifications",
     "pagination",
     "kaleo",
+    "south",
     
     # project
     "misc",

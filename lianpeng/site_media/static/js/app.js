@@ -1,83 +1,27 @@
-F = { 
-    fetch_title : function(url, callback) {
-        $.post('/harvest/pageinfo/', {url:url}, callback);
-    },
-    url_domain: function (url) {
-        var a = document.getElementById('url-template');
-        a.href = url;
-        var domain = a.hostname;
-        if (a.port && a.port != 80) {
-            domain += ":" + a.port;
-        };
-        return domain;
-    },
-    form2json: function(form)
-    {
-        var o = {};
-        var a = $(form).serializeArray();
-        
-        $.each(a, function() {
-            if (o[this.name] !== undefined) {
-                if (!o[this.name].push) {
-                    o[this.name] = [o[this.name]];
-                }
-                o[this.name].push(this.value || '');
-            } else {
-                o[this.name] = this.value || '';
-            }
-        });
-        return o;
-    },
-    show_paginator: function(view, display_max, callback) {
-        var self = view;
-        if (self.collection.total_count > self.collection.paginationConfig.ipp) {
-            self.$(".paginator").pagination({
-              total_pages: Math.ceil(self.collection.total_count / self.collection.paginationConfig.ipp),
-              current_page: self.collection.currentPage,
-              display_max:display_max,
-              callback: function(event, page) {
-                  callback();
-                  self.collection.loadPage(page);
-              }
-            }).show();
-        } else {
-            self.$(".paginator").hide();
-        }
-    }
-}
-$.fn.spin = function(opts) {
-  this.each(function() {
-    var $this = $(this),
-    data = $this.data();
-
-    if (data.spinner) {
-        data.spinner.stop();
-        delete data.spinner;
-    }
-    if (opts !== false) {
-        data.spinner = new Spinner($.extend({color: $this.css('color')}, opts)).spin(this);
-    }
-  });
-  return this;
-};
-var USER_URL = "/api/v1/user/" + USER_ID;
-var Bookmark = Backbone.Model.extend({
-    urlRoot: '/api/v1/bookmark/'
-});
-
-var BaseCollection = Backbone.Collection.extend({
-    parse: function(data) {
-        this.total_count = data.meta.total_count;
-        return data.objects;
-    }
-});
-var Comment = Backbone.Model.extend({
-    urlRoot: '/api/v1/comment/'
-});
+var window_height;
+var lists_view;
 var List = Backbone.Model.extend({
-    urlRoot: '/api/v1/list/'
+    urlRoot: '/api/v1/list/',
+    can_edit: function() {
+        var result = false;
+        if(this.get('user') == USER_URL) {
+            result = true;
+        }
+        var perms = this.get('perms');
+        if(perms) {
+            for (var i = 0; i < perms.length; i++) {
+                if ('can_edit' == perms[i]){
+                    result = true;
+                    break;
+                };
+            };
+        }
+        return result;
+    },
+    can_comment: function() {
+        return true;
+    }
 });
-
 var FilterList = List.extend({
     
 });
@@ -91,6 +35,16 @@ var Lists = BaseCollection.extend({
         });
     },
     baseUrl: '/api/v1/list/'
+});
+var SharedLists = Lists.extend({
+    baseUrl: '/api/v1/list/share/'
+});
+var ListInvitation = Backbone.Model.extend({
+    urlRoot: '/api/v1/listinvitation/'
+});
+var ListInvitations = BaseCollection.extend({
+    model: ListInvitation,
+    url: '/api/v1/listinvitation/'
 });
 var ListView = Backbone.View.extend({
     events : {
@@ -143,7 +97,7 @@ var ListView = Backbone.View.extend({
     render: function() {
         var list = this.model;
         var template = $('#list-bookmarks-tmpl').html();
-        var html = _.template(template, {list: list.toJSON()});
+        var html = _.template(template, {list: list.toJSON(), 'can_edit': list.can_edit()});
         $('#bookmarks').html(html);
         $('#bookmarks').spin();
 
@@ -186,24 +140,85 @@ var SearchView = ListView.extend({
     }
 });
 var TagView = SearchView.extend({});
+var ListInvitationView = Backbone.View.extend({
+    events: {
+        'change select.permission' : 'change_invitee_permission',
+        'click .delete' : 'remove_invitee_permission',
+    },
+    initialize: function() {
+    },
+    remove_invitee_permission: function(e) {
+        this.model.destroy();
+        this.remove();
+    },
+    change_invitee_permission: function(e) {
+        var select = $(e.currentTarget);
+        var new_permission = select.val();
+        this.model.save({permission: new_permission});
+    }
+});
 var ListSettingView = Backbone.View.extend({
     events: {
         'click .delete-list': "delete_list",
+        'click .invite-list': "show_invite",
         'click .list-edit-modal .save' : 'update',
+        'click .invite-list-modal .invite' : 'invite',
+        'submit .invite-list-modal form' : 'invite',
         'submit .list-edit-modal form' : 'update',
         'click .edit-list': "edit"
     },
-    change_name: function() {
-        this.$('.list-name').text(this.model.get('name'));
-    },
     initialize: function() {
-        this.model.bind('change', this.change_name, this);
+        this.model.bind('change', this.render, this);
+        this.render();
+        this.list_invitations = new ListInvitations();
+        this.list_invitations.bind("reset", this.render_invitees, this);
+        this.list_invitations.bind("add", this.append_invitee, this);
+    },
+    render: function() {
+        var template = $('#list-header-tmpl').html();
+        var html = _.template(template, {list:this.model.toJSON(), can_edit: this.model.can_edit()});
+        this.$el.html(html);
     },
     delete_list: function() {
         var result = confirm("确认删除？"); 
         if (result) {
             this.model.destroy();
         }
+    },
+    render_invitees: function(data) {
+        this.$('.invite-list-modal #invitee-list').html('');
+        for (var i = 0; i < data.models.length; i++) {
+            this.append_invitee(data.models[i]);
+        };
+    },
+    append_invitee: function(invitee) {
+        var template = $('#invitee-list-tmpl').html();
+        var html = $(_.template(template, {invitees: [invitee.toJSON()]}));
+        this.$('.invite-list-modal #invitee-list').append(html);
+        var list_invitation_view = new ListInvitationView({model: invitee, el: html});
+    },
+    show_invite: function() {
+        this.list_invitations.fetch({url: this.list_invitations.url + "?list=" + this.model.id});
+        this.$('.invite-list-modal').modal(); 
+    },
+    invite: function() {
+        var form = this.$('.invite-list-modal form');
+        var data = F.form2json(form);
+        var invitee_string = data.invitee;
+        var invitees = invitee_string.split(',');
+        for (var i = 0; i < invitees.length; i++) {
+            var invitee = $.trim(invitees[i]);
+            if (invitee) {
+                data.invitee = invitee;
+                this.list_invitations.create(data, {wait:true, success: function(){
+                    form.find('.invited').hide();
+                    form.find('input[name="invitee"]').val(""); 
+                }, error: function(){
+                    form.find('.invited').show();
+                }});
+            }
+        };
+        return false;
     },
     edit: function() {
         this.$('.list-edit-modal').modal();
@@ -233,6 +248,7 @@ var ListsView = Backbone.View.extend({
         this.collection.bind('add', this.append_new_list, this);
         this.collection.bind('destroy', function(){this.resize_height(-26);}, this);// resize sidebar list height after a list is deleted
         this.collection.bind("reset", this.render, this);
+        this.collection.bind("reset", this.user_lists_loaded, this);
         this.collection.fetch();
 
         this.bookmarks = this.options['bookmarks'];
@@ -251,11 +267,14 @@ var ListsView = Backbone.View.extend({
         this.current_list_view = list_view;
         this.current_list_view.render();
     },
-    render: function() {
+    render: function(data, resp, target) {
         var self = this;
-        this.$('ul.lists-ul').html('');
-        $.each(this.collection.models, function(index, list){
-            self.append_new_list(list);
+        if(!target) {
+            target = 'ul.lists-ul';
+        }
+        //this.$(target).html('');
+        $.each(data.models, function(index, list){
+            self.append_new_list(list, data, null, target);
         });
         if (!this.$('.jquery-bootstrap-pagination').html()) {
             F.show_paginator(self, 4, function(){
@@ -276,15 +295,24 @@ var ListsView = Backbone.View.extend({
         $('.user-lists').css('height', user_lists_height);
 
     },
-    append_new_list: function(list) {
+    append_new_list: function(list, collection, resp, target) {
         var template = $('#list-tmpl').html();
         var html = _.template(template, {lists: [list.toJSON()]});
-        var target = this.$('ul.lists-ul');
-        var kind = list.get('kind');
-        if (kind != 2) {
-            target = this.$('.sys-lists .nav');// if it's sys list, append it to sys ul
+        if (!target) {
+            target = 'ul.lists-ul';
         }
+        var kind = list.get('kind');
+        if (kind == 0) {
+            target = '.sys-lists .nav';// if it's sys list, append it to sys ul
+        } else if(kind == 3){
+            target = '.shared-lists-ul';
+        } else {
+            this.$('.user-lists-sep').show();
+        }
+        this.$(target + '-sep').show();
+        target = this.$(target);
         target.append(html);
+        target.show();
         var self = this;
         var list_view = new ListView({model: list, el:'#list-' + list.id});
         this.views[list.id] = list_view;
@@ -317,330 +345,80 @@ var ListsView = Backbone.View.extend({
         $('.new-list-button').show();
         $('.new-list-form').hide();
         form.find('input.list-name').val("");
-        this.resize_height(28);
+        var height = 28;
+        if(this.collection.size() <= 2) {
+            height = 48;
+        }
+        this.resize_height(height);
         return false;
     }
 });
 
-var Bookmarks = BaseCollection.extend({
-    model: Bookmark,
-    list: null,
-    initialize: function(options){
-        
-        if (options && options.list) {
-            this.list = options.list;
-        }
-        Backbone.Pagination.enable(this, {
-            page_attr: "offset",
-            ipp: 20,
-            ipp_attr: "limit"
-        });
-    },
-    baseUrl: function(){
-        
-        if (this.list) {
-            if (typeof(this.list.id) == 'number') {
-                return this.list.url() + "/bookmarks/"
-            } else {
-                var q = "";
-                if (this.list.id == 'search') {
-                    q = "?q=" + this.list.get('query');
-                } else if (this.list.id == 'tag') {
-                    q = "?tag=" + this.list.get('tag');
-                } else if(this.list.id == 'feed') {
-                    q = "?feed=t"
-                }
-                return '/api/v1/bookmark/' + q;
-            }
-        } else {
-            return '/api/v1/bookmark/';
-        }
-    }
-});
-var BookmarkView = Backbone.View.extend({
-    initialize: function(){
-        this.$el = $('#bookmark-' + this.model.id);
-        this.events = {
-            "click .edit-action": "edit",
-            "click .share-action": "share",
-            "click .save-action": "collect",
-            "click .comment-box .publish": "comment",
-            "click .shares .douban": "share_douban",
-            "hover": "show_actions",
-            "hover .move": "enable_drag",
-            "mouseleave .move": "disable_drag",
-            "click .remove-action": "remove"
-        }
-        this.list = this.options['list'];
-        this.listenTo(this.model, 'destroy', this.remove_bookmark_html);
-        this.listenTo(this.model, 'change', this.append_bookmark_html);
-    },
-    comment: function() {
-        
-    },
-    collect: function() {
-        this.trigger("new_bookmark", this.model.toJSON(), '', '#bookmark-' + this.model.id + ' .edit-bookmark-box');
-    },
-    share: function(e) {
-        $(e.currentTarget).dropdown('toggle')
-    },
-    share_douban: function() {
-        var s = this.model.get('note');
-        var title = this.model.get('title');
-        var url = this.model.get('url');
-        var d=document,e=encodeURIComponent, 
-        r='http://www.douban.com/recommend/?url='+e(url)+'&title='+e(title)+'&sel='+e(s)+'&v=1',
-        x=function(){if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330'))location.href=r+'&r=1'};
-        if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}; 
-    },
-    enable_drag:function() {
-        this.$el.draggable({
-            helper: "clone",
-        });
-        this.$el.draggable("enable");
-    },
-    disable_drag: function() {
-        this.$el.draggable( "disable" )
-    },
-    show_actions: function() {
-        this.$('.move').toggle();
-        this.$('.actions').toggle();
-    },
-    remove_bookmark_html: function() {
-        this.$el.remove();
-    },
-    remove : function(){
-        this.model.destroy();
-    },
-    append_bookmark_html: function(bookmark) {
-        var template = $('#bookmarks-tmpl').html();
-        var bookmark = this.model;
-        var html = _.template(template, {bookmarks: [bookmark.toJSON()], list: this.list})
-        this.$el.html($(html).html());
-    },
-    edit: function(){
-        var self = this;
-        var template = $('#bookmark-form-tmpl').html();
-        var html = _.template(template, {bookmark: self.model.toJSON(), list: this.list.toJSON()});
-        this.$('.bookmark-title-box').hide();
-        this.$('.edit-bookmark-box').html(html).show();
 
-        self.$('.edit-bookmark-box form').submit(function(e){
-            
-            self.model.save(F.form2json(this));
-            self.$('.bookmark-title-box').show();
-            return false;
-        });
-        self.$('.edit-bookmark-box form .cancel').click(function(){
-            self.$('.edit-bookmark-box').hide(); 
-            self.$('.bookmark-title-box').show();
-        });
-    }
-});
-var BookmarksView = Backbone.View.extend({
-    events: {
-        "click .tag": "list_by_tag",
-        "submit .add-bookmark-form": "add_bookmark"
-    },
-    list_by_tag: function(e) {
-        var tag = $(e.currentTarget).text();
-        router.navigate(USER_NAME + '/tag/' + tag, {trigger:true});
-    },
-    initialize: function() {
-        var self = this;
-        self.listenTo(self.collection, "add", function(data){
-            self.create_bookmark_view(data, true);
-        });
-        self.listenTo(self.collection, "reset", self.create_bookmarks_views);
-        this.list = this.options['list'];
-    },
-    create_bookmarks_views: function(data) {
-        var bookmarks = data.models;
-        var self = this;
-        self.render();
-        self.render_pagination();
-        $.each(bookmarks, function(index, bookmark){
-            self.create_bookmark_view(bookmark); 
-        });
-    },
-    create_bookmark_view: function(bookmark, new_bookmark) {
-        if (new_bookmark) {
-            this.append_bookmark_html(bookmark);
-        };
-        var bookmark_view = new BookmarkView({model:bookmark, list: this.list});
-        this.listenTo(bookmark_view, "new_bookmark", this.show_add_bookmark_form);
-    },
-    add_bookmark: function(e) {
-        var url = $(e.currentTarget).find('.url').val();
-        $(e.currentTarget).spin();
-        $(e.currentTarget).find('input').attr('disabled', 'on');
-        var self = this;
+$(document).ready(function(){ 
+    lists_view = new ListsView();
+    var all_list = new List({id:"all"});
+    var all_list_view = new FilterView({model: all_list, el: "#all-list", fake_list: true});
+    var feed_list = new List({id:"feed"});
+    var feed_list_view = new FilterView({model: feed_list, el: "#feed", fake_list: true});
+    var try_times = 0;
 
-        // fetch web page info
-        F.fetch_title(url, function(data) {
-            $(e.currentTarget).spin(false);
-            data = $.parseJSON(data);
-            if (data) {
-                var domain = F.url_domain(url); 
-                data.url = url;
-                data['domain'] = domain;
-                data['tags'] = '';
-                self.show_add_bookmark_form(data, e.currentTarget);
-            };
-        });
-        return false;
-    },
-    show_add_bookmark_form: function(data, add_form, target) {
-                var bookmark_dict = {url: data.url,
-                    user: USER_URL,
-                    title: data.title,
-                    domain: data.domain,
-                    note: data.note,
-                    tags: data.tags
-                };
-                var url = data.url;
-                var self = this;
-                if(!target) {
-                    target = '.confirm-add-bookmark';
-                }
-                var template = $('#bookmark-form-tmpl').html();
-                var html = _.template(template, {bookmark: bookmark_dict, list:this.list.toJSON()});
-                self.$(target).html(html).show();
+    var AppRouter = Backbone.Router.extend({
+        routes: {
+            '': "index",
+            ':username/list/all': "index",
+            ':username/list/feed': "feed",
+            ':username/list/:id': "list",
+            ':username/tag/:tag': "tag",
+            ':username/search/:query': "search"
+        },
 
-                // check if existed
-                self.$(target + ' .existed-bookmark .spinner').spin({length:0, radius:6, width:2});
-                var existed_bookmarks = new Bookmarks();
-                existed_bookmarks.bind("reset", function(data){
-                    self.$(target + ' .existed-bookmark .spinner').spin(false);
-                    
-                    if (data.total_count > 0) {
-                        var existed_bookmark = data.models[0]
-                        self.$(target + ' .existed-bookmark').addClass('alert');
-                        self.$(target + ' .existed-bookmark .text').show();
-                        self.$(target + ' .existed-bookmark .edit').click(function(){
-                            if (!self.collection.get(existed_bookmark.id)) {
-                                self.collection.push(existed_bookmark );
-                            }
-                            self.$(target + ' .existed-bookmark .edit').attr('href', '#bookmark-' + existed_bookmark.id);
-                            self.$('.list #bookmark-' + existed_bookmark.id + ' .bookmark-title-box .actions .edit-action').trigger('click');
-                            self.recover_submit_form(target, add_form);
-                        });
-                    } else {
-                        self.$(target + ' .existed-bookmark').hide();
-                    }
-                });
-                existed_bookmarks.fetch({url:existed_bookmarks.url() + "&url=" + url});
-
-                // create new bookmark
-                self.$(target + ' form').submit(function(){
-                    var new_bookmark = F.form2json(this);
-                    
-                    if (typeof(list_id) == 'number') {
-                        new_bookmark.list = self.list.url();
-                    }
-                    self.collection.create(new_bookmark, {wait:true, success:function(data){
-                    }});
-                    self.recover_submit_form(target, add_form);
-                    return false;
-                });
-                // hide confirm form and enable add-bookmark form
-                self.$(target + ' form .cancel').click(function(){
-                    self.recover_submit_form(target, add_form);
-                });
-    },
-    recover_submit_form: function(target, form) {
-        $(target).hide(); 
-        $(form).find('input').removeAttr('disabled');
-        $(form).find('input.url').val("");
-    },
-    append_bookmark_html: function(bookmark) {
-        if (this.list.id == 'feed') {
-            return false; // do not add bookmark to feed list
-        }
-        var template = $('#bookmarks-tmpl').html();
-        var html = _.template(template, {bookmarks: [bookmark.toJSON()], list: this.list.toJSON()});
-        
-        this.$('.no-bookmarks').hide();
-        this.$('.list').prepend(html);
-    },
-    render_pagination: function() {
-        if (!this.$('.jquery-bootstrap-pagination').html()) {
-            var self = this;
-            F.show_paginator(self, 8, function(){
-                $(self.$('.list').children()[0]).spin();
-            }); 
-        }
-        //this.$('.jquery-bootstrap-pagination').addClass("pagination-right");
-    },
-    render: function() {
-        var self = this;
-        if (this.collection.size() > 0) {
-            var template = $('#bookmarks-tmpl').html();
-            var html = _.template(template, {bookmarks: this.collection.toJSON(), list: self.list.toJSON()});
-            this.$('.list').html(html);
-        } else {
-            this.$('.list .no-bookmarks').show();
-        }
-    }
-});
-
-
-var lists_view = new ListsView();
-var all_list = new List({id:"all"});
-var all_list_view = new FilterView({model: all_list, el: "#all-list", fake_list: true});
-var feed_list = new List({id:"feed"});
-var feed_list_view = new FilterView({model: feed_list, el: "#feed", fake_list: true});
-
-var AppRouter = Backbone.Router.extend({
-    routes: {
-        '': "index",
-        ':username/list/all': "index",
-        ':username/list/feed': "feed",
-        ':username/list/:id': "list",
-        ':username/tag/:tag': "tag",
-        ':username/search/:query': "search"
-    },
-
-    index: function(username) {
-        lists_view.render_current_list_view(all_list_view);
-    },
-    feed: function(username) {
-        lists_view.render_current_list_view(feed_list_view);
-    },
-    list: function(username, id) {
-        var list_view = lists_view.views[id];
-        var list_id = id;
-        if (list_view) {
-            list_view.render();
-        } else {
-            var list = new List({id: list_id});
-            var list_view = new ListView({model:list});
-            list.bind("change", function(list){ 
+        index: function(username) {
+            $('body').animate({scrollTop: 0});
+            lists_view.render_current_list_view(all_list_view);
+        },
+        feed: function(username) {
+            $('body').animate({scrollTop: 0});
+            lists_view.render_current_list_view(feed_list_view);
+        },
+        list: function(username, id) {
+            $('body').animate({scrollTop: 0});
+            var list_view = lists_view.views[id];
+            var list_id = id;
+            if (list_view) {
                 list_view.render();
-            });
-            list.fetch();
+            } else {
+                if (try_times <= 8) {
+                    setTimeout(function(){router.list(username, id)}, 400);
+                    try_times ++;
+                }
+            }
+        },
+        search: function(username, query) {
+            $('body').animate({scrollTop: 0});
+            var list = new List({id:"search", query:query, name:TEXTS['search_title'] + decodeURI(query)});
+            var list_view = new SearchView({model: list, el: "#no-such-dom", fake_list: true});
+            lists_view.render_current_list_view(list_view);
+        },
+        tag: function(username, tag) {
+            $('body').animate({scrollTop: 0});
+            var list = new List({id:"tag", tag:tag, name:TEXTS['tag_title'] + tag});
+            var list_view = new TagView({model: list, el: "#no-such-dom", fake_list: true});
+            lists_view.render_current_list_view(list_view);
         }
-    },
-    search: function(username, query) {
-        var list = new List({id:"search", query:query, name:TEXTS['search_title'] + query});
-        var list_view = new SearchView({model: list, el: "#no-such-dom", fake_list: true});
-        lists_view.render_current_list_view(list_view);
-    },
-    tag: function(username, tag) {
-        var list = new List({id:"tag", tag:tag, name:TEXTS['tag_title'] + tag});
-        var list_view = new TagView({model: list, el: "#no-such-dom", fake_list: true});
-        lists_view.render_current_list_view(list_view);
-    }
-});
-var router = new AppRouter();
-var window_height = $(window).height();
-$('#bookmarks').css('min-height', window_height);
-$('#lists').css('min-height', window_height);
+    });
+    router = new AppRouter();
+    window_height = $(window).height();
+    $('#bookmarks').css('min-height', window_height);
+    $('#lists').css('min-height', window_height);
 
-sidebarwidth = $(".sidebar-width").css('width');
-bodypaddingtop = $(".navbar-fixed-top").css('height');
-$('.sidebar-nav-fixed').css('width', sidebarwidth);
-contentmargin = parseInt(sidebarwidth)
-$('.span-fixed-sidebar').css('marginLeft', contentmargin);
-$('.span-fixed-sidebar').css('paddingLeft', 60);
-Backbone.history.start({pushState: true});
+    sidebarwidth = $(".sidebar-width").css('width');
+    bodypaddingtop = $(".navbar-fixed-top").css('height');
+    $('.sidebar-nav-fixed').css('width', sidebarwidth);
+    contentmargin = parseInt(sidebarwidth)
+    $('.span-fixed-sidebar').css('marginLeft', contentmargin);
+    $('.span-fixed-sidebar').css('paddingLeft', 60);
+
+    Backbone.history.start({pushState: true});
+
+});

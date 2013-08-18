@@ -39,3 +39,4 @@ django-notifications-hq==0.6.0
 django-pagination==1.0.7
 kaleo==1.1
 django-gravatar==0.1.0
+south==0.8.2

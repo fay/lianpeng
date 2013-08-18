@@ -25,16 +25,12 @@
                     <a href="?filter=stream"><i class="icon icon-bookmark"></i> {% trans "Recent bookmarked" %}</a>
                 </li>
             </ul>
-            <div class="row">
                     {% if bookmarks %}
-                    <div class="bookmarks span10">
                         {% include 'bookmark/includes/bookmarks.html' %}
-                    </div>
                     {% endif %}
                     {% if lists %}
                         {% include 'bookmark/includes/lists.html' %}
                     {% endif %}
-            </div>
         </div>
     </div>
     {% include 'bookmark/js/bookmark_form.html' %}

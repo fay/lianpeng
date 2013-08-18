@@ -20,7 +20,7 @@ from social_auth.models import UserSocialAuth
 def sync():
     usas = UserSocialAuth.objects.filter(provider='github')
     for social_auth in usas:
-        states = user.syncstate_set.all()
+        states = social_auth.user.syncstate_set.all()
         for state in states:
             if state.list:
                 _sync_github(social_auth.user, state.list, state)

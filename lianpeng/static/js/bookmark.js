@@ -342,5 +342,6 @@ var BookmarksView = Backbone.View.extend({
         } else {
             this.$('.list .no-bookmarks').show();
         }
+        $('#bookmarks .list-wrapper').css('min-height', window_height - 128);
     }
 });

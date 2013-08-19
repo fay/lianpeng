@@ -285,7 +285,7 @@ var ListsView = Backbone.View.extend({
     },
     resize_height: function(height) {
         var user_lists_height = $('.user-lists').height();
-        var user_lists_max_height = window_height - 320;
+        var user_lists_max_height = window_height - 128;
         if (user_lists_max_height < user_lists_height) {
             user_lists_height = user_lists_max_height;
         }
@@ -408,7 +408,7 @@ $(document).ready(function(){
         }
     });
     router = new AppRouter();
-    window_height = $(window).height();
+    window_height = $(window).height() - $('.navbar').height() - $('footer').height() - 88;
     $('#bookmarks').css('min-height', window_height);
     $('#lists').css('min-height', window_height);
 

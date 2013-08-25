@@ -1,5 +1,4 @@
 @import "bootstrap.less";
-@import "responsive.less";
 //@import "../flat-ui/less/flat-ui.less";
 @orange: #f47c39;
 @orangeHighlight: spin(@orange, 5%);
@@ -12,9 +11,15 @@
 @formActionsBackground: @white;
 @heroUnitBackground: @white;
 body {
-    margin-top:0px;
+    padding-top:60px;
     /* background: url(../img/bg-noise.gif);*/
-    background:#F8F8F3;
+    background:#fafafa;
+    font-family: 'Microsoft Yahei', "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color:#3b3b3b;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-weight: normal;
 }
 .hero-unit {
     border:1px solid #eee;
@@ -73,7 +78,6 @@ a {
     border-bottom-color: #bd4a0a;
     border-bottom-width: 3px;
 }
-
 .navbar-fixed-top {
     .navbar-inner {
         border-top: 4px @green solid;
@@ -97,14 +101,64 @@ a {
 }
 .sidebar-nav-fixed {
     position:fixed;
+    background:#333;
+    color:white;
+    height:100%;
+    width:185px;
+    padding:10px;
+    a {
+        color:#dee1e7;
+    }
+    left:0;
+    hr {
+        border-bottom:none;
+        border-top:none;
+    }
+    a.brand {
+        font-size:18px;
+    }
+    .brand-menu li {
+        padding:0 4px;
+    }
+    .sidebar-menu li {
+        padding:0px 0;
+        a {
+            padding:8px;
+            font-size:16px;
+            display:block;
+            &:hover {
+                background-color:#222;
+            }
+            & i {
+            }
+        }
+    }
 }
 .sidebar-nav-fixed  .signature, .bookmarks #lists, #profile .tab-pane .signature, .bookmark-detail .signature {
     overflow:hidden;
     white-space:nowrap;
     display:block;
 }
-#bookmarks {
+.scrollable {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+.scrollable:hover {
+    overflow-y: auto;
+}
+body.bookmark-app {
+    padding-top:0;
+}
+#user-home #bookmarks {
     margin-top:10px;
+    position:fixed;
+    right:15px;
+    .add-bookmark-form-box {
+        input.url {
+            height:32px;
+            line-height: 16px;
+        }
+    }
     .list-header {
         h2 {
             margin:0;
@@ -122,16 +176,11 @@ a {
         }
     }
 
-}
-#user-home #bookmarks {
-    .add-bookmark-form-box {
-        input.url {
-            height:32px;
-            line-height: 16px;
-        }
+    .pagination-hr {
+        border:none;
+        @shadow: 0 0 6px lighten(@green, 1%);
+        .box-shadow(0 0 0 rgba(0,0,0,0));
     }
-}
-#bookmarks {
     .paginator {
         .pagination {
             margin:0;
@@ -140,14 +189,19 @@ a {
     .bookmarks .list-wrapper {
         position: relative;
         height: 100%;
-        overflow-x: hidden;
         .list {
             position:absolute;
+            .bookmark-entry {
+                margin-bottom:15px;
+            }
+        }
+        hr {
+            margin-top:0;
         }
     }
 }
 
-.bookmarks .list, #explore .bookmarks, .bookmark-detail, #profile #bookmarks {
+.bookmarks .list, #explore .bookmarks-box, .bookmark-detail, #profile #bookmarks {
     hr {
         margin:15px 0;
     }
@@ -166,8 +220,7 @@ a {
 
         .actions {
             ul.well-small {
-                padding:0 8px;
-                padding-right:12px;
+                padding:0 12px;
                 li {
                     padding:5px;
                 }
@@ -177,18 +230,21 @@ a {
             }
             position: absolute;
             right: 0px;
-            width:200px;
+            width:150px;
             z-index:20;
+            .dropdown-menu {
+                right:0;
+                left:auto;
+            }
         }
         a.bookmark-title {
-            color: @grayDarker;
             &:hover {
                 color: @green;
             }
             overflow:hidden;
             white-space:nowrap;
             font-weight:normal;
-            color:#444;
+            color: @gray;
             font-size:17.5px;
             display:block;
         }
@@ -200,7 +256,7 @@ a {
         position:relative;
         .move {
             position:absolute;
-            top:15px;
+            top:0px;
         }
         blockquote {
             margin-bottom:0;
@@ -252,6 +308,14 @@ a {
         margin-top:8px;
     }
 }
+#user-home #lists {
+    position: fixed;
+    height: 100%;
+    left: 180px;
+    background: #eff0f2;
+    padding:10px;
+
+}
 #lists {
     .nav {
         margin-bottom:0;
@@ -273,10 +337,10 @@ a {
       text-shadow:none;
     }
     .nav > li > a:hover {
-      border-left:4px solid #888;
+        border-left:4px solid #888;
+        background:#e8e8e8;
     }
     .user-lists, .sys-lists {
-        overflow:auto;
         .list-name {
             .row-fluid [class*="span"] {
                 min-height:1px;

@@ -78,7 +78,7 @@ var BookmarkView = Backbone.View.extend({
         this.listenTo(this.model, 'destroy', this.remove_bookmark_html);
         this.listenTo(this.model, 'change', this.append_bookmark_html);
         this.comments_view = new CommentsView({el:'#bookmark-' + this.model.id + " .comments-box", bookmark:this.model});
-        this.$('.actions li').tooltip();
+        this.$('.actions li').tooltip({placement:'bottom', animation:false, delay: { show: 0, hide: 0 }});
     },
     show_comment_box: function() {
         if (this.list.can_comment()) {
@@ -329,6 +329,7 @@ var BookmarksView = Backbone.View.extend({
             var self = this;
             F.show_paginator(self, 8, function(){
                 $(self.$('.list').children()[0]).spin();
+                $('.list-wrapper').animate({scrollTop: 0});
             }); 
         }
         //this.$('.jquery-bootstrap-pagination').addClass("pagination-right");
@@ -342,7 +343,7 @@ var BookmarksView = Backbone.View.extend({
         } else {
             this.$('.list .no-bookmarks').show();
         }
-        var offset = 80;
+        var offset = 50;
         if (this.collection.size() < 20) {
             offset -= 38;
         }

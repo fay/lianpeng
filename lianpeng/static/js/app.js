@@ -199,7 +199,7 @@ var ListSettingView = Backbone.View.extend({
     },
     show_invite: function() {
         this.list_invitations.fetch({url: this.list_invitations.url + "?list=" + this.model.id});
-        this.$('.invite-list-modal').modal(); 
+        this.$('.invite-list-modal').modal({backdrop:false}); 
     },
     invite: function() {
         var form = this.$('.invite-list-modal form');
@@ -221,7 +221,7 @@ var ListSettingView = Backbone.View.extend({
         return false;
     },
     edit: function() {
-        this.$('.list-edit-modal').modal();
+        this.$('.list-edit-modal').modal({backdrop:false});
     },
     update: function() {
         this.$('.list-edit-modal').modal("hide");
@@ -408,16 +408,16 @@ $(document).ready(function(){
         }
     });
     router = new AppRouter();
-    window_height = $(window).height() - $('.navbar').height() - $('footer').height() - 88;
+    window_height = $(window).height() - 20;
     $('#bookmarks').css('min-height', window_height);
     $('#lists').css('min-height', window_height);
 
-    sidebarwidth = $(".sidebar-width").css('width');
+    //sidebarwidth = $(".sidebar-width").css('width');
     bodypaddingtop = $(".navbar-fixed-top").css('height');
-    $('.sidebar-nav-fixed').css('width', sidebarwidth);
-    contentmargin = parseInt(sidebarwidth)
-    $('.span-fixed-sidebar').css('marginLeft', contentmargin);
-    $('.span-fixed-sidebar').css('paddingLeft', 60);
+    //$('.sidebar-nav-fixed').css('width', sidebarwidth);
+    //contentmargin = parseInt(sidebarwidth)
+    //$('.span-fixed-sidebar').css('marginLeft', contentmargin);
+    //$('.span-fixed-sidebar').css('paddingLeft', 60);
 
     Backbone.history.start({pushState: true});
 

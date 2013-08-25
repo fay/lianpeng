@@ -5,6 +5,11 @@
 {% load agon_tags %}
 
 {% block head_title %}{{ user.username }}{% endblock %}
+{% block topbar_base %}
+{% endblock %}
+{% block body_class %}
+bookmark-app
+{% endblock %}
 {% block extra_style %}
 <!-- <link rel="stylesheet" href="{{ STATIC_URL }}css/flat-ui.css" type="text/css" media="screen" charset="utf-8"> -->
 {% endblock %}
@@ -12,21 +17,44 @@
      <div class="row-fluid" id="user-home">
         <div class="span2 sidebar-width">
             <div class="sidebar-nav-fixed">
+                <hr>
                 <div class="row-fluid">
                     <div class="span4">
+                        <a class="brand" href="/"><big>{{ SITE_NAME }}</big></a>
+                    </div>
+                    <div class="span8">
+                        <ul class="inline brand-menu">
+                            <li><a target="_blank" href="{% url help %}" data-toggle="modal"><i class="icon-question-sign"></i> {% trans "Help" %}</a></li>
+                            <li><a href="{% url account_logout %}"><i class="icon-off"></i> {% trans "Log out" %}</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+                <div class="row-fluid">
+                    <div class="span5">
                         <a href="{% url bookmark_profile user %}">
                             <img class="avatar" alt="{{ user }}" src="{% gravatar_for_email user.email 64 %}&r=r" />
                         </a>
                     </div>
-                    <div class="span8">
+                    <div class="span7">
                         <a href="{% url bookmark_profile user %}">
                             <h4>{{ user }}</h4>
                         </a>
-                        <span><b class="text-warning">{% points_for_object user %}</b> karma</span>
+                        <span><b class="text-success">{% points_for_object user %}</b> karma</span>
                     </div>
                 </div>
-                <hr>
-                <hr class="shared-lists-ul-sep hide">
+                <hr class="sidebar-hr">
+                <ul class="unstyled sidebar-menu">
+                    <li><a target="_blank" href="{% url bookmark_profile user.username %}"><i class="icon-home"></i> {% trans "My public page" %}</a></li>
+                    <li><a target="_blank" href="{% url account_settings %}"><i class="icon-cog"></i> {% trans "Settings" %}</a></li>
+                    <li><a target="_blank" href="{% url bookmark_sync %}"><i class="icon-refresh"></i> {% trans "Sync" %}</a></li>
+                    <li><a target="_blank" href="{% url bookmark_import %}"><i class="icon-signin"></i> {% trans "Import" %}</a></li>
+                    <li class="divider"></li>
+                    {% if user.is_staff %}
+                    <li><a target="_blank" href="/admin/"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
+                    {% endif %}
+                    <li><a target="_blank" href="#feedback" data-toggle="modal"><i class="icon-comment"></i> {% trans "Feedback" %}</a></li>
+                </ul>
             </div>
         </div>
         <div class="span3" id="lists">
@@ -47,7 +75,7 @@
                         </li>
                     </ul>
                 </div>
-                <div class="user-lists">
+                <div class="user-lists scrollable">
                     <ul class="nav shared-lists-ul hide">
                         <li class="nav-header">{% trans "Shared Lists" %}</li>
                     </ul>
@@ -91,7 +119,7 @@
                     <div class="span12 hide confirm-add-bookmark">
                     </div>
                 </div>
-                <div class="row-fluid list-wrapper">
+                <div class="row-fluid scrollable list-wrapper">
                     <div class="span12 list">
                         <div class="empty-box hide no-bookmarks">
                             <p>
@@ -102,7 +130,7 @@
                         </div>
                     </div>
                 </div>
-                <hr>
+                <hr class="pagination-hr">
                 <div class="row-fluid">
                     <div class="span12 paginator">
                     </div>
@@ -250,8 +278,8 @@
                                                     <%- bookmark.title %></a>
                                             </div>
                                         </div>
-                                        <div class="span2 hide actions">
-                                            <ul class="pull-right inline unstyled well-small well">
+                                        <div class="hide actions">
+                                            <ul class="inline unstyled well-small well">
                                                 <li data-toggle="tooltip" title="{% trans "Read mode" %}">
                                                     <a href="javascript:;" class="icon-eye-open preview-action"></a>
                                                 </li>
@@ -413,5 +441,5 @@
 </script>
 {% compressed_js 'main' %}
 {% endblock %}
-{% block footer %}
+{% block footer_base %}
 {% endblock%}

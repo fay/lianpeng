@@ -38,7 +38,7 @@ RESERVED_USERNAMES = "about access account accounts add address adm admin admini
                      "win ww www www1 www2 www3 www4 www5 www6 www7 wwww wws wwws web webmail " + "website websites webmaster workshop " \
                      "xxx xpg " + "you yourname yourusername yoursite yourdomain " \
                      "weibo django site_media bookmark bookmarks shuqian share harvest " \
-                     "love comment comments room tea explore discover reader read import tag tags"\
+                     "love comment comments room tea explore discover reader read import tag tags sync"\
 
 class ImportForm(forms.Form):
     site = forms.ChoiceField(choices=(("delicious", "Delicious"), ('google', "Google Bookmarks"), ("chrome", _("Chrome Browser Bookmarks")), ("kippt", "Kippt")), label=_("Choose Site you want to import from"))

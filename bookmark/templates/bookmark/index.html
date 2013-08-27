@@ -3,6 +3,8 @@
 {% load compressed %}
 {% load gravatar %}
 {% load agon_tags %}
+{% load kaleo_tags %}
+{% load notifications_tags %}
 
 {% block head_title %}{{ user.username }}{% endblock %}
 {% block topbar_base %}
@@ -44,6 +46,17 @@ bookmark-app
                 </div>
                 <hr class="sidebar-hr">
                 <ul class="unstyled sidebar-menu">
+                    <li>
+                        <a href="{% url notifications:mark_all_as_read %}">
+                            <i class="icon-bell-alt"></i>
+                        {% trans "Notifications" %} 
+                        {% if unread_count %}<span class="badge badge-mini badge-success">{{ unread_count }}</span>{% endif %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url invite_user %}">
+                            <i class="icon-heart"></i>
+                        {% trans "Invite" %} {% invites_remaining user %}</a></li>
                     <li>
                         <a target="_blank" href="{% url bookmark_explore %}"><i class="icon icon-bolt"></i>{% trans "Explore" %}</a>
                     </li>

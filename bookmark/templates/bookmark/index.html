@@ -15,30 +15,29 @@ bookmark-app
 {% endblock %}
 {% block body %}
      <div class="row-fluid" id="user-home">
-        <div class="span2 sidebar-width">
+        <div class="sidebar-width">
             <div class="sidebar-nav-fixed">
                 <hr>
                 <div class="row-fluid">
-                    <div class="span4">
+                    <div class="span6">
                         <a class="brand" href="/"><big>{{ SITE_NAME }}</big></a>
                     </div>
-                    <div class="span8">
+                    <div class="span6">
                         <ul class="inline brand-menu">
-                            <li><a target="_blank" href="{% url help %}" data-toggle="modal"><i class="icon-question-sign"></i> {% trans "Help" %}</a></li>
                             <li><a href="{% url account_logout %}"><i class="icon-off"></i> {% trans "Log out" %}</a></li>
                         </ul>
                     </div>
                 </div>
                 <hr>
                 <div class="row-fluid">
-                    <div class="span5">
+                    <div class="span4">
                         <a href="{% url bookmark_profile user %}">
                             <img class="avatar" alt="{{ user }}" src="{% gravatar_for_email user.email 64 %}&r=r" />
                         </a>
                     </div>
-                    <div class="span7">
+                    <div class="span8">
                         <a href="{% url bookmark_profile user %}">
-                            <h4>{{ user }}</h4>
+                            <b>{{ user }}</b>
                         </a>
                         <span><b class="text-success">{% points_for_object user %}</b> karma</span>
                     </div>
@@ -60,13 +59,14 @@ bookmark-app
                     <li><a target="_blank" href="/admin/"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
                     {% endif %}
                     <li><a target="_blank" href="#feedback" data-toggle="modal"><i class="icon-comment"></i> {% trans "Feedback" %}</a></li>
+                    <li><a target="_blank" href="{% url help %}" data-toggle="modal"><i class="icon-question-sign"></i> {% trans "Help" %}</a></li>
                 </ul>
             </div>
         </div>
-        <div class="span3" id="lists">
+        <div class="" id="lists">
                 <form class="navbar-form search" action="/{{user.username}}/search/">
                     <div class="input-append">
-                        <input type="text" name="query" class="query"><button type="submit" class="btn"><i class="icon-search"></i></button>
+                        <input type="text" name="query" class="query span10"><button type="submit" class="btn"><i class="icon-search"></i></button>
                     </div>
                 </form>
                 <div class="sys-lists">
@@ -104,7 +104,7 @@ bookmark-app
                 </form>
             
         </div>
-        <div class="span7" id="bookmarks">
+        <div class="" id="bookmarks">
         </div>
      </div>
 

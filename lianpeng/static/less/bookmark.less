@@ -99,17 +99,19 @@ a {
         border-width: 0 0 0 1px;
     }
 }
-.sidebar-nav-fixed {
+.sidebar-width {
     position:fixed;
     background:#333;
     color:white;
     height:100%;
-    width:185px;
+    width:12%;
+    left:0;
+}
+.sidebar-nav-fixed {
     padding:10px;
     a {
         color:#dee1e7;
     }
-    left:0;
     hr {
         border-bottom:none;
         border-top:none;
@@ -139,6 +141,15 @@ a {
     white-space:nowrap;
     display:block;
 }
+#user-home #lists {
+    position: fixed;
+    height: 100%;
+    left: 12%;
+    background: #eff0f2;
+    padding:10px;
+    width:20%;
+
+}
 .scrollable {
     overflow-x: hidden;
     overflow-y: hidden;
@@ -151,6 +162,7 @@ body.bookmark-app {
 }
 #user-home #bookmarks {
     margin-top:10px;
+    width:64%;
     position:fixed;
     right:15px;
     .add-bookmark-form-box {
@@ -307,14 +319,6 @@ body.bookmark-app {
         color: #333;
         margin-top:8px;
     }
-}
-#user-home #lists {
-    position: fixed;
-    height: 100%;
-    left: 180px;
-    background: #eff0f2;
-    padding:10px;
-
 }
 #lists {
     .nav {

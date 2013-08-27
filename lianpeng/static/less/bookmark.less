@@ -104,7 +104,7 @@ a {
     background:#333;
     color:white;
     height:100%;
-    width:12%;
+    width:15%;
     left:0;
 }
 .sidebar-nav-fixed {
@@ -117,10 +117,23 @@ a {
         border-top:none;
     }
     a.brand {
-        font-size:18px;
+        font-size:22px;
+        line-height:22px;
     }
     .brand-menu li {
         padding:0 4px;
+    }
+    .brand-wrapper {
+        margin-top:6px;
+    }
+    .info {
+        margin-top:8px;
+        ul li {
+            padding: 0 4px;
+        }
+    }
+    .username {
+        margin-top:10px;
     }
     .sidebar-menu li {
         padding:0px 0;
@@ -144,10 +157,12 @@ a {
 #user-home #lists {
     position: fixed;
     height: 100%;
-    left: 12%;
+    left: 15%;
     background: #eff0f2;
-    padding:10px;
     width:20%;
+    .list-wrapper {
+        padding:10px;
+    }
 
 }
 .scrollable {
@@ -161,10 +176,13 @@ body.bookmark-app {
     padding-top:0;
 }
 #user-home #bookmarks {
-    margin-top:10px;
-    width:64%;
+    margin-top:15px;
+    width:65%;
     position:fixed;
-    right:15px;
+    left:35%;
+    .bookmarks {
+        padding:0 10px;
+    }
     .add-bookmark-form-box {
         input.url {
             height:32px;

@@ -285,7 +285,7 @@ var ListsView = Backbone.View.extend({
     },
     resize_height: function(height) {
         var user_lists_height = $('.user-lists').height();
-        var user_lists_max_height = window_height - 128;
+        var user_lists_max_height = window_height - 170;
         if (user_lists_max_height < user_lists_height) {
             user_lists_height = user_lists_max_height;
         }

@@ -851,7 +851,7 @@ a.label:hover,a.badge:hover{color:#ffffff;text-decoration:none;cursor:pointer;}
 .show{display:block;}
 .invisible{visibility:hidden;}
 .affix{position:fixed;}
-body{padding-top:60px;background:#fafafa;font-family:'Microsoft Yahei',"Helvetica Neue",Helvetica,Arial,sans-serif;color:#3b3b3b;}
+body{padding-top:60px;background:#fafafa;font-family:'Helvetica Neue',Helvetica,Arial,'Liberation Sans',FreeSans,'Hiragino Sans GB',sans-serif,"Microsoft YaHei","Microsoft JhengHei",STHeiti,MingLiu;color:#3b3b3b;text-rendering:optimizelegibility;}
 h1,h2,h3,h4,h5,h6{font-weight:normal;}
 .hero-unit{border:1px solid #eee;}
 a{text-decoration:none;}

@@ -39,14 +39,14 @@ bookmark-app
                     <div class="span7 info pull-right">
                         <ul class="unstyled">
                             <li>
-                            <a href="{% url notifications:mark_all_as_read %}" class="pull-right">
-                                <i class="icon-bell-alt"></i>
-                                {% trans "Notifications" %}
-                            {% if unread_count %}<span class="badge badge-mini badge-success">{{ unread_count }}</span>{% endif %}
-                            </a>
+                                <a href="{% url notifications:mark_all_as_read %}" class="pull-right">
+                                    <i class="icon-bell-alt"></i>
+                                    {% trans "Notifications" %}
+                                {% if unread_count %}<span class="badge badge-mini badge-success">{{ unread_count }}</span>{% endif %}
+                                </a>
                             </li>
                             <li>
-                        <a target="_blank" href="{% url account_settings %}" class="pull-right"><i class="icon-cog"></i> {% trans "Settings" %}</a>
+                                <span class="pull-right"><b class="text-success"></b> <small class="label label-success">{% points_for_object user %} karma</small></span>
                             </li>
                         </ul>
                     </div>
@@ -58,13 +58,15 @@ bookmark-app
                             </a>
                     </div>
                     <div class="span5 pull-right">
-                        <span class="pull-right"><b class="text-success">{% points_for_object user %}</b> karma</span>
+                        <ul class="unstyled">
+                            <li>
+                                <a target="_blank" href="{% url account_settings %}" class="pull-right"><i class="icon-cog"></i> {% trans "Settings" %}</a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
                 <hr class="sidebar-hr">
                 <ul class="unstyled sidebar-menu">
-                    <li>
-                    </li>
                     <li>
                         <a href="{% url invite_user %}">
                             <i class="icon-heart"></i>
@@ -294,7 +296,7 @@ bookmark-app
                         <div class="span12 bookmark-entry">
                             <hr>
                             <% if(list.id != 'feed'){ %>
-                            <div class="hide move">
+                            <div class="hide move" data-toggle="tooltip" title="{% trans "Assign to one list on the left by dragging onto it." %}">
                                 <i class="icon-move"></i>
                             </div>
                             <% } %>

@@ -79,6 +79,7 @@ var BookmarkView = Backbone.View.extend({
         this.listenTo(this.model, 'change', this.append_bookmark_html);
         this.comments_view = new CommentsView({el:'#bookmark-' + this.model.id + " .comments-box", bookmark:this.model});
         this.$('.actions li').tooltip({placement:'bottom', animation:false, delay: { show: 0, hide: 0 }});
+        this.$('.move').tooltip({placement:'right', animation:false, delay: { show: 0, hide: 0 }});
     },
     show_comment_box: function() {
         if (this.list.can_comment()) {
@@ -149,7 +150,7 @@ var BookmarkView = Backbone.View.extend({
         var x=function(){if(!window.open(r,'douban','toolbar=0,resizable=1,scrollbars=yes,status=1,width=450,height=330'))location.href=r+'&r=1'};
         if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}; 
     },
-    enable_drag:function() {
+    enable_drag:function(e) {
         this.$el.draggable({
             helper: "clone",
         });
@@ -328,7 +329,8 @@ var BookmarksView = Backbone.View.extend({
         if (!this.$('.jquery-bootstrap-pagination').html()) {
             var self = this;
             F.show_paginator(self, 8, function(){
-                $(self.$('.list').children()[0]).spin();
+                this.$('.list').html("");
+                $(self.$('.list-wrapper')).spin();
                 $('.list-wrapper').animate({scrollTop: 0});
             }); 
         }
@@ -336,6 +338,7 @@ var BookmarksView = Backbone.View.extend({
     },
     render: function() {
         var self = this;
+        $(self.$('.list-wrapper')).spin(false);
         if (this.collection.size() > 0) {
             var template = $('#bookmarks-tmpl').html();
             var html = _.template(template, {bookmarks: this.collection.toJSON(), list: self.list.toJSON(), can_edit: this.list.can_edit()});
@@ -343,10 +346,8 @@ var BookmarksView = Backbone.View.extend({
         } else {
             this.$('.list .no-bookmarks').show();
         }
-        var offset = 60;
-        if (this.collection.size() < 20) {
-            offset -= 38;
-        }
-        $('#bookmarks .list-wrapper').css('min-height', window_height - offset - $('.pagination-hr').height() - $('.list-header').height() - $('.add-bookmark-form-box').height());
+        console.log()
+        
+        $('#bookmarks .list-wrapper').css('min-height', window_height - 35 - $('.pagination-hr').height() - $('.list-header').height() - $('.add-bookmark-form-box').height());
     }
 });

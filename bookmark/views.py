@@ -155,7 +155,19 @@ def import_to(request):
                 site = form.cleaned_data.get('site')
                 f = request.FILES['file']
                 data = f.read() 
-                handle_imported_file.delay(data, user, site)
+
+                if site == 'chrome':
+                    list_name = _("Export from Chrome Browser ")
+                elif site == 'kippt':
+                    list_name = _('Export from Kippt')
+                elif site == 'delicious':
+                    list_name = _('Export from Delicious')
+                elif site == 'google':
+                    list_name = _('Export from Google Bookmarks')
+                else:
+                    return Http404()
+
+                handle_imported_file.delay(data, user, site, list_name)
                 messages.info(request, 
                               _("Upload successfully, \
                                 we will import your bookmarks to your account \

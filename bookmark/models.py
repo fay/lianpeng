@@ -279,7 +279,7 @@ def dec_list_count(sender, instance, **kwargs):
 
 @receiver(post_save, sender=User)
 def create_default_list(sender, instance, created, **kwargs):
-    if created:
+    if created and instance.id > 0:
         default_list = List(user=instance, kind=0, name=_("Inbox"))
         default_list.save()
 

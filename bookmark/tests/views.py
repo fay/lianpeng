@@ -41,4 +41,5 @@ class BookmarkViewTest(TestCase):
         count = Bookmark.objects.count()
         print count
         self.assertTrue(count == 15)
-        self.assertTrue(List.objects.filter(user=self.user).count() == 3)
+        print List.objects.filter(user=self.user)
+        self.assertTrue(List.objects.filter(user=self.user).count() == 4)

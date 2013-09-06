@@ -25,7 +25,7 @@ from bookmark.models import Bookmark, List, ListInvitation
 
 class BookmarkTest(ResourceTestCase):
 
-    fixtures = ['users.json']
+    fixtures = ['users.json', 'points.json']
 
     def setUp(self):
         super(BookmarkTest, self).setUp()
@@ -65,7 +65,7 @@ class BookmarkTest(ResourceTestCase):
         data['user'] = '/api/v1/user/' + str(self.john.id)
         print data
         response = self.client.post('/api/v1/bookmark/', json.dumps(data), content_type="application/json")
-        self.assertTrue(response.status_code==201)
+        self.assertTrue(response.status_code == 201)
         self.assertTrue(len(Bookmark.objects.all()) == 1)
         b = Bookmark.objects.all()[0]
         self.assertTrue(b.user.id ==self.user.id)

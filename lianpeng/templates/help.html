@@ -9,15 +9,24 @@
 <div class="row">
     <div class="span12">
         <div class="page-header">
-            <h4>安装收藏工具</h4>
+            <h3>安装收藏工具</h3>
         </div>
+        <h4>A. 谷歌Chrome浏览器</h4>
+            
+        <p>
+            如果您正在使用的是谷歌Chrome浏览器，可以点击下面的按钮安装Chrome浏览器插件：
+            <h2 id="chrome-bookmarklet-box" class="inline"><a target="_blank" class="btn btn-large btn-primary" href="https://chrome.google.com/webstore/detail/%E8%8E%B2%E8%93%AC/bdomhbcbkbldbnechblaaaopghdmdcej" id="chrome-bookmarklet">安装莲蓬Chrome浏览器插件</a>
+            </h2>
+            安装完成后的效果如图：<img src="{{ STATIC_URL }}img/chrome_extension.png" />，点击这个绿色按钮会弹出一个收藏窗口：
+            <img src="{{ STATIC_URL }}img/chrome_popup.png" />
+            <br>点击保存后就可以对网页进行收藏了。
+        </p>
+        <hr>
+        <h4>B. 其他浏览器</h4>
         <p>
         点击 <a href="{% url bookmark_tools %}" target="_blank" class="">这里</a>，在打开的页面中，拖拽红色按钮到你的浏览器书签栏中，最终效果如下图：
         </p>
         <img src="{{ STATIC_URL }}img/tools_screenshot.png" />
-        <div class="page-header">
-            <h4>收藏网页</h4>
-        </div>
         <p>
         在浏览网页时，如果希望收藏当前的网页，点击书签栏中前面安装好的收藏按钮：<img src="{{ STATIC_URL }}img/button_help.png" />，此时会有一个窗口弹出，
         需要你进一步的填写笔记和标签，如果没有特别需要，可以直接点击保存：
@@ -26,7 +35,7 @@
             <img src="{{ STATIC_URL }}img/bookmark_screenshot.png" />
         </p>
         <div class="page-header">
-            <h4>查看、管理网页</h4>
+            <h3>查看、管理网页</h3>
         </div>
         <p>
             用收藏工具保存网页之后，您就可以在莲蓬的网站上查看和管理之前的收藏了：

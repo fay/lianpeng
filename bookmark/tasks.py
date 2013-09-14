@@ -72,19 +72,9 @@ def _sync_github(user, default_list, state):
         state.save()
 
 @task
-def handle_imported_file(data, user, site):
+def handle_imported_file(data, user, site, list_name):
     soup = BeautifulSoup(data)
     entries = soup.findAll('dt')
-    if site == 'chrome':
-        list_name = _("Export from Chrome Browser ")
-    elif site == 'kippt':
-        list_name = _('Export from Kippt')
-    elif site == 'delicious':
-        list_name = _('Export from Delicious')
-    elif site == 'google':
-        list_name = _('Export from Google Bookmarks')
-    else:
-        return Http404()
 
     default_list, created = List.objects.get_or_create(name=list_name, user=user)
 

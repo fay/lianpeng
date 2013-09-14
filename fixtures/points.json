@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "agon.pointvalue", "fields": {"value": 1, "key": "daily_bookmark_1"}}, {"pk": 2, "model": "agon.pointvalue", "fields": {"value": 2, "key": "daily_bookmark_2"}}, {"pk": 3, "model": "agon.pointvalue", "fields": {"value": 3, "key": "daily_bookmark_3"}}, {"pk": 4, "model": "agon.pointvalue", "fields": {"value": 4, "key": "daily_bookmark_4"}}]

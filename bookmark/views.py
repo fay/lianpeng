@@ -15,6 +15,7 @@ from django.template import RequestContext
 from django.utils.translation import ugettext, ugettext as _
 from django.contrib import messages
 from django.conf import settings
+from django.core.cache import cache
 
 from BeautifulSoup import BeautifulSoup
 from guardian.shortcuts import assign_perm
@@ -195,3 +196,11 @@ def list_ignore_invitation(request, id):
     invitation.status = 2
     invitation.save()
     return redirect('notifications:all')
+
+@login_required
+def bookmark_viewed(request, id):
+    bookmark = get_object_or_404(Bookmark, id=id)
+    user = request.user
+    bookmark.save()
+    return HttpResponse("opened")
+

@@ -361,6 +361,8 @@ $(document).ready(function(){
     var all_list_view = new FilterView({model: all_list, el: "#all-list", fake_list: true});
     var feed_list = new List({id:"feed"});
     var feed_list_view = new FilterView({model: feed_list, el: "#feed", fake_list: true});
+    var recent_list = new List({id:"recent"});
+    var recent_list_view = new FilterView({model: recent_list, el: "#recent-viewed", fake_list: true});
     var try_times = 0;
 
     var AppRouter = Backbone.Router.extend({
@@ -368,6 +370,7 @@ $(document).ready(function(){
             '': "index",
             ':username/list/all': "index",
             ':username/list/feed': "feed",
+            ':username/list/recent': "recent",
             ':username/list/:id': "list",
             ':username/tag/:tag': "tag",
             ':username/search/:query': "search"
@@ -380,6 +383,10 @@ $(document).ready(function(){
         feed: function(username) {
             $('body').animate({scrollTop: 0});
             lists_view.render_current_list_view(feed_list_view);
+        },
+        recent: function(username) {
+            $('body').animate({scrollTop: 0});
+            lists_view.render_current_list_view(recent_list_view);
         },
         list: function(username, id) {
             $('body').animate({scrollTop: 0});

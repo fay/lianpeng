@@ -44,6 +44,7 @@ urlpatterns = patterns("",
     url(r'^profiles/', include('idios.urls')),
     url(r'^invite/', include('kaleo.urls')),
     url(r'^notifications/', include('notifications.urls', namespace="notifications")),
+    url(r'^avatar/', include('avatar.urls')),
     url(r'^', include("bookmark.urls")),
 )
 

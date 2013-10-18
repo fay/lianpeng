@@ -81,13 +81,13 @@ class ListGroupObjectPermission(GroupObjectPermissionBase):
 class Bookmark(models.Model, DiffingMixin):
     url = models.URLField()
     title = models.CharField(max_length=1024)
-    domain = models.CharField(max_length=128, blank=True, null=True, 
+    domain = models.CharField(max_length=128, blank=True, null=True,
                               db_index=True)
     note = models.TextField(null=True, blank=True)
     tags = TagField()
 
     created_time = models.DateTimeField(db_index=True)
-    modified_time = models.DateTimeField(auto_now=True)
+    modified_time = models.DateTimeField(auto_now=True, db_index=True)
     unique_key = models.CharField(max_length=32)
     user = models.ForeignKey(User)
     list = models.ForeignKey(List, null=True, blank=True)

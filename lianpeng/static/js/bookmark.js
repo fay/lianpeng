@@ -48,6 +48,8 @@ var Bookmarks = BaseCollection.extend({
                     q = "?tag=" + this.list.get('tag');
                 } else if(this.list.id == 'feed') {
                     q = "?feed=t"
+                } else if(this.list.id == 'recent') {
+                    q = "?recent=t"
                 }
                 return '/api/v1/bookmark/' + q;
             }
@@ -61,6 +63,7 @@ var BookmarkView = Backbone.View.extend({
         this.$el = $('#bookmark-' + this.model.id);
         this.events = {
             "click .edit-action": "edit",
+            "click .bookmark-title": "record_viewed",
             "click .share-action": "share",
             "click .preview-action": "preview",
             "click .save-action": "collect",
@@ -88,6 +91,9 @@ var BookmarkView = Backbone.View.extend({
                 this.comments_view.fetch();
             }
         }
+    },
+    record_viewed: function() {
+        $.get('/bookmark/viewed/' + this.model.id + '/');
     },
     collect: function() {
         this.trigger("new_bookmark", this.model.toJSON(), '', '#bookmark-' + this.model.id + ' .edit-bookmark-box');

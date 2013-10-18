@@ -312,6 +312,7 @@ class BookmarkResource(ModelResource):
 
         user = bundle.request.user
 
+        # by list
         list_id = kwargs.get('list_id')
         objects = super(BookmarkResource, self).obj_get_list(bundle, **kwargs)
         if list_id:
@@ -320,6 +321,10 @@ class BookmarkResource(ModelResource):
                 objects = Bookmark.objects.all()
             objects = objects.filter(list=l).order_by('-created_time')
 
+        # by recent
+        recent = bundle.request.GET.get('recent')
+        if recent:
+            objects = objects.order_by('-modified_time')
         # user feed
         feed = bundle.request.GET.get('feed')
         if feed:
@@ -330,13 +335,15 @@ class BookmarkResource(ModelResource):
 
         # by tag
         tags = bundle.request.GET.get('tag')
-        if  tags:
+        if tags:
             mtim = ModelTaggedItemManager()
             objects = mtim.with_all(tags, objects)
 
         q = bundle.request.GET.get('q')
         if q:
             objects = objects.filter(Q(title__icontains=q) | Q(tags__icontains=q) | Q(note__icontains=q))
+
+        
 
         return objects
 

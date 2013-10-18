@@ -163,12 +163,12 @@ INSTALLED_APPS = [
     "pinax_theme_bootstrap_account",
     "pinax_theme_bootstrap",
     "django_forms_bootstrap",
+    
+    # external
     "idios",
     'social_auth',    
     'guardian',
     'agon',
-    
-    # external
     "account",
     "metron",
     "eventlog",
@@ -191,6 +191,7 @@ INSTALLED_APPS = [
     "bookmark",
     "harvest",
     "profiles",
+    "avatar",
 ]
 
 # A sample logging configuration. The only tangible logging
@@ -329,7 +330,15 @@ WEIBO_CLIENT_SECRET = ''
 #SOCIAL_AUTH_LOGIN_REDIRECT_URL = ''
 #NOTIFY_USE_JSONFIELD = True
 
+CACHES = { 
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': 'cache_table',
+    }
+}
+
 KALEO_DEFAULT_INVITE_ALLOCATION = 5
+
 try:
     from local_settings import *
 except ImportError:

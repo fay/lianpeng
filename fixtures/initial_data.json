@@ -4,7 +4,7 @@
         "model": "sites.site", 
         "fields": {
             "domain": "lianpeng.me", 
-            "name": "莲蓬"
+            "name": "莲蓬网"
         }
     }
 ]

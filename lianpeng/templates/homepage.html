@@ -7,6 +7,10 @@
 {% block body_class %}welcome{% endblock %}
 {% block extra_head %}
     <meta name="description"  content="莲蓬是一个社会化书签网站，为你的创意工作和生活建立知识库，结识有趣的人">
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/bdomhbcbkbldbnechblaaaopghdmdcej">
+{% endblock %}
+{% block extra_style%}
+<link rel="stylesheet" href="{{ STATIC_URL }}css/bbtn.css" type="text/css" media="screen" charset="utf-8">
 {% endblock %}
 
 {% block extra_inner_body %}
@@ -14,12 +18,20 @@
     <div class="container">
         <div class="row-fluid">
             <div class="span7">
-                <h1 class="slogan">为你的创意工作建立知识库，管理组织有用的网页</h1>
+                <h1 class="slogan">简单好用的网络书签<br><small>莲蓬为你的创意工作建立知识库，管理组织有用的网页</small></h1>
             </div>
-            <div class="span5">
-                
+            <div class="span5 buttons">
+                <p>
+                    <a href="{% url account_signup %}" class="bbtn turquoise large2x">立即注册</a> <big>or</big> 
+                    <a class="bbtn large2x " href="{% url bookmark_tools %}" id="get-chrome">安装插件</a>
+                </p>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_script %}
+<script type="text/javascript" charset="utf-8">
+</script>
 {% endblock %}

@@ -910,7 +910,7 @@ body.bookmark-app{padding-top:0;}
 #lists .user-lists .list-name,#lists .sys-lists .list-name{position:relative;}#lists .user-lists .list-name .row-fluid [class*="span"],#lists .sys-lists .list-name .row-fluid [class*="span"]{min-height:1px;}
 #lists .user-lists .list-name .name-text,#lists .sys-lists .list-name .name-text{display:inline-block;vertical-align:top;}
 #lists .user-lists .list-name .icon,#lists .sys-lists .list-name .icon{margin-top:3px;}#lists .user-lists .list-name .icon.icon-shared-list,#lists .sys-lists .list-name .icon.icon-shared-list{padding-left:2px;}
-#lists .user-lists .list-name .count,#lists .sys-lists .list-name .count{position:absolute;right:5px;top:4px;}
+#lists .user-lists .list-name .count,#lists .sys-lists .list-name .count{color:#888;position:absolute;right:5px;top:4px;}
 #lists .sys-lists #feed .list-name .icon,#lists .sys-lists #all-list .list-name .icon{margin-top:0px;}
 #lists hr{margin:10px 0;}
 ::-webkit-scrollbar{width:8px;height:8px;background-color:#aaa;-webkit-border-radius:1ex;}
@@ -938,7 +938,8 @@ hr.soften{height:1px;margin:40px 0;background-image:-webkit-linear-gradient(left
 #profile .about{padding-top:20px;padding-bottom:20px;background:#f8f8f8;}
 .empty-box{border:3px dotted #ddd;border-radius:13px;padding:40px 0;background-color:#f8f8f8;}.empty-box p{text-align:center;vertical-align:middle;font-size:19px;color:#888;}
 .center{text-align:center;}
-body.welcome{padding-top:0px;}body.welcome .banner{height:500px;background:url(../img/banner_bg.jpg);}body.welcome .banner .container{padding-top:60px;}body.welcome .banner .container .slogan{color:white;background-color:rgba(0, 0, 0, 0.7);padding:36px;margin-top:100px;}
+body.welcome{padding-top:0px;}body.welcome .banner{height:500px;background:url(../img/banner_bg.jpg);}body.welcome .banner .container{padding-top:60px;}body.welcome .banner .container .buttons{background-color:rgba(255, 255, 255, 0.9);padding:58px 36px;margin-top:100px;}
+body.welcome .banner .container .slogan{color:white;background-color:rgba(0, 0, 0, 0.7);padding:36px;margin-top:100px;}body.welcome .banner .container .slogan small{color:white;}
 body.welcome_old{padding-top:0px;}body.welcome_old .logo-box{-webkit-animation:bodyslide 2s ease;margin-top:80px;margin-bottom:30px;}
 body.welcome_old .logo{background:#4fccbf;color:white;display:inline-block;font-size:60px;padding:110px 62px;border:6px solid white;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;}
 body.welcome_old h1.slogan .emphasize{color:#B5E9E3;}

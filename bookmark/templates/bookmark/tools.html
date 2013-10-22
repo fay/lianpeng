@@ -1,11 +1,14 @@
 {% extends 'site_base.html' %}
 {% load i18n %}
 {% block head_title %}{% trans "Collect Tools" %}{% endblock %}
+{% block extra_head %}
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/bdomhbcbkbldbnechblaaaopghdmdcej">
+{% endblock %}
 {% block body %}
 <div class="hero-unit center">
     <div class="row-fluid">
         <div class="span6 well">
-            <h2 id="chrome-bookmarklet-box"><a target="_blank" class="btn btn-large btn-primary" href="https://chrome.google.com/webstore/detail/%E8%8E%B2%E8%93%AC/bdomhbcbkbldbnechblaaaopghdmdcej"
+            <h2 id="chrome-bookmarklet-box"><a target="_blank" class="btn btn-large btn-primary" onclick="chrome.webstore.install()"
                     id="chrome-bookmarklet">安装莲蓬Chrome浏览器插件</a>
             </h2>
             <p>

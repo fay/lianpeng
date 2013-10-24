@@ -7,4 +7,6 @@ urlpatterns = patterns("",
     url(r"^bind/", "misc.auth_pipeline.bind", name="bind_user"),
     url(r"^invite/", "misc.views.invite", name="invite_user"),
     url(r"^redirect_to_login/", "misc.auth_pipeline.redirect_to_login", name="redirect_to_login"),
+    url(r"^resend/confirmation/$", "misc.views.resend_email_confirmation", name="resend_email_confirmation"),
+    url(r"^resend/confirmation/done/$", "misc.views.resend_email_confirmation_done", name="resend_email_confirmation_done"),
 )

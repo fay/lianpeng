@@ -41,7 +41,8 @@ def index(request, username=None, id=None, query=None, tag=None):
         today = datetime.date.today()
         if not verified and (today - user.date_joined.date()).days >= \
            settings.ACCOUNT_EMAIL_CONFIRMATION_REQUIRED_DAYS:
-            messages.error(request, _("You need to verify your email address to continue to use Lianpeng.You can check your email inbox.")) 
+            resend_url = reverse('resend_email_confirmation')
+            messages.error(request, _("You need to verify your email address to continue to use Lianpeng.You can check your email inbox. You can also <a href='%s'>resend email confirmation</a>.") % (resend_url,)) 
             return redirect('account_settings')
         context = {}
         return render(request, 'bookmark/index.html', context)

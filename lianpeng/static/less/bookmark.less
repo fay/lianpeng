@@ -402,17 +402,19 @@ body.bookmark-app {
 
 /* scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 5px;
+  height: 5px;
   background-color: #aaa;
   -webkit-border-radius: 1ex;
 }
 ::-webkit-scrollbar-thumb {
-  background: #cccccc -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f0f0f0), to(#d2d2d2));
-  -webkit-border-radius: 1ex;
+  background: #999;
+}
+::-webkit-scrollbar-track {
+  background: #ddd;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #cccccc -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f5f5f5), to(#d7d7d7));
+  background: #ccc;
 }
 
 /* box */

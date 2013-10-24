@@ -913,9 +913,10 @@ body.bookmark-app{padding-top:0;}
 #lists .user-lists .list-name .count,#lists .sys-lists .list-name .count{color:#888;font-size:12px;font-weight:bold;position:absolute;right:5px;top:4px;}
 #lists .sys-lists #feed .list-name .icon,#lists .sys-lists #all-list .list-name .icon{margin-top:0px;}
 #lists hr{margin:10px 0;}
-::-webkit-scrollbar{width:8px;height:8px;background-color:#aaa;-webkit-border-radius:1ex;}
-::-webkit-scrollbar-thumb{background:#cccccc -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f0f0f0), to(#d2d2d2));-webkit-border-radius:1ex;}
-::-webkit-scrollbar-thumb:hover{background:#cccccc -webkit-gradient(linear, 0% 0%, 0% 100%, from(#f5f5f5), to(#d7d7d7));}
+::-webkit-scrollbar{width:5px;height:5px;background-color:#aaa;-webkit-border-radius:1ex;}
+::-webkit-scrollbar-thumb{background:#999;}
+::-webkit-scrollbar-track{background:#ddd;}
+::-webkit-scrollbar-thumb:hover{background:#ccc;}
 .box{background-color:#fff;border:#ddd 1px solid;-moz-box-shadow:0 1px 1px #ddd;-webkit-box-shadow:0 1px 1px #ddd;box-shadow:0 1px 1px #ddd;-moz-border-radius:3px;-webkit-border-radius:3px;-khtml-border-radius:3px;border-radius:3px;position:relative;}.box .detail{height:120px;overflow:hidden;padding:18px 20px;}.box .detail .title{text-align:center;}.box .detail .title h1,.box .detail .title h2,.box .detail .title h3,.box .detail .title h4,.box .detail .title h5{margin-top:0;}
 .box .detail .title a{color:#4fccbf;position:relative;font-size:18px;}
 .box .detail ul li a{white-space:nowrap;overflow:hidden;display:block;}

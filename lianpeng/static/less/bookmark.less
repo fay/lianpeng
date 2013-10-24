@@ -162,6 +162,7 @@ a {
     .list-wrapper {
         padding:10px;
     }
+    border-left: solid 1px #ddd;
 
 }
 .scrollable {
@@ -174,26 +175,48 @@ a {
 body.bookmark-app {
     padding-top:0;
 }
+.padbox {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.padbox-left {
+    padding-left: 15px;
+}
+.padbox-right {
+    padding-right: 15px;
+}
 #user-home #bookmarks {
-    margin-top:15px;
+    border-left: solid 1px #ddd;
     width:65%;
     position:fixed;
     left:35%;
     .bookmarks {
-        padding:0 10px;
+        padding:0 0px;
     }
     .add-bookmark-form-box {
+        padding-top:15px;
+        background:#f5f5f5;
         input.url {
             height:32px;
             line-height: 16px;
         }
+        form {
+            margin: 0 0 15px;
+        }
     }
     .list-header {
+        padding-top:15px;
+        padding-bottom:15px;
+        background:#f5f5f5;
         h2 {
-            margin:0;
-            margin-bottom:10px;
+            margin-top:0;
+            margin-bottom:0px;
         }
     }   
+    .list-header + .add-bookmark-form-box{
+        padding-top:0px;
+        margin-top:-5px;
+    }
     #invitee-list {
         select {
             &.permission {
@@ -225,10 +248,20 @@ body.bookmark-app {
             position:absolute;
             .bookmark-entry {
                 margin-bottom:15px;
+                .entry-content-left {
+                    padding-left:10px;
+                }
+                .entry-content-right {
+                    padding-right:10px;
+                }
+            }
+            .no-bookmarks {
+                margin-top:15px;
             }
         }
         hr {
             margin-top:0px;
+            border-top:solid 1px #ddd;
         }
     }
 }

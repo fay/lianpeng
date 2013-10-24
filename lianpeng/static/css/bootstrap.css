@@ -876,18 +876,25 @@ a{color:#000000;}a:hover{color:#4fccbf;text-decoration:none;}
 .sidebar-nav-fixed .username{margin-top:10px;}
 .sidebar-nav-fixed .sidebar-menu li{padding:0px 0;}.sidebar-nav-fixed .sidebar-menu li a{padding:8px;font-size:16px;display:block;}.sidebar-nav-fixed .sidebar-menu li a:hover{background-color:#222;}
 .sidebar-nav-fixed .signature,.bookmarks #lists,#profile .tab-pane .signature,.bookmark-detail .signature{overflow:hidden;white-space:nowrap;display:block;}
-#user-home #lists{position:fixed;height:100%;left:15%;background:#eff0f2;width:20%;}#user-home #lists .list-wrapper{padding:10px;}
+#user-home #lists{position:fixed;height:100%;left:15%;background:#eff0f2;width:20%;border-left:solid 1px #ddd;}#user-home #lists .list-wrapper{padding:10px;}
 .scrollable{overflow-x:hidden;overflow-y:hidden;}
 .scrollable:hover{overflow-y:auto;}
 body.bookmark-app{padding-top:0;}
-#user-home #bookmarks{margin-top:15px;width:65%;position:fixed;left:35%;}#user-home #bookmarks .bookmarks{padding:0 10px;}
-#user-home #bookmarks .add-bookmark-form-box input.url{height:32px;line-height:16px;}
-#user-home #bookmarks .list-header h2{margin:0;margin-bottom:10px;}
+.padbox{padding-left:15px;padding-right:15px;}
+.padbox-left{padding-left:15px;}
+.padbox-right{padding-right:15px;}
+#user-home #bookmarks{border-left:solid 1px #ddd;width:65%;position:fixed;left:35%;}#user-home #bookmarks .bookmarks{padding:0 0px;}
+#user-home #bookmarks .add-bookmark-form-box{padding-top:15px;background:#f5f5f5;}#user-home #bookmarks .add-bookmark-form-box input.url{height:32px;line-height:16px;}
+#user-home #bookmarks .add-bookmark-form-box form{margin:0 0 15px;}
+#user-home #bookmarks .list-header{padding-top:15px;padding-bottom:15px;background:#f5f5f5;}#user-home #bookmarks .list-header h2{margin-top:0;margin-bottom:0px;}
+#user-home #bookmarks .list-header+.add-bookmark-form-box{padding-top:0px;margin-top:-5px;}
 #user-home #bookmarks #invitee-list select{margin:0;width:auto;display:block;}#user-home #bookmarks #invitee-list select.permission{height:25px;}
 #user-home #bookmarks .pagination-hr{border:none;margin:0px;height:20px;-webkit-box-shadow:0 0 0 rgba(0, 0, 0, 0);-moz-box-shadow:0 0 0 rgba(0, 0, 0, 0);box-shadow:0 0 0 rgba(0, 0, 0, 0);}
 #user-home #bookmarks .paginator .pagination{margin:0;}
-#user-home #bookmarks .bookmarks .list-wrapper{position:relative;height:100%;}#user-home #bookmarks .bookmarks .list-wrapper .list{position:absolute;}#user-home #bookmarks .bookmarks .list-wrapper .list .bookmark-entry{margin-bottom:15px;}
-#user-home #bookmarks .bookmarks .list-wrapper hr{margin-top:0px;}
+#user-home #bookmarks .bookmarks .list-wrapper{position:relative;height:100%;}#user-home #bookmarks .bookmarks .list-wrapper .list{position:absolute;}#user-home #bookmarks .bookmarks .list-wrapper .list .bookmark-entry{margin-bottom:15px;}#user-home #bookmarks .bookmarks .list-wrapper .list .bookmark-entry .entry-content-left{padding-left:10px;}
+#user-home #bookmarks .bookmarks .list-wrapper .list .bookmark-entry .entry-content-right{padding-right:10px;}
+#user-home #bookmarks .bookmarks .list-wrapper .list .no-bookmarks{margin-top:15px;}
+#user-home #bookmarks .bookmarks .list-wrapper hr{margin-top:0px;border-top:solid 1px #ddd;}
 .bookmarks .list hr,#explore .bookmarks-box hr,.bookmark-detail hr,#profile #bookmarks hr{margin:15px 0;}
 .bookmarks .list .comments-box,#explore .bookmarks-box .comments-box,.bookmark-detail .comments-box,#profile #bookmarks .comments-box{margin-top:10px;}.bookmarks .list .comments-box .comments hr,#explore .bookmarks-box .comments-box .comments hr,.bookmark-detail .comments-box .comments hr,#profile #bookmarks .comments-box .comments hr{margin:0px 0 10px 0;border-top:1px dotted #ddd;border-bottom:1px dotted #ffffff;}
 .bookmarks .list .bookmark-title-box,#explore .bookmarks-box .bookmark-title-box,.bookmark-detail .bookmark-title-box,#profile #bookmarks .bookmark-title-box{padding-bottom:1px;}.bookmarks .list .bookmark-title-box .actions,#explore .bookmarks-box .bookmark-title-box .actions,.bookmark-detail .bookmark-title-box .actions,#profile #bookmarks .bookmark-title-box .actions{position:absolute;right:0px;width:150px;z-index:20;}.bookmarks .list .bookmark-title-box .actions ul.well-small,#explore .bookmarks-box .bookmark-title-box .actions ul.well-small,.bookmark-detail .bookmark-title-box .actions ul.well-small,#profile #bookmarks .bookmark-title-box .actions ul.well-small{padding:0 12px;}.bookmarks .list .bookmark-title-box .actions ul.well-small li,#explore .bookmarks-box .bookmark-title-box .actions ul.well-small li,.bookmark-detail .bookmark-title-box .actions ul.well-small li,#profile #bookmarks .bookmark-title-box .actions ul.well-small li{padding:5px;}

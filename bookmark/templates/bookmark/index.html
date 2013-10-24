@@ -157,7 +157,7 @@ bookmark-app
                 <%}%>
                 <% if(list.id == 'all' || can_edit) {%>
                 <div class="row-fluid add-bookmark-form-box">
-                     <div class="span12">
+                     <div class="span12 padbox">
                          <form action="" class="add-bookmark-form form-inline" method="post" accept-charset="utf-8">
                              <input type="text" name="url" value="" class="url span10" placeholder="{% trans "enter url here" %}" />
                              <input type="submit" class="pull-right btn btn-primary span2" value="{% trans "Add bookmark" %}" />
@@ -166,11 +166,12 @@ bookmark-app
                 </div>
                 <% } %>
                 <div class="row-fluid confirm-add-bookmark-box">
-                    <div class="span12 hide confirm-add-bookmark">
+                    <div class="span12 hide padbox confirm-add-bookmark">
                     </div>
                 </div>
                 <div class="row-fluid scrollable list-wrapper">
                     <div class="span12 list">
+                        <div class="padbox">
                         <div class="empty-box hide no-bookmarks">
                             <p>
                                 <% if(list.id == 'feed') { %> {% trans "No feed.You can find and follow awesome people here:" %}
@@ -178,17 +179,19 @@ bookmark-app
                                 <% } else { %>{% trans "No bookmarks" %}<% } %>
                             </p>
                         </div>
+                        </div>
                     </div>
                 </div>
                 <hr class="pagination-hr">
                 <div class="row-fluid">
-                    <div class="span12 paginator">
+                    <div class="span12 padbox paginator">
                     </div>
                 </div>
             </div>
         </div>
     </script>
     <script type="text/html" id="list-header-tmpl" charset="utf-8">
+                <div class="padbox span12">
                     <h2 class="span10">
                         <span class="list-name"><%-list.name%></span> 
                         &nbsp;<small class="label label-success">
@@ -267,6 +270,7 @@ bookmark-app
                             </div>
                         </div>
                     </div>
+                </div>
     </script>
     <script type="text/html" id="invitee-list-tmpl" charset="utf-8">
         <% _.each(invitees, function(invitee) {%>
@@ -314,13 +318,13 @@ bookmark-app
                             <% } %>
                             <div class="row-fluid">
                                 <% if(list.id == 'feed'){ %>
-                                <div class="span1">
+                                <div class="span1 padbox-left">
                                     <a href="/<%-bookmark.user_name%>" title="<%-bookmark.user_name%>">
                                         <img class="avatar" alt="<%-bookmark.user_name%>" src="<%-bookmark.user_avatar%>&r=r" />
                                     </a>
                                 </div>
                                 <% } %>
-                                <div class="span<% if(list.id == 'feed') { %>11<% } else { %>12<% }%>">
+                                <div class="span<% if(list.id == 'feed') { %>11<% } else { %>12 padbox-left<% }%> padbox-right">
                                     <div class="row-fluid bookmark-title-box">
                                         <div class="span10">
                                             <div class="bookmark-title-wrapper bookmark-title-inner">

@@ -381,6 +381,7 @@ body.bookmark-app {
     {
       border-left:4px solid transparent;
       padding:3px 5px;
+      margin:1px 0;
     }
     .nav > .active > a > [class*=" icon-"] {
     }
@@ -392,6 +393,18 @@ body.bookmark-app {
       color: @gray;
       border-left:4px solid @green;
       text-shadow:none;
+    }
+    .nav > li.ui-state-highlight.active > a {
+        background: #27ae60;
+        border-left:4px solid #27ae60;
+        color:white;
+    }
+    .nav > li.ui-state-highlight > a {
+        background: #2ecc71;
+        color:white;
+        .count {
+            color:white;
+        }
     }
     .nav > li > a:hover {
         border-left:4px solid #888;

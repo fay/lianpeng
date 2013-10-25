@@ -57,6 +57,8 @@ var ListView = Backbone.View.extend({
         this.$el.droppable({
             accept: '.bookmark-entry-box',
             tolerance: 'pointer',
+            activeClass: "ui-state-highlight",
+            hoverClass: "active",
             drop: _.bind(function(event, ui) {
                 var object = $(event.target);
                 var bookmark_id = $(ui.draggable).data('id');
@@ -65,18 +67,9 @@ var ListView = Backbone.View.extend({
                 $(ui.draggable).remove();
             }, this),
             over: _.bind(function(event,ui){
-                var object = $(event.target);
-                if (object.hasClass('active')) {
-                    object.addClass('source');
-                } else {
-                    object.addClass('active');
-                }
             }, this),
             out: _.bind(function(event,ui){
                 var object = $(event.target);
-                if (!object.hasClass('source')) {
-                    object.removeClass('active');
-                }
             }, this)
         });
 

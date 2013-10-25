@@ -965,3 +965,4 @@ body.welcome_old .big-icon{font-size:180px;}
 p.lead a{text-decoration:underline;}
 footer{margin:20px 0;}
 .kaleo-invites-sent{list-style:none;}
+.drag-ui{z-index:10000;position:absolute;}

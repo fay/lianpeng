@@ -157,8 +157,15 @@ var BookmarkView = Backbone.View.extend({
         if(/Firefox/.test(navigator.userAgent)){setTimeout(x,0)}else{x()}; 
     },
     enable_drag:function(e) {
+        var self = this;
         this.$el.draggable({
-            helper: "clone",
+            helper: function () {
+                drag_ui = "<div class='drag-ui label label-info' data-id='" + self.model.id +
+                    "' data-list-id='" + self.list.id + 
+                    "'>" + self.model.get('title').slice(0, 10) + "</div>";
+                $('body').append(drag_ui);
+                return $('.drag-ui');
+            },
         });
         this.$el.draggable("enable");
     },

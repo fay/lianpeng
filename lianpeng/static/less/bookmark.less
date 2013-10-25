@@ -4,6 +4,7 @@
 @orangeHighlight: spin(@orange, 5%);
 @green: #4FCCBF; /*#42D7B4*/
 @greenHighlight: spin(@green, 20%);
+@lightgreen: #2ecc71;
 @bluegray: #8C9CAF;
 @linkColor: @green;
 @btnBackground: @white;
@@ -322,6 +323,7 @@ body.bookmark-app {
         .move {
             position:absolute;
             top:0px;
+            cursor:pointer;
         }
         blockquote {
             margin-bottom:0;
@@ -379,7 +381,6 @@ body.bookmark-app {
     }
     .nav > li > a,
     {
-      border-left:4px solid transparent;
       padding:3px 5px;
       margin:1px 0;
     }
@@ -390,14 +391,19 @@ body.bookmark-app {
     .nav > .active > a,
     .nav > li > a:hover,
     .nav > .active > a:hover {
-      color: @gray;
-      border-left:4px solid @green;
-      text-shadow:none;
+        color: @gray;
+        .icon {
+            color:@lightgreen;
+        }
+        text-shadow:none;
+        background:#e8e8e8;
     }
     .nav > li.ui-state-highlight.active > a {
         background: #27ae60;
-        border-left:4px solid #27ae60;
         color:white;
+        .icon {
+            color:white;
+        }
     }
     .nav > li.ui-state-highlight > a {
         background: #2ecc71;
@@ -407,7 +413,6 @@ body.bookmark-app {
         }
     }
     .nav > li > a:hover {
-        border-left:4px solid #888;
         background:#e8e8e8;
     }
     .user-lists, .sys-lists {

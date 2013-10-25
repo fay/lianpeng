@@ -285,18 +285,32 @@ body.bookmark-app {
         padding-bottom:1px;
 
         .actions {
-            ul.well-small {
-                padding:0 12px;
-                li {
+            ul.action-ul {
+                padding:0px 15px;
+                background: #eee;
+                .share-action {
+                    color:#444;
+                    font-size:16px;
+                }
+                & > li {
                     padding:5px;
+                    &:hover {
+                        background:@orange;
+                        & > a, & > span {
+                            color:white;
+                        }
+                    }
+                }
+                &> li > a {
+                    color:#444;
+                    font-size:16px;
                 }
             }
             span {
                 cursor:pointer;
             }
             position: absolute;
-            right: 0px;
-            width:150px;
+            right: 5px;
             z-index:20;
             .dropdown-menu {
                 right:0;

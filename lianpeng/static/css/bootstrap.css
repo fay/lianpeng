@@ -874,7 +874,8 @@ a{color:#000000;}a:hover{color:#4fccbf;text-decoration:none;}
 .sidebar-nav-fixed .brand-wrapper{margin-top:6px;}
 .sidebar-nav-fixed .info{margin-top:8px;}
 .sidebar-nav-fixed .username{margin-top:10px;}
-.sidebar-nav-fixed .sidebar-menu li{padding:0px 0;}.sidebar-nav-fixed .sidebar-menu li a{padding:8px;font-size:16px;display:block;}.sidebar-nav-fixed .sidebar-menu li a:hover{background-color:#222;}
+.sidebar-nav-fixed .sidebar-menu li{padding:0px 0;}
+.sidebar-nav-fixed .sidebar-menu li a{padding:8px;font-size:16px;display:block;}.sidebar-nav-fixed .sidebar-menu li a:hover{background-color:#222;}
 .sidebar-nav-fixed .signature,.bookmarks #lists,#profile .tab-pane .signature,.bookmark-detail .signature{overflow:hidden;white-space:nowrap;display:block;}
 #user-home #lists{position:fixed;height:100%;left:15%;background:#eff0f2;width:20%;border-left:solid 1px #ddd;}#user-home #lists .list-wrapper{padding:10px;}
 .scrollable{overflow-x:hidden;overflow-y:hidden;}

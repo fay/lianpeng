@@ -66,23 +66,14 @@
     {% block extra_style %}{% endblock %}
 {% endblock %}
 
-{% block extra_head_base %}
-  <!--[if lt IE 9]>
-    <div class="container">
-        
-      <div class="alert alert-danger">
-        为达到最佳体验效果，建议使用 <a href="http://www.google.com/chrome" target="_blank" title="下载 Chrome 浏览器">Chrome,</a> <a href="http://www.apple.com/safari" target="_blank" title="下载 Safari 浏览器">Safari,</a> <a href="http://firefox.com.cn/download/" target="_blank" title="下载 Firefox 浏览器">Firefox</a>
-      </div>
-    </div>
-  <![endif]-->
-    {% block extra_head %}{% endblock %}
-{% endblock %}
-
 {% block script_base %}
     <script src="{% block jquery_src %}{% static "pinax/js/jquery.js" %}{% endblock %}"></script>
     <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
     <script src="{% static "pinax/js/theme.js" %}"></script>
     <script type="text/javascript" src="{% static "js/base.js?v=4" %}" charset="utf-8"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/noty/jquery.noty.js" charset="utf-8"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/noty/layouts/top.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/noty/themes/default.js?v=2" charset="utf-8"></script>
     {% block extra_script %}{% endblock %}
 {% endblock %}
 {% block body_base %}
@@ -128,6 +119,16 @@
             <a href="#" class="btn btn-primary confirm">{% trans "Confirm" %}</a>
         </div>
     </div>
+    <!--[if lt IE 9]>
+        <script type="text/javascript" src="{{ STATIC_URL }}js/noty/layouts/topCenter.js"></script>
+        <script type="text/javascript" charset="utf-8">
+            noty({text: 
+                    '为达到最佳体验效果，建议使用 <a href="http://www.google.com/chrome" target="_blank" title="下载 Chrome 浏览器">Chrome,</a> <a href="http://www.apple.com/safari" target="_blank" title="下载 Safari 浏览器">Safari,</a> <a href="http://firefox.com.cn/download/" target="_blank" title="下载 Firefox 浏览器">Firefox</a>',
+                    type:'warning',
+                    layout: 'topCenter'
+                    });
+        </script>
+    <![endif]-->
     {% analytics %}
     {% block extra_body %}{% endblock %}
 {% endblock %}

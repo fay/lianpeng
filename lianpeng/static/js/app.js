@@ -1,4 +1,29 @@
 var window_height;
+var resize_lists = function(height) {
+    var user_lists_height = $('.user-lists').height();
+    var user_lists_max_height = window_height - 198;
+    if (user_lists_max_height < user_lists_height) {
+        user_lists_height = user_lists_max_height;
+    }
+    if (height) {
+        user_lists_height += height;
+    }
+    $('.user-lists').css('height', user_lists_height);
+};
+function resize_bookmarks () {
+    // adjust bookmark box height
+    $('#bookmarks .list-wrapper').css('min-height', window_height - 50 - $('.pagination-hr').height() - $('.list-header').height() - $('.add-bookmark-form-box').height());
+}
+var window_resize = function  (e) {
+    window_height = $(window).height() - 20;
+    $('#bookmarks').css('min-height', window_height);
+    $('#lists').css('min-height', window_height);
+    if (e) {
+        resize_bookmarks();
+        resize_lists();
+    }
+};
+$(window).resize(window_resize)
 var lists_view;
 var List = Backbone.Model.extend({
     urlRoot: '/api/v1/list/',
@@ -400,26 +425,3 @@ $(document).ready(function(){
     Backbone.history.start({pushState: true});
 
 });
-var resize_lists = function(height) {
-    var user_lists_height = $('.user-lists').height();
-    var user_lists_max_height = window_height - 198;
-    if (user_lists_max_height < user_lists_height) {
-        user_lists_height = user_lists_max_height;
-    }
-    if (height) {
-        user_lists_height += height;
-    }
-    $('.user-lists').css('height', user_lists_height);
-};
-function resize_bookmarks () {
-    // adjust bookmark box height
-    $('#bookmarks .list-wrapper').css('min-height', window_height - 50 - $('.pagination-hr').height() - $('.list-header').height() - $('.add-bookmark-form-box').height());
-}
-var window_resize = function  () {
-    window_height = $(window).height() - 20;
-    $('#bookmarks').css('min-height', window_height);
-    $('#lists').css('min-height', window_height);
-    resize_bookmarks();
-    resize_lists();
-};
-$(window).resize(window_resize)

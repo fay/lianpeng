@@ -184,6 +184,10 @@ INSTALLED_APPS = [
     "pagination",
     "kaleo",
     "south",
+    "xadmin",
+    'crispy_forms',
+    'reversion',
+
     
     # project
     "misc",

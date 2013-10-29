@@ -210,6 +210,7 @@ var BookmarkView = Backbone.View.extend({
 });
 var BookmarksView = Backbone.View.extend({
     events: {
+        "resize window": "render",
         "click .tag": "list_by_tag",
         "submit .add-bookmark-form": "add_bookmark"
     },
@@ -359,8 +360,6 @@ var BookmarksView = Backbone.View.extend({
         } else {
             this.$('.list .no-bookmarks').show();
         }
-        console.log()
-        
-        $('#bookmarks .list-wrapper').css('min-height', window_height - 50 - $('.pagination-hr').height() - $('.list-header').height() - $('.add-bookmark-form-box').height());
+        resize_bookmarks();
     }
 });

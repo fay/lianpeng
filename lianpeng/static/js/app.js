@@ -239,7 +239,7 @@ var ListsView = Backbone.View.extend({
         var self = this;
         this.collection = new Lists();
         this.collection.bind('add', this.append_new_list, this);
-        this.collection.bind('destroy', function(){this.resize_height(-26);}, this);// resize sidebar list height after a list is deleted
+        this.collection.bind('destroy', function(){resize_lists(-26);}, this);// resize sidebar list height after a list is deleted
         this.collection.bind("reset", this.render, this);
         this.collection.bind("reset", this.user_lists_loaded, this);
         this.collection.fetch();
@@ -274,19 +274,7 @@ var ListsView = Backbone.View.extend({
             });
         }
         this.$('.jquery-bootstrap-pagination').addClass("pagination-mini");
-        this.resize_height();
-    },
-    resize_height: function(height) {
-        var user_lists_height = $('.user-lists').height();
-        var user_lists_max_height = window_height - 198;
-        if (user_lists_max_height < user_lists_height) {
-            user_lists_height = user_lists_max_height;
-        }
-        if (height) {
-            user_lists_height += height;
-        }
-        $('.user-lists').css('height', user_lists_height);
-
+        resize_lists();
     },
     append_new_list: function(list, collection, resp, target) {
         var template = $('#list-tmpl').html();
@@ -408,17 +396,30 @@ $(document).ready(function(){
         }
     });
     router = new AppRouter();
-    window_height = $(window).height() - 20;
-    $('#bookmarks').css('min-height', window_height);
-    $('#lists').css('min-height', window_height);
-
-    //sidebarwidth = $(".sidebar-width").css('width');
-    bodypaddingtop = $(".navbar-fixed-top").css('height');
-    //$('.sidebar-nav-fixed').css('width', sidebarwidth);
-    //contentmargin = parseInt(sidebarwidth)
-    //$('.span-fixed-sidebar').css('marginLeft', contentmargin);
-    //$('.span-fixed-sidebar').css('paddingLeft', 60);
-
+    window_resize();
     Backbone.history.start({pushState: true});
 
 });
+var resize_lists = function(height) {
+    var user_lists_height = $('.user-lists').height();
+    var user_lists_max_height = window_height - 198;
+    if (user_lists_max_height < user_lists_height) {
+        user_lists_height = user_lists_max_height;
+    }
+    if (height) {
+        user_lists_height += height;
+    }
+    $('.user-lists').css('height', user_lists_height);
+};
+function resize_bookmarks () {
+    // adjust bookmark box height
+    $('#bookmarks .list-wrapper').css('min-height', window_height - 50 - $('.pagination-hr').height() - $('.list-header').height() - $('.add-bookmark-form-box').height());
+}
+var window_resize = function  () {
+    window_height = $(window).height() - 20;
+    $('#bookmarks').css('min-height', window_height);
+    $('#lists').css('min-height', window_height);
+    resize_bookmarks();
+    resize_lists();
+};
+$(window).resize(window_resize)

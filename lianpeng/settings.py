@@ -338,6 +338,7 @@ CACHES = {
 }
 
 KALEO_DEFAULT_INVITE_ALLOCATION = 5
+GRAVATAR_DEFAULT_IMAGE = 'mm'
 
 try:
     from local_settings import *

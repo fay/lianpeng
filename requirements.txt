@@ -41,3 +41,5 @@ kaleo==1.1
 django-gravatar==0.1.0
 south==0.8.2
 django-avatar==2.0a10
+django-xadmin==0.4.0
+django-reversion==1.7.1

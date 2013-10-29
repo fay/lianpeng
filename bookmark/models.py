@@ -89,7 +89,7 @@ class Bookmark(models.Model, DiffingMixin):
     created_time = models.DateTimeField(db_index=True)
     modified_time = models.DateTimeField(auto_now=True, db_index=True)
     unique_key = models.CharField(max_length=32)
-    user = models.ForeignKey(User)
+    user = models.ForeignKey(User, related_name="bookmarks")
     list = models.ForeignKey(List, null=True, blank=True)
 
     def tags_splited(self):

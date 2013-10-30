@@ -46,9 +46,12 @@ bookmark-app
                         <ul class="unstyled">
                             <li>
                                 <a href="{% url notifications:mark_all_as_read %}" class="pull-right">
+                                    {% notifications_unread as unread_count %}
                                     <i class="icon-bell-alt"></i>
+                                    {% if unread_count %}<span class="badge badge-mini badge-warning">{{ unread_count }}</span>
+                                    {% else %}
                                     {% trans "Notifications" %}
-                                {% if unread_count %}<span class="badge badge-mini badge-success">{{ unread_count }}</span>{% endif %}
+                                    {% endif %}
                                 </a>
                             </li>
                             <li>

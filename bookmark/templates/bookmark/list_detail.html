@@ -21,7 +21,7 @@
                         <a href="{% url bookmark_profile list.user %}">
                             <h4>{{ list.user }}</h4>
                         </a>
-                        <small class="muted signature">{{ profile.signature }}</small>
+                        <small class="muted signature">{{ profile.signature|default:"" }}</small>
                     </div>
                 </div>
             </div>

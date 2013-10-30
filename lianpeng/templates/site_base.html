@@ -67,6 +67,24 @@
 {% endblock %}
 
 {% block script_base %}
+    <div class="modal hide" id="feedback">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>{% trans "Feedback" %}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row-fluid">
+                <textarea name="text" rows="8" class="span12" placeholder="{% trans "Help us to make it better." %}"></textarea>
+            </div>
+            <div class="alert alert-success success hide">
+                {% trans "Thank for your feedback, we will deal with it carefully." %}
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="#" class="btn" data-dismiss="modal">{% trans "Cancel" %}</a>
+            <a href="#" class="btn btn-primary confirm">{% trans "Confirm" %}</a>
+        </div>
+    </div>
     <script src="{% block jquery_src %}{% static "pinax/js/jquery.js" %}{% endblock %}"></script>
     <script src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
     <script src="{% static "pinax/js/theme.js" %}"></script>
@@ -100,24 +118,6 @@
 {% block extra_body_base %}
     <div class="hide">
         {% trans "now" %}
-    </div>
-    <div class="modal hide" id="feedback">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">×</button>
-            <h3>{% trans "Feedback" %}</h3>
-        </div>
-        <div class="modal-body">
-            <div class="row-fluid">
-                <textarea name="text" rows="8" class="span12" placeholder="{% trans "Help us to make it better." %}"></textarea>
-            </div>
-            <div class="alert alert-success success hide">
-                {% trans "Thank for your feedback, we will deal with it carefully." %}
-            </div>
-        </div>
-        <div class="modal-footer">
-            <a href="#" class="btn" data-dismiss="modal">{% trans "Cancel" %}</a>
-            <a href="#" class="btn btn-primary confirm">{% trans "Confirm" %}</a>
-        </div>
     </div>
     <!--[if lt IE 9]>
         <script type="text/javascript" src="{{ STATIC_URL }}js/noty/layouts/topCenter.js"></script>

@@ -355,7 +355,7 @@ var ListsView = Backbone.View.extend({
         if(this.collection.size() <= 2) {
             height = 48;
         }
-        this.resize_height(height);
+        resize_lists(height);
         return false;
     }
 });

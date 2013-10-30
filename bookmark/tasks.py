@@ -83,6 +83,8 @@ def handle_imported_file(data, user, site, list_name):
         bookmark = Bookmark()
         l = None
         date = None
+        if not link:
+            continue
         for attr in link.attrs:
             if attr[0] == 'href':
                 bookmark.url = attr[1]

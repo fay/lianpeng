@@ -63,6 +63,10 @@ def explore(request):
             context['bookmarks'] = bookmarks
         elif filter == 'recent':
             context['lists'] = lists
+        elif filter == 'user':
+            #users = User.objects.all()
+            #context['users'] = users
+            pass
     else:
         list_ids = PickedList.objects.all().values_list('list_id', flat=True) 
         lists = List.objects.filter(public=True, id__in=list_ids).order_by('-created_time')

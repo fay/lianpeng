@@ -342,6 +342,7 @@ CACHES = {
 }
 
 KALEO_DEFAULT_INVITE_ALLOCATION = 5
+SOCIAL_AUTH_SESSION_EXPIRATION = False
 
 try:
     from local_settings import *

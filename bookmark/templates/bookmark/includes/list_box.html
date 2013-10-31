@@ -14,7 +14,7 @@
                                         {% for bookmark in  bookmarks %}
                                         <li>
                                         <a class="bookmark-link" href="javascript:;" title="{{ bookmark.title }}">
-                                                <img src="http://g.etfv.co/http://{{ bookmark.domain }}" width="16"/>
+                                                <img src="{{ bookmark.favicon }}" width="16"/>
                                                 {{ bookmark.title }}
                                             </a>
                                         </li>

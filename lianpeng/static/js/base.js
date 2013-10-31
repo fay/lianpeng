@@ -65,7 +65,11 @@ $.fn.spin = function(opts) {
 var router;
 $('.search').submit(function(){
     var query = $(this).find('.query').val();
-    var search_url = $(this).attr('action') + query;
+    if (query.indexOf('#') == 0) {
+        var search_url = $(this).attr('tag-action') + query.slice(1)
+    } else {
+        var search_url = $(this).attr('action') + query;
+    }
     if (router) {
         router.navigate(search_url, {trigger: true});
     } else {

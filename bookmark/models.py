@@ -26,6 +26,29 @@ from guardian.shortcuts import assign_perm, remove_perm, get_perms
 from agon.models import award_points, TargetStat
 from misc.utils import find_mentions
 
+class Choice(object):
+
+    def __init__(self, choices):
+        self.choices = choices
+
+    def __getattr__(self, name):
+        if name.lower() in self.choices:
+            return self.choices.get(name)
+        else:
+            return super(Choice, self).__getattr__(name)
+
+    def to_choices(self):
+        return tuple(zip(self.choices.values(), self.choices.keys()))
+
+
+LIST_KIND_CHOICES = Choice({
+        'inbox': 0,
+        'normal': 2,
+        'shared': 3,
+       # Note: kind: 3(shared) is not used in db,
+       # but for frontend use, kind: 1 is reserved
+})
+
 class DiffingMixin(object):
 
     def __init__(self, *args, **kwargs):
@@ -43,16 +66,12 @@ class DiffingMixin(object):
 class List(models.Model):
     name = models.CharField(max_length=256)
     user = models.ForeignKey(User)
-    image = models.ImageField(null=True, blank=True, 
+    image = models.ImageField(null=True, blank=True,
                               upload_to="list_images")
     slug = models.SlugField(null=True, blank=True)
     public = models.BooleanField(default=False, db_index=True)
-    kind = models.IntegerField(choices=((0, "inbox"), 
-                                        (2, "normal"), 
-                                        (3, "shared")), 
-                               # Note: kind: 3(shared) is not used in db, 
-                               # but for frontend use, kind: 1 is reserved
-                               default=2, db_index=True) 
+    kind = models.IntegerField(choices=LIST_KIND_CHOICES.to_choices(),
+                               default=2, db_index=True)
     position = positions.PositionField(unique_for_fields=('user', 'kind'))
     count = models.PositiveIntegerField(default=0)
 

@@ -16,7 +16,13 @@ def is_user_followed(user, followee):
 def list_bookmarks(l, num=3):
     return l.bookmark_set.order_by('-created_time')[:num]
 
-    
 @register.filter(name="public_lists")
 def public_lists(user, num=3):
     return user.list_set.filter(public=True).order_by('-created_time')[:num]
+
+@register.filter(name="split")
+def split_string(string):
+    if string:
+        return string.split()
+    else:
+        return string

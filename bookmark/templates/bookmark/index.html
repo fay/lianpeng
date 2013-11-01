@@ -5,6 +5,7 @@
 {% load agon_tags %}
 {% load kaleo_tags %}
 {% load notifications_tags %}
+{% load bookmark_tags %}
 
 {% block head_title %}{{ user.username }}{% endblock %}
 
@@ -492,7 +493,7 @@ bookmark-app
         tag_title:"{% trans "Tag:" %}"
     };
     {% for message in messages %}
-        noty({text: '{{ message }}', type:'{{ message.tags }}', layout: 'bottom'});
+        noty({text: '{{ message }}', type:'{{ message.tags|split|last }}', layout: 'bottom'});
     {% endfor %}
 
 

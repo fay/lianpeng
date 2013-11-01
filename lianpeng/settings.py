@@ -112,6 +112,7 @@ MIDDLEWARE_CLASSES = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "bookmark.django-crossdomainxhr-middleware.XsSharing",
     'django.middleware.gzip.GZipMiddleware',
+    'social_auth.middleware.SocialAuthExceptionMiddleware',
     #'pipeline.middleware.MinifyHTMLMiddleware',
 ]
 
@@ -344,6 +345,7 @@ CACHES = {
 KALEO_DEFAULT_INVITE_ALLOCATION = 5
 SOCIAL_AUTH_SESSION_EXPIRATION = False
 GRAVATAR_DEFAULT_IMAGE = 'mm'
+LOGIN_ERROR_URL = 'account_login'
 
 try:
     from local_settings import *

@@ -101,9 +101,9 @@ bookmark-app
         </div>
         <div class="" id="lists">
             <div class="list-wrapper">
-                <form class="navbar-form search" action="/{{user.username}}/search/">
+                <form class="navbar-form search" action="/{{user.username}}/search/" tag-action="/{{ user.username }}/tag/">
                     <div class="input-append">
-                        <input type="text" name="query" class="query span10"><button type="submit" class="btn"><i class="icon-search"></i></button>
+                        <input type="text" name="query" class="query span10" placeholder="输入关键字或者#标签名"><button type="submit" class="btn"><i class="icon-search"></i></button>
                     </div>
                 </form>
                 <div class="sys-lists">

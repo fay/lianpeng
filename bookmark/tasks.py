@@ -4,11 +4,14 @@ import datetime
 import re
 import urllib2
 import json
+import os
+import hashlib
 from urlparse import urlparse
 
 from django.utils.timezone import utc
 from django.utils.translation import ugettext as _
 from django.db import transaction
+from django.conf import settings
 
 from BeautifulSoup import BeautifulSoup
 from celery.task import task
@@ -137,5 +140,3 @@ def handle_imported_file(data, user, site, list_name):
             bookmark.save()
         except:
             continue
-            
-

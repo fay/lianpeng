@@ -1,5 +1,6 @@
 import re
 import datetime
+import calendar
 from urlparse import urlparse
 
 from django.contrib.auth import authenticate, login
@@ -179,6 +180,33 @@ def import_to(request):
                                 we will import your bookmarks to your account \
                                 in background.Please wait a minute."))
         return redirect('bookmark_import')
+
+@login_required
+def export(request):
+    if request.method == 'POST':
+        user = request.user
+
+        lists = user.list_set.all()
+
+        html = """
+        <!DOCTYPE NETSCAPE-Bookmark-file-1>
+        <!--This is an automatically generated file.
+        It will be read and overwritten.
+        Do Not Edit! -->
+        <Title>lianpeng.me bookmarks</Title>
+        <H1>Bookmarks</H1>
+        <DL>
+        """
+
+        for l in lists:
+            bookmarks = l.bookmark_set.all()
+            html += ''.join(['<DT><A HREF="{}" ADD_DATE="{}" TAGS="{}" LIST="{}">{}</A></DT>\n'.format(
+                bookmark.url, calendar.timegm(bookmark.created_time.utctimetuple()), bookmark.tags, l.name, bookmark.title
+            ) for bookmark in bookmarks])
+        html += "</DL>"
+        resp = HttpResponse(html, content_type="application/octet-stream")
+        resp['Content-Disposition'] = 'attachment;filename=\"{}\"'.format('lianpeng_bookmarks.html') 
+        return resp
 
 def feedback(request):
     form = FeedbackForm()

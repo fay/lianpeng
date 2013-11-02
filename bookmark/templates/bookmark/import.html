@@ -1,17 +1,33 @@
 {% extends 'site_base.html' %}
 {% load i18n %}
 {% load bootstrap_tags %}
-{% block head_title %}{% trans "Import" %}{% endblock %}
+
+{% block head_title %}{% trans "Import/Export" %}{% endblock %}
+
 {% block body %}
     <div class="page-title">
-        <h1>{% trans "Import" %}</h1>
+        <h1>{% trans "Import/Export" %}</h1>
     </div>
     <hr class="soften">
-    <form enctype="multipart/form-data" method="post" class="form-horizontal" action="{% url bookmark_import %}">
-        {% csrf_token %}
-        {{ import_form|as_bootstrap }}
-        <p class="form-actions">
-        <input type="submit" value="{% trans "Import" %}" class="btn btn-primary">
-        </p>
-    </form> 
+    <div class="row-fluid">
+        <div class="span6">
+            <form enctype="multipart/form-data" method="post" class="form-horizontal" action="{% url bookmark_import %}">
+                {% csrf_token %}
+                {{ import_form|as_bootstrap }}
+                <p class="form-actions">
+                <input type="submit" value="{% trans "Import" %}" class="btn btn-primary">
+                </p>
+            </form> 
+        </div>
+        <div class="span6">
+            <form action="{% url bookmark_export %}" method="post" accept-charset="utf-8">
+                {% csrf_token %}
+                <p class="well">{% trans "Export your bookmarks to HTML file and download it to your comouter." %}</p>
+                <p class="form-actions">
+                    <input type="submit" name="" value="{% trans "Export" %}" class="btn btn-primary">
+                </p>
+            </form>
+        </div>
+    </div>
+
 {% endblock %}

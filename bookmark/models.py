@@ -158,6 +158,7 @@ class PickedList(models.Model):
 class Feedback(models.Model):
     user = models.ForeignKey(User, null=True, blank=True)
     text = models.TextField(verbose_name=_('feedback'))
+    created_time = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return self.text
@@ -364,20 +365,3 @@ def send_notification_email(sender, instance, created, **kwargs):
     site_name = site.name 
     send_mail(_('[%(site_name)s] You have new notification messages') % {'site_name': site_name}, content,
               settings.DEFAULT_FROM_EMAIL, [instance.recipient.email], fail_silently=False)
-    
-
-'''
-from django.contrib.auth.models import Group, Permission
-def add_bookmark_permission(sender, instance, **kwargs):
-    add_permission(instance, "bookmark")
-    add_permission(instance, "list")
-
-def add_permission(instance, suffix_code_name):
-    add_permission = Permission.objects.get(codename="add_" + suffix_code_name)
-    change_permission = Permission.objects.get(codename="change_" + suffix_code_name)
-    delete_permission = Permission.objects.get(codename="delete_" + suffix_code_name)
-    instance.user_permissions.add(add_permission)
-    instance.user_permissions.add(delete_permission)
-    instance.user_permissions.add(change_permission)
-post_save.connect(add_bookmark_permission, sender=User)
-'''

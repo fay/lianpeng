@@ -136,6 +136,12 @@ def handle_imported_file(data, user, site, list_name):
             bookmark.list = default_list
         bookmark.title = link.string 
         bookmark.user = user
+        # we can not have two bookmark with the same url in the same list
+        try:
+            Bookmark.objects.get(url=bookmark.url, list=bookmark.list)
+            continue
+        except Bookmark.DoesNotExist:
+            pass
         try:
             bookmark.save()
         except:

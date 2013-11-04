@@ -23,7 +23,7 @@
 <ul class="nav pull-right">
     {% if request.user.is_authenticated %}
         {% notifications_unread as unread_count %}
-        <li><a href="{% url bookmark_sync %}">{% trans "Sync" %}</a></li>
+        <li><a href="#feedback" data-toggle="modal">{% trans "Feedback" %}</a></li>
         <li><a href="{% url help %}" data-toggle="modal">{% trans "Help" %}</a></li>
         <li>
             <a href="{% url notifications:mark_all_as_read %}">{% trans "Notifications" %} 
@@ -48,7 +48,6 @@
                 <li><a href="/admin/" target="_blank"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
                 {% endif %}
                 <li><a href="{% url help %}" data-toggle="modal"><i class="icon-question-sign"></i> {% trans "Help" %}</a></li>
-                <li><a href="#feedback" data-toggle="modal"><i class="icon-comment"></i> {% trans "Feedback" %}</a></li>
                 <li class="divider"></li>
                 <li><a href="{% url account_logout %}"><i class="icon-off"></i> {% trans "Log out" %}</a></li>
             </ul>

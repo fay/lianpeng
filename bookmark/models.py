@@ -123,7 +123,7 @@ class Bookmark(models.Model, DiffingMixin):
         return reverse('bookmark_detail', args=[self.id])
 
     def __unicode__(self):
-        return self.title
+        return u"{} - {}".format(self.title, self.user)
 
 class Follow(models.Model):
     followee = models.ForeignKey(User, related_name='followers')

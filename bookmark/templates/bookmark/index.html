@@ -98,12 +98,13 @@ bookmark-app
                     <li><a target="_blank" href="{% url help %}" data-toggle="modal"><i class="icon-question-sign"></i> {% trans "Help" %}</a></li>
                 </ul>
                 <hr>
-                <div id="lianbang-container">
-                    <div id="lianbang-tip-box"></div>
-                    <script type="text/javascript" src="http://127.0.0.1:8000/tip/site/815724886710a0dac63df121ec4f3322.js/" charset="utf-8">
-                    </script>
-                </div>
             </div>
+        </div>
+        <div id="lianbang-container" style="z-index:10;position:fixed;left:0;bottom:0;width:15%;">
+            <a href="javascript:;" id="lianbang-close"><i class="icon-remove-sign" style="z-index:1;position:absolute;right:20px;top:5px;"></i></a>
+            <div id="lianbang-tip-box"></div>
+            <script type="text/javascript" src="http://127.0.0.1:8000/tip/site/815724886710a0dac63df121ec4f3322.js/" charset="utf-8">
+            </script>
         </div>
         <div class="" id="lists">
             <div class="list-wrapper">

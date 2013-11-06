@@ -7,8 +7,8 @@
 </div>
 <hr class="soften">
 <div class="row">
-    <div class="span12">
-        <div class="page-header">
+    <div class="span10">
+        <div class="page-header" id="install">
             <h3>安装收藏工具</h3>
         </div>
         <h4>A. 谷歌Chrome浏览器</h4>
@@ -34,7 +34,31 @@
         <p>
             <img src="{{ STATIC_URL }}img/bookmark_screenshot.png" />
         </p>
-        <div class="page-header">
+
+
+        <div class="page-header" id="bookmark">
+            <h3>收藏网页</h3>
+        </div>
+        <p>
+            <h4>标题</h4>
+            在弹出的收藏窗口中，莲蓬会获取到网页的标题，并将网页的描述默认作为这次收藏的笔记。
+            <h4>笔记</h4>
+            如果你希望编写自己的笔记，可以直接删除笔记栏目中的默认内容。
+            之所以需要笔记是因为有时标题太简单，没有足够的信息方便以后可以再次找到，
+            自己可以组织一段话来描述这次收藏，帮助自己理解和加深印象。
+            <h4>专辑</h4>
+            专辑是用来组织一些相关性较强的网页，网页默认是存放到<code>Inbox</code>这个专辑中的。您也可以自己创建专辑，
+            这一栏是一个下拉筛选框，其中最后一个选项是<code>-- 新建专辑 -- </code>，选择这个选项后，会出现一个输入框，
+            用于填写专辑名称，点击确定后，即可看到下拉筛选框多了一个刚才新建的专辑。
+            <h4>标签</h4>
+            标签是简短的关键字，是归纳网页的中心词，也是便于往后找回收藏的方式，多个标签以空格分隔填写在对应的输入框里。
+            莲蓬现在会自动抽取网页的关键字，作为候选标签推荐在下方。
+            <h4>邮件分享</h4>
+            在最下方是邮件分享的选项，在点击保存后将跳转到对应的邮件编写应用中，将本次收藏的网页分享给好友。
+        </p>
+
+
+        <div class="page-header" id="manage">
             <h3>查看、管理网页</h3>
         </div>
         <p>
@@ -43,6 +67,13 @@
         <p>
             <img src="{{ STATIC_URL }}img/home_screenshot.png" />
         </p>
+    </div>
+    <div class="span2">
+    <ul class="nav nav-list bs-docs-sidenav affix">
+          <li><a href="#install"><i class="icon-chevron-left"></i> 安装插件</a></li>
+          <li><a href="#bookmark"><i class="icon-chevron-left"></i> 收藏网页</a></li>
+          <li><a href="#manage"><i class="icon-chevron-left"></i> 管理收藏</a></li>
+    </ul>
     </div>
 </div>
 {% endblock %}

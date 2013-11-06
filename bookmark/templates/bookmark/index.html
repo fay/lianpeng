@@ -100,12 +100,14 @@ bookmark-app
                 <hr>
             </div>
         </div>
+        {% if user.is_superuser %}
         <div id="lianbang-container" style="z-index:10;position:fixed;left:0;bottom:0;width:15%;">
             <a href="javascript:;" id="lianbang-close"><i class="icon-remove-sign" style="z-index:1;position:absolute;right:20px;top:5px;"></i></a>
             <div id="lianbang-tip-box"></div>
-            <script type="text/javascript" src="http://127.0.0.1:8000/tip/site/815724886710a0dac63df121ec4f3322.js/" charset="utf-8">
+            <script type="text/javascript" src="http://lianbang.duapp.com/tip/site/815724886710a0dac63df121ec4f3322.js/?v=1" charset="utf-8">
             </script>
         </div>
+        {% endif %}
         <div class="" id="lists">
             <div class="list-wrapper">
                 <form class="navbar-form search" action="/{{user.username}}/search/" tag-action="/{{ user.username }}/tag/">

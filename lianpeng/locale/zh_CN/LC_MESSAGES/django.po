@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 17:42+0800\n"
+"POT-Creation-Date: 2013-11-07 21:39+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,6 +143,7 @@ msgid "Try again:"
 msgstr "重试："
 
 #: templates/account/email/invite_user.txt:1
+#, python-format
 msgid ""
 "You have been invited to join %(site_name)s (%(site_domain)s) by "
 "%(inviter)s. Your signup code is %(code)s. You can also click the link below "
@@ -156,26 +157,6 @@ msgstr ""
 #, python-format
 msgid "[%(site_name)s] Invitation to join from friend."
 msgstr "[%(site_name)s] 好友邀请"
-
-#: templates/avatar/change.html:13
-msgid "Avatar"
-msgstr ""
-
-#: templates/avatar/change.html:16
-msgid "Your current avatar: "
-msgstr ""
-
-#: templates/avatar/change.html:19
-msgid "You haven't uploaded an avatar yet. Please upload one now."
-msgstr ""
-
-#: templates/avatar/change.html:25
-msgid "Choose new Default"
-msgstr ""
-
-#: templates/avatar/change.html:30
-msgid "Upload New Image"
-msgstr ""
 
 #: templates/notifications/list.html:9
 msgid "All"

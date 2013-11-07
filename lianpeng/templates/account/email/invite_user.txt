@@ -1,2 +1,2 @@
-{% load i18n %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain code=signup_code.code inviter=singup_code.inviter.username %}You have been invited to join {{ site_name }} ({{ site_domain }}) by {{ inviter }}. Your signup code is {{ code }}. You can also click the link below directly to signup:
+{% load i18n %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain code=signup_code.code inviter=signup_code.inviter.username %}You have been invited to join {{ site_name }} ({{ site_domain }}) by {{ inviter }}. Your signup code is {{ code }}. You can also click the link below directly to signup:
 {% endblocktrans %}{{ signup_url }}

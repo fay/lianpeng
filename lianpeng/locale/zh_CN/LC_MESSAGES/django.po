@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-12 16:09+0800\n"
+"POT-Creation-Date: 2013-11-07 17:42+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 
-#: templates/_account_bar.html:10 templates/homepage.html:35
+#: templates/_account_bar.html:10
 msgid "Explore"
 msgstr "探索发现"
 
@@ -25,11 +25,11 @@ msgstr "探索发现"
 msgid "Tools"
 msgstr "工具"
 
-#: templates/_account_bar.html:26 templates/site_base.html:51
+#: templates/_account_bar.html:26 templates/site_base.html:73
 msgid "Feedback"
 msgstr "反馈"
 
-#: templates/_account_bar.html:27
+#: templates/_account_bar.html:27 templates/_account_bar.html.py:50
 msgid "Help"
 msgstr "帮助"
 
@@ -55,22 +55,26 @@ msgid "Settings"
 msgstr "设置"
 
 #: templates/_account_bar.html:44
+msgid "Sync"
+msgstr ""
+
+#: templates/_account_bar.html:45
 msgid "Import"
 msgstr ""
 
-#: templates/_account_bar.html:47
+#: templates/_account_bar.html:48
 msgid "Admin"
 msgstr ""
 
-#: templates/_account_bar.html:49
+#: templates/_account_bar.html:52
 msgid "Log out"
 msgstr ""
 
-#: templates/_account_bar.html:53 templates/homepage.html:41
+#: templates/_account_bar.html:56
 msgid "Log in"
 msgstr ""
 
-#: templates/_account_bar.html:55
+#: templates/_account_bar.html:58
 msgid "Sign up"
 msgstr ""
 
@@ -86,45 +90,25 @@ msgstr ""
 msgid "帮助"
 msgstr ""
 
-#: templates/homepage.html:11
-msgid "Welcome"
-msgstr "欢迎"
-
-#: templates/homepage.html:25
-msgid "Your online knowledge library of amazing things."
-msgstr "为你的创意工作建立知识库，管理组织有用的网页"
-
-#: templates/homepage.html:28
-msgid "Find, Collect, Research & Share the serendipity on internet."
-msgstr "发现 • 收集 • 研究 • 分享，"
-
-#: templates/homepage.html:34
-msgid "立即注册"
-msgstr ""
-
-#: templates/homepage.html:41
-msgid "Already has an account?"
-msgstr "已经有一个帐号？"
-
-#: templates/site_base.html:46
-msgid "now"
-msgstr "刚刚"
-
-#: templates/site_base.html:55
+#: templates/site_base.html:77
 msgid "Help us to make it better."
 msgstr "帮助我们变得更好"
 
-#: templates/site_base.html:58
+#: templates/site_base.html:80
 msgid "Thank for your feedback, we will deal with it carefully."
 msgstr "谢谢您的反馈，我们会认真对待您的建议。"
 
-#: templates/site_base.html:62
+#: templates/site_base.html:84
 msgid "Cancel"
 msgstr ""
 
-#: templates/site_base.html:63
+#: templates/site_base.html:85
 msgid "Confirm"
 msgstr ""
+
+#: templates/site_base.html:120
+msgid "now"
+msgstr "刚刚"
 
 #: templates/account/email/admin_invite_user.html:4
 msgid "Home"
@@ -158,9 +142,8 @@ msgstr "您必须指定一个邀请码"
 msgid "Try again:"
 msgstr "重试："
 
-#: templates/account/email/invite_user.txt:2
+#: templates/account/email/invite_user.txt:1
 msgid ""
-"\n"
 "You have been invited to join %(site_name)s (%(site_domain)s) by "
 "%(inviter)s. Your signup code is %(code)s. You can also click the link below "
 "directly to signup:\n"
@@ -170,9 +153,29 @@ msgstr ""
 "是%(code)s，您可以直接点击下面的链接直接注册：\n"
 
 #: templates/account/email/invite_user_subject.txt:1
+#, python-format
 msgid "[%(site_name)s] Invitation to join from friend."
+msgstr "[%(site_name)s] 好友邀请"
+
+#: templates/avatar/change.html:13
+msgid "Avatar"
 msgstr ""
-"[%(site_name)s] 好友邀请"
+
+#: templates/avatar/change.html:16
+msgid "Your current avatar: "
+msgstr ""
+
+#: templates/avatar/change.html:19
+msgid "You haven't uploaded an avatar yet. Please upload one now."
+msgstr ""
+
+#: templates/avatar/change.html:25
+msgid "Choose new Default"
+msgstr ""
+
+#: templates/avatar/change.html:30
+msgid "Upload New Image"
+msgstr ""
 
 #: templates/notifications/list.html:9
 msgid "All"
@@ -201,6 +204,18 @@ msgstr "前"
 #: templates/notifications/notice.txt:4
 msgid "Click link below to view the detail notification."
 msgstr "点击下面的链接查看通知详细信息："
+
+#~ msgid "Welcome"
+#~ msgstr "欢迎"
+
+#~ msgid "Your online knowledge library of amazing things."
+#~ msgstr "为你的创意工作建立知识库，管理组织有用的网页"
+
+#~ msgid "Find, Collect, Research & Share the serendipity on internet."
+#~ msgstr "发现 • 收集 • 研究 • 分享，"
+
+#~ msgid "Already has an account?"
+#~ msgstr "已经有一个帐号？"
 
 #~ msgid "Get started"
 #~ msgstr "立即开始"

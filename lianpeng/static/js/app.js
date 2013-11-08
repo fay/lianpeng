@@ -1,6 +1,10 @@
 var window_height;
 var resize_lists = function(height) {
     var user_lists_height = $('.user-lists').height();
+    if (user_lists_height == 0) {
+        return;
+    }
+
     var user_lists_max_height = window_height - 198;
     if (user_lists_max_height < user_lists_height) {
         user_lists_height = user_lists_max_height;

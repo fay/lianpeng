@@ -14,7 +14,7 @@ from django.utils.timezone import utc
 from django.template.loader import render_to_string
 from django.core.mail import send_mail
 from django.conf import settings
-
+from django.db import IntegrityError
 
 from tagging.fields import TagField
 import positions
@@ -25,6 +25,7 @@ from guardian.models import GroupObjectPermissionBase
 from guardian.shortcuts import assign_perm, remove_perm, get_perms
 from agon.models import award_points, TargetStat
 from misc.utils import find_mentions
+from misc.models import Lock
 
 class Choice(object):
 
@@ -170,7 +171,9 @@ class ListInvitation(models.Model):
     status = models.IntegerField(default=0, choices=((0, 'created'), 
                                                      (1, 'accepted'), 
                                                      (2, 'ignored')))
-    permission = models.CharField(max_length=50, choices=(('can_edit', 'Can edit'), ('can_view', 'Can view')))
+    permission = models.CharField(max_length=50, choices=(('can_edit', 'Can edit'),
+                                                          ('can_view', 'Can view'))
+                                 )
     created_time = models.DateTimeField(auto_now_add=True)
 
     def clean(self):
@@ -199,7 +202,10 @@ class ListInvitation(models.Model):
 class SyncState(models.Model):
     user = models.ForeignKey(User)
     website = models.CharField(max_length=16)
-    state = models.IntegerField(choices=((0, 'no sync'), (1, 'synced'), (2, 'syncing')))
+    state = models.IntegerField(choices=((0, 'no sync'),
+                                         (1, 'synced'),
+                                         (2, 'syncing'))
+                               )
     list = models.ForeignKey(List, null=True)
 
     class Meta:
@@ -255,9 +261,19 @@ def inc_user_karma(sender, instance, created, **kwargs):
         now = datetime.datetime.utcnow().replace(tzinfo=utc)
         today = now.date()
         user = instance.user
-        today_count = Bookmark.objects.filter(created_time__gte=today, user=user).count()
-
-        if today_count < 2:
+        action = "award_daily_points"
+        awarded = False
+        try:
+            key = md5("{}{}{}".format(user.id, action, today)).hexdigest()
+            lock, created = Lock.objects.get_or_create(key=key,
+                      defaults={"user": user, "action": action})
+            if not created:
+                awarded = True
+        except IntegrityError:
+            awarded = True
+        if awarded:
+            return #: no award again today
+        else:
             try:
                 stat = user.targetstat_targets
                 level = stat.level
@@ -321,7 +337,9 @@ def notify_comment(sender, instance, created, **kwargs):
         comment = instance
         user = comment.content_object.user
         from_user = comment.user
-        mentions = set(find_mentions(comment.comment) + [from_user.username, user.username]) - set([from_user.username, user.username])
+        mentions = set(find_mentions(comment.comment) + 
+                       [from_user.username, user.username]
+                      ) - set([from_user.username, user.username])
         users = list(User.objects.filter(username__in=mentions))
         users.append(user)
         for user in users:

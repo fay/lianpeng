@@ -345,7 +345,6 @@ class BookmarkResource(ModelResource):
         q = bundle.request.GET.get('q')
         if q:
             sqs = SearchQuerySet().models(Bookmark).auto_query(q).filter(user_id=user.id)
-            print len(sqs)
             objects = objects.filter(pk__in=[i.pk for i in sqs])
             #objects = objects.filter(Q(title__icontains=q) | Q(tags__icontains=q) | Q(note__icontains=q))
 

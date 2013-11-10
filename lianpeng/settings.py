@@ -348,14 +348,6 @@ SOCIAL_AUTH_SESSION_EXPIRATION = False
 GRAVATAR_DEFAULT_IMAGE = 'mm'
 LOGIN_ERROR_URL = 'account_login'
 
-HAYSTACK_CONNECTIONS = {
-    'default': {
-        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-        'URL': 'http://127.0.0.1:9203/',
-        'INDEX_NAME': 'haystack',
-    },
-}
-
 try:
     from local_settings import *
 except ImportError:

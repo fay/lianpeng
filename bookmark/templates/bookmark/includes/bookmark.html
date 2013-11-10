@@ -60,6 +60,12 @@
                                             {{  bookmark.domain  }}</a> &nbsp;
                                         <a href="{% url bookmark_profile bookmark.user%}" class="muted"><i class="icon-user"></i> {{ bookmark.user }}</a>
                                         &nbsp;
+                                        <a class="muted" href="{% url bookmark_list bookmark.list.id %}">
+                                            <i class="icon-circle-blank"></i>
+                                            <small>{{ bookmark.list }}</small>
+                                        </a>
+                                        &nbsp;
+                                        <a href=""></a>
                                         <a href="{% url bookmark_detail bookmark.id %}" class="muted">
                                             <i class="icon-comment"></i>&nbsp;
                                             <small>{{ bookmark|comments_count }} {% trans "comments" %}</small>

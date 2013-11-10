@@ -50,7 +50,7 @@ urlpatterns = patterns("",
     url(r'^invite/', include('kaleo.urls')),
     url(r'^notifications/', include('notifications.urls', namespace="notifications")),
     url(r'^avatar/', include('avatar.urls')),
-    url(r'^search/', include('haystack.urls')),
+    url(r'^apps/', include('market.urls')),
     url(r'^', include("bookmark.urls")),
 )
 

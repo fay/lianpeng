@@ -198,6 +198,7 @@ INSTALLED_APPS = [
     "harvest",
     "profiles",
     "avatar",
+    "market",
 ]
 
 # A sample logging configuration. The only tangible logging

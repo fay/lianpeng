@@ -33,6 +33,7 @@ from bookmark.api.validations import BookmarkValidation, \
         ListInvitationValidation
 from bookmark.forms import BookmarkForm, ListForm, FeedbackForm, FollowForm, \
         CommentForm, ListInvitationForm
+from market.models import UserApp, App
 from tagging.managers import ModelTaggedItemManager
 
 class PermissionValidation(Validation):
@@ -344,9 +345,12 @@ class BookmarkResource(ModelResource):
 
         q = bundle.request.GET.get('q')
         if q:
-            sqs = SearchQuerySet().models(Bookmark).auto_query(q).filter(user_id=user.id)
-            objects = objects.filter(pk__in=[i.pk for i in sqs])
-            #objects = objects.filter(Q(title__icontains=q) | Q(tags__icontains=q) | Q(note__icontains=q))
+            try:
+                UserApp.objects.get(user=user, app__key='search')
+                sqs = SearchQuerySet().models(Bookmark).auto_query(q).filter(user_id=user.id)
+                objects = objects.filter(pk__in=[i.pk for i in sqs])
+            except UserApp.DoesNotExist:
+                objects = objects.filter(Q(title__icontains=q) | Q(tags__icontains=q) | Q(note__icontains=q))
 
         return objects
 

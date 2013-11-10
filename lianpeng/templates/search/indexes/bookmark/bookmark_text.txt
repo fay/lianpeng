@@ -1,0 +1,4 @@
+{{ object.tags }}
+{{ object.title }}
+{{ object.note }}
+{{ object.list.name }}

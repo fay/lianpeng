@@ -45,3 +45,6 @@ celery-with-redis==3.0
 django-celery==3.0.11
 django-celery-email==1.0.1
 celery-with-redis==3.0
+pyelasticsearch==0.6.1
+django-haystack==2.1.0
+

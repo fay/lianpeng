@@ -3,4 +3,5 @@
 *.pyo
 *.egg-info
 *.swp
+*.log.*
 site_media/*

@@ -32,7 +32,7 @@ v1_api.register(ListInvitationResource())
 
 urlpatterns = patterns("",
     #url(r"^admin/", include(admin.site.urls)),
-    url(r'admin/', include(xadmin.site.urls)),
+    url(r'adminx/', include(xadmin.site.urls)),
     url(r'^harvest/', include("harvest.urls")),
     url(r"^accounts/signup/$", SignupView.as_view(form_class=SignupForm), name="account_signup"),
     url(r"^accounts/settings/$", SettingsView.as_view(form_class=SettingsForm), name="account_settings"),

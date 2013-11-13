@@ -22,7 +22,7 @@ function __buildForm($, f) {
     ).append(
         $('<input type="hidden" name="domain" />').attr('value', window.document.domain)
     ).append(
-        $('<input type="hidden" name="charset" />').attr('value', window.document.charset)
+        $('<input type="hidden" name="charset" />').attr('value', window.document.charset ? window.document.charset :  window.document.characterSet)
     );
     f.submit();
     __watchForCommands($);

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-10 08:52+0800\n"
+"POT-Creation-Date: 2013-11-13 20:50+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,43 +46,43 @@ msgstr ""
 msgid "A user is registered with this email address."
 msgstr ""
 
-#: models.py:140
+#: models.py:141
 msgid "can not follow yourself"
 msgstr "无法关注你自己"
 
-#: models.py:160
+#: models.py:161
 msgid "feedback"
 msgstr "反馈"
 
-#: models.py:179
+#: models.py:182
 msgid "forbidden"
 msgstr ""
 
-#: models.py:185
+#: models.py:188
 msgid "Accept"
 msgstr "接受"
 
-#: models.py:189
+#: models.py:192
 msgid "Ignore"
 msgstr "忽略"
 
-#: models.py:308
+#: models.py:324
 msgid "Inbox"
 msgstr ""
 
-#: models.py:330
+#: models.py:348
 msgid "replied"
 msgstr "回复了"
 
-#: models.py:343
+#: models.py:361
 msgid "followed you"
 msgstr "关注了你"
 
-#: models.py:357
+#: models.py:375
 msgid "invited you to join"
 msgstr "邀请你参与"
 
-#: models.py:366
+#: models.py:384
 #, python-format
 msgid "[%(site_name)s] You have new notification messages"
 msgstr "[%(site_name)s] 您有新的通知消息"
@@ -359,6 +359,10 @@ msgstr ""
 msgid "Load more"
 msgstr "加载更多"
 
+#: templates/bookmark/index.html:428
+msgid "Enter '@' to select the user you want to reply."
+msgstr "输入“@”选择需要回复的用户"
+
 #: templates/bookmark/index.html:429
 #: templates/bookmark/includes/bookmark.html:98
 msgid "Publish"
@@ -453,10 +457,6 @@ msgstr "收藏到"
 msgid "Drag bookmarklet to your bookmark toolbar to install."
 msgstr "将收藏按钮拖到您的浏览器书签工具条中"
 
-#: templates/bookmark/includes/bookmark.html:66
-msgid "Collected in "
-msgstr "收藏于"
-
 #: templates/bookmark/includes/bookmark.html:72
 msgid "comments"
 msgstr ""
@@ -494,6 +494,9 @@ msgstr "标签"
 #: templates/bookmark/js/bookmark_form.html:24
 msgid "Seperate multiple tags by space"
 msgstr "多个标签以空格分隔"
+
+#~ msgid "Collected in "
+#~ msgstr "收藏于"
 
 #~ msgid "Staff picks"
 #~ msgstr "精选专辑"

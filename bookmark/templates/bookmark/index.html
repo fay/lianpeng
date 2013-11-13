@@ -425,7 +425,7 @@ bookmark-app
                                                 <hr>
                                                 <form action="" method="get" class="row-fluid" accept-charset="utf-8">
                                                     <input type="hidden" name="content_object" value="<%-bookmark.resource_uri%>">
-                                                    <textarea name="comment" rows="3" class="span12"></textarea>
+                                                    <textarea name="comment" rows="3" class="span12" placeholder="{% trans "Enter '@' to select the user you want to reply." %}"></textarea>
                                                     <p class="pull-right"><input class="btn btn-primary" type="submit" value="{% trans "Publish" %}"></p>
                                                 </form>
                                             </div>

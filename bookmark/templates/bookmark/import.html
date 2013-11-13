@@ -10,7 +10,9 @@
     </div>
     <hr class="soften">
     <div class="row-fluid">
-        <div class="span6">
+        <div class="span6 well">
+            <h1 class="center"><i class="icon-signin"></i> {% trans "Import" %}</h1>
+            <hr>
             <form enctype="multipart/form-data" method="post" class="form-horizontal" action="{% url bookmark_import %}">
                 {% csrf_token %}
                 {{ import_form|as_bootstrap }}
@@ -19,10 +21,12 @@
                 </p>
             </form> 
         </div>
-        <div class="span6">
+        <div class="span6 well">
+            <h1 class="center"><i class="icon-signout"></i> {% trans "Export" %}</h1>
+            <hr>
             <form action="{% url bookmark_export %}" method="post" accept-charset="utf-8">
                 {% csrf_token %}
-                <p class="well">{% trans "Export your bookmarks to HTML file and download it to your comouter." %}</p>
+                <p class="">{% trans "Export your bookmarks to HTML file and download it to your comouter." %}</p>
                 <p class="form-actions">
                     <input type="submit" name="" value="{% trans "Export" %}" class="btn btn-primary">
                 </p>

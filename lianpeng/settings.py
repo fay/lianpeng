@@ -349,6 +349,8 @@ SOCIAL_AUTH_SESSION_EXPIRATION = False
 GRAVATAR_DEFAULT_IMAGE = 'mm'
 LOGIN_ERROR_URL = 'account_login'
 
+ADMIN_USER_ID = 1
+
 try:
     from local_settings import *
 except ImportError:

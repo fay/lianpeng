@@ -383,3 +383,11 @@ def send_notification_email(sender, instance, created, **kwargs):
     site_name = site.name 
     send_mail(_('[%(site_name)s] You have new notification messages') % {'site_name': site_name}, content,
               settings.DEFAULT_FROM_EMAIL, [instance.recipient.email], fail_silently=False)
+
+@receiver(post_save, sender=Feedback)
+def send_feedback_notfication(sender, instance, created, **kwargs):
+    if created:
+        admin_user = User.objects.get(id=settings.ADMIN_USER_ID)
+        notify.send(instance.user, recipient=admin_user, verb=_('feedback'), 
+                    action_object=instance,
+                    description=instance.text)

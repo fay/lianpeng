@@ -21,6 +21,7 @@ bookmark-app
 
 {% block extra_style %}
 <!-- <link rel="stylesheet" href="{{ STATIC_URL }}css/flat-ui.css" type="text/css" media="screen" charset="utf-8"> -->
+<link rel="stylesheet" href="{{ STATIC_URL }}css/hopscotch-0.1.2.min.css" type="text/css" media="screen" charset="utf-8">
 {% endblock %}
 {% block body %}
      <div class="row-fluid" id="user-home">
@@ -493,6 +494,7 @@ bookmark-app
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui-1.10.1.custom.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/noty/layouts/bottom.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.atwho.js" charset="utf-8"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/hopscotch-0.1.2.min.js" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
     var USER_ID = {{user.id}};
     var USER_URL = "/api/v1/user/" + USER_ID;
@@ -505,7 +507,27 @@ bookmark-app
         noty({text: '{{ message }}', type:'{{ message.tags|split|last }}', layout: 'bottom'});
     {% endfor %}
 
+    var tour = {
+      id: "lianpeng_tour",
+      fixedElement: true,
+      steps: [
+        {
+          title: "试试在这里输入一个链接，收藏你在莲蓬的第一个网页",
+                 content: "在一般情况下，我们使用莲蓬的收藏工具收藏我们正在浏览的网页，<a href>sasa</a>",
+          target: ".add-bookmark-form",
+          placement: "bottom"
+        },
+        {
+          title: "My content",
+          content: "Here is where I put my content.",
+          target: document.querySelector("#content p"),
+          placement: "bottom"
+        }
+      ]
+    };
 
+// Start the tour!
+hopscotch.startTour(tour); 
 </script>
 {% compressed_js 'main' %}
 {% endblock %}

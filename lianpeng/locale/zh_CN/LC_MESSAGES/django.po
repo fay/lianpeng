@@ -149,7 +149,6 @@ msgid ""
 "%(inviter)s. Your signup code is %(code)s. You can also click the link below "
 "directly to signup:\n"
 msgstr ""
-"\n"
 "您刚被好友%(inviter)s邀请加入%(site_name)s(%(site_domain)s)。您的邀请码"
 "是%(code)s，您可以直接点击下面的链接直接注册：\n"
 

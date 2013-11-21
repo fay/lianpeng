@@ -8,12 +8,14 @@
             新浪微博帐号登录
         </a>
     </li>
+    {% comment %}
     <li>
         <a href="{% url socialauth_begin 'google-oauth2' %}">
             <img src="http://www.google.com/favicon.ico" width="16" />
             使用Google帐号登录
         </a>
     </li>
+    {% endcomment %}
     <li>
         <a href="{% url socialauth_begin 'github' %}">
             <img src="https://github.com/fluidicon.png" width="16" />

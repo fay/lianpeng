@@ -92,7 +92,7 @@ bookmark-app
                     <li><a target="_blank" href="{% url bookmark_import %}"><i class="icon-signin"></i> {% trans "Import/Export" %}</a></li>
                     <li class="divider"></li>
                     {% if user.is_staff %}
-                    <li><a target="_blank" href="/admin/"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
+                    <li><a target="_blank" href="/adminx/"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
                     {% endif %}
                     <li><a target="_blank" href="#feedback" data-toggle="modal"><i class="icon-comment"></i> {% trans "Feedback" %}</a></li>
                     <li><a target="_blank" href="{% url help %}" data-toggle="modal"><i class="icon-question-sign"></i> {% trans "Help" %}</a></li>

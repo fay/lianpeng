@@ -85,7 +85,7 @@ bookmark-app
                     <li class="explore-menu">
                         <a target="_blank" href="{% url bookmark_explore %}"><i class="icon icon-bolt"></i>{% trans "Explore" %}</a>
                     </li>
-                    <li>
+                    <li class="tool-menu">
                         <a target="_blank" href="{% url bookmark_tools %}"><i class="icon icon-wrench"></i>{% trans "Tools" %}</a>
                     </li>
                     <li><a target="_blank" href="{% url bookmark_profile user.username %}"><i class="icon-home"></i> {% trans "My public page" %}</a></li>
@@ -173,16 +173,16 @@ bookmark-app
                 <div class="row-fluid add-bookmark-form-box">
                      <div class="span12 padbox">
                          <form action="" class="add-bookmark-form form-inline" method="post" accept-charset="utf-8">
-                             <input type="text" name="url" value="" class="url span10" placeholder="{% trans "enter url here" %}" />
-                             <input type="submit" class="pull-right btn btn-primary span2" value="{% trans "Add bookmark" %}" />
+                             <input type="text" name="url" value="{% if not user.user_guide.finished %}http://lianpeng.me/{% endif %}" class="url span10" placeholder="{% trans "enter url here" %}" />
+                             <input type="submit" class="pull-right btn-add-bookmark btn btn-primary span2" value="{% trans "Add bookmark" %}" />
                          </form>
                      </div>
-                </div>
-                <% } %>
-                <div class="row-fluid confirm-add-bookmark-box">
-                    <div class="span12 hide padbox confirm-add-bookmark">
+                    <div class="row-fluid confirm-add-bookmark-box">
+                        <div class="span12 hide padbox confirm-add-bookmark">
+                        </div>
                     </div>
                 </div>
+                <% } %>
                 <div class="row-fluid scrollable list-wrapper">
                     <div class="span12 list">
                         <div class="padbox">
@@ -512,15 +512,34 @@ bookmark-app
       fixedElement: true,
       steps: [
         {
-          title: "试试在这里输入一个链接，收藏你在莲蓬的第一个网页",
-                 content: "在一般情况下，我们使用莲蓬的收藏工具收藏我们正在浏览的网页，<a href>sasa</a>",
-          target: ".add-bookmark-form",
+          title: "点击右侧“添加链接”按钮，收藏你在莲蓬的第一个网页",
+                 content: "在出现的表单里，点击<span class='label label-success'>保存</span>按钮即完成。",
+          target: ".add-bookmark-form .btn-add-bookmark",
+          //showNextButton: false,
+          placement: "left"
+        },
+        {
+          title: "安装收藏工具",
+          content: "在浏览网页的时候，使用收藏工具一键收藏，不用登录到莲蓬主站也可以收藏。",
+          target: ".tool-menu a i",
+          multipage: true,
+          onNext: function() {
+              window.location = "/tools/"
+          },
+          nextOnTargetClick: true,
+          showPrevButton: true,
           placement: "bottom"
         },
         {
-          title: "My content",
-          content: "Here is where I put my content.",
-          target: document.querySelector("#content p"),
+          title: "安装收藏工具",
+          content: "在浏览网页的时候，使用收藏工具一键收藏，不用登录到莲蓬主站也可以收藏。",
+          target: ".tool-menu a i",
+          multipage: true,
+          onNext: function() {
+              window.location = "/tools/"
+          },
+          nextOnTargetClick: true,
+          showPrevButton: true,
           placement: "bottom"
         }
       ]

@@ -4,6 +4,9 @@
 {% block extra_head %}
     <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/bdomhbcbkbldbnechblaaaopghdmdcej">
 {% endblock %}
+{% block extra_style %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/hopscotch-0.1.2.min.css" type="text/css" media="screen" charset="utf-8">
+{% endblock %}
 {% block body %}
 <div class="hero-unit center">
     <div class="row-fluid">
@@ -35,27 +38,73 @@
 {% endblock %}
 {% block extra_script %}
     <script type="text/javascript" language="javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/hopscotch-0.1.2.min.js" charset="utf-8"></script>
     <script type="text/javascript">
-		var scriptPath = 'bookmarklet.sinaapp.com/harvest/bookmarklet.js';
-		var postPath = 'bookmarklet.sinaapp.com/harvest/bookmarklet.html';
-		var minVersion = '1.4.2';
-		var initFunction = '__initBookmarklet';
+        var scriptPath = 'bookmarklet.sinaapp.com/harvest/bookmarklet.js';
+        var postPath = 'bookmarklet.sinaapp.com/harvest/bookmarklet.html';
+        var minVersion = '1.4.2';
+        var initFunction = '__initBookmarklet';
 
-		//
-		// the script that is executed when the bookmarklet is clicked
-		//
-		var bookmarklet = "javascript:function%20__i(){jQueryBookmarklet.init('" + minVersion + "'," + initFunction + ");};(function(__u){var%20__d=document,__b=__d.body;__scriptPath=__u;__postPath=('https:' == document.location.protocol ? 'https://' : 'http://') + '" + postPath + "';try{if(!__b)throw(0);if(typeof(jQueryBookmarklet)!='undefined'){__i();}else{var%20__s=__d.createElement('script');__s.type='text/javascript';__s.src=('https:' == document.location.protocol ? 'https://' : 'http://') + __scriptPath;__s.onload=__s.onreadystatechange=function(){if(__s.readyState||__s.readyState=='loaded'||__s.readyState=='complete'){__s.onreadystatechange=null;__i();}else{__i();}};__d.getElementsByTagName('head')[0].appendChild(__s);}}catch(e){alert('Wait%20till%20page%20has%20loaded%20and%20try%20again')}})('" + scriptPath + "?'+Math.round(Math.random()*10000000));";
+        //
+        // the script that is executed when the bookmarklet is clicked
+        //
+        var bookmarklet = "javascript:function%20__i(){jQueryBookmarklet.init('" + minVersion + "'," + initFunction + ");};(function(__u){var%20__d=document,__b=__d.body;__scriptPath=__u;__postPath=('https:' == document.location.protocol ? 'https://' : 'http://') + '" + postPath + "';try{if(!__b)throw(0);if(typeof(jQueryBookmarklet)!='undefined'){__i();}else{var%20__s=__d.createElement('script');__s.type='text/javascript';__s.src=('https:' == document.location.protocol ? 'https://' : 'http://') + __scriptPath;__s.onload=__s.onreadystatechange=function(){if(__s.readyState||__s.readyState=='loaded'||__s.readyState=='complete'){__s.onreadystatechange=null;__i();}else{__i();}};__d.getElementsByTagName('head')[0].appendChild(__s);}}catch(e){alert('Wait%20till%20page%20has%20loaded%20and%20try%20again')}})('" + scriptPath + "?'+Math.round(Math.random()*10000000));";
 
-		//
-		// set bookmarklet href value
-		//
-		$(document).ready(function () {
-				$('#bookmarklet')
-						.attr('href', bookmarklet)
-						.click(function (event) {
+        //
+        // set bookmarklet href value
+        //
+        $(document).ready(function () {
+                $('#bookmarklet')
+                        .attr('href', bookmarklet)
+                        .click(function (event) {
                             alert("{% trans 'Drag bookmarklet to your bookmark toolbar to install.' %}");
-								event.preventDefault();
-						});
-		});
+                                event.preventDefault();
+                        });
+                        var browser = $.browser;
+                        if(!browser.chrome) {
+                            $('#chrome-bookmarklet-box a').removeClass('btn-primary');
+                        }
+                        var tour = {
+                          id: "lianpeng_tour",
+                          fixedElement: true,
+                          steps: [
+                            {
+                              title: "点击右侧“添加链接”按钮，收藏你在莲蓬的第一个网页",
+                                     content: "在出现的表单里，点击<span class='label label-success'>保存</span>按钮即完成。",
+                              target: ".add-bookmark-form .btn-add-bookmark",
+                              //showNextButton: false,
+                              placement: "left"
+                            },
+                            {
+                              title: "安装收藏工具",
+                              content: "在浏览网页的时候，使用收藏工具一键收藏，不用登录到莲蓬主站也可以收藏。",
+                              target: ".tool-menu a i",
+                              multipage: true,
+                              onNext: function() {
+                                  window.location = "/tools/"
+                              },
+                              nextOnTargetClick: true,
+                              showPrevButton: true,
+                              placement: "bottom"
+                            },
+                            {
+                              title: "点击上方的按钮安装收藏工具",
+                              content: "在浏览网页的时候，使用收藏工具一键收藏，不用登录到莲蓬主站也可以收藏。",
+                              target: "#chrome-bookmarklet-box a",
+                              multipage: true,
+                              onNext: function() {
+                                  window.location = "/tools/"
+                              },
+                              nextOnTargetClick: true,
+                              showPrevButton: true,
+                              placement: "bottom"
+                            }
+                          ]
+                        };
+                if (hopscotch.getState() === "lianpeng_tour:2") {
+                  hopscotch.startTour(tour);
+                }
+      
+        });
     </script>
 {% endblock %}

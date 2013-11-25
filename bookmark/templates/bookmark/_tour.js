@@ -32,6 +32,18 @@
                               nextOnTargetClick: true,
                               showPrevButton: true,
                               placement: "bottom"
+                            },
+                            {
+                              title: "导入现有的书签",
+                              content: "如果之前已经使用其他书签收藏服务，例如Delicious/Google书签，或者是浏览器的书签，你可以将之导出并导入到莲蓬。",
+                              target: ".import-menu",
+                              multipage: true,
+                              onNext: function() {
+                                  window.location = "/tools/"
+                              },
+                              nextOnTargetClick: true,
+                              showPrevButton: true,
+                              placement: "bottom"
                             }
                           ]
                         };

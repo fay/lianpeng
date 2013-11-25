@@ -88,9 +88,9 @@ bookmark-app
                     <li class="tool-menu">
                         <a target="_blank" href="{% url bookmark_tools %}"><i class="icon icon-wrench"></i>{% trans "Tools" %}</a>
                     </li>
-                    <li><a target="_blank" href="{% url bookmark_profile user.username %}"><i class="icon-home"></i> {% trans "My public page" %}</a></li>
+                    <li class=""><a target="_blank" href="{% url bookmark_profile user.username %}"><i class="icon-home"></i> {% trans "My public page" %}</a></li>
                     <li><a target="_blank" href="{% url bookmark_sync %}"><i class="icon-refresh"></i> {% trans "Sync" %}</a></li>
-                    <li><a target="_blank" href="{% url bookmark_import %}"><i class="icon-signin"></i> {% trans "Import/Export" %}</a></li>
+                    <lii class="import-menu"><a target="_blank" href="{% url bookmark_import %}"><i class="icon-signin"></i> {% trans "Import/Export" %}</a></li>
                     <li class="divider"></li>
                     {% if user.is_staff %}
                     <li><a target="_blank" href="/admin/"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>

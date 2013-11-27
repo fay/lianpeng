@@ -24,7 +24,7 @@ from account.models import EmailAddress
 
 from bookmark.forms import ImportForm, FeedbackForm
 from bookmark.models import List, Bookmark, PickedList, ListInvitation,\
-        SyncState
+        SyncState, LIST_KIND_CHOICES
 from bookmark.tasks import handle_imported_file, sync_github
 
 def index(request, username=None, id=None, query=None, tag=None):
@@ -49,6 +49,11 @@ def index(request, username=None, id=None, query=None, tag=None):
         return render(request, 'bookmark/index.html', context)
     else:
         return render(request, "homepage.html")
+
+@login_required
+def inbox(request, username=None):
+    inbox_list = get_object_or_404(List, kind=LIST_KIND_CHOICES.INBOX, user=request.user)
+    return redirect('bookmark_user_list', username=username, id=inbox_list.id)
 
 def explore(request):
     filter = request.GET.get('filter')

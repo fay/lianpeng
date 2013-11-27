@@ -54,23 +54,16 @@
         // set bookmarklet href value
         //
         $(document).ready(function () {
-                $('#bookmarklet')
-                        .attr('href', bookmarklet)
-                        .click(function (event) {
-                            alert("{% trans 'Drag bookmarklet to your bookmark toolbar to install.' %}");
-                                event.preventDefault();
-                        });
-                var browser = $.browser;
-                if(!browser.chrome) {
-                    $('#chrome-bookmarklet-box a').removeClass('btn-primary');
-                } else {
-                    $('#bookmarklet-box a').removeClass('btn-primary');
-                }
-                {% include 'bookmark/_tour.js' %}
-                if (hopscotch.getState() === "lianpeng_tour:2") {
-                  hopscotch.startTour(tour);
-                }
-      
+            $('#bookmarklet')
+                    .attr('href', bookmarklet)
+                    .click(function (event) {
+                        alert("{% trans 'Drag bookmarklet to your bookmark toolbar to install.' %}");
+                            event.preventDefault();
+                    });
+            {% include 'bookmark/_tour.js' %}
+            if (hopscotch.getState() === "lianpeng_tour:1") {
+              hopscotch.startTour(tour);
+            }
         });
     </script>
 {% endblock %}

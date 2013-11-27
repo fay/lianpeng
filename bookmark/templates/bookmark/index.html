@@ -90,7 +90,7 @@ bookmark-app
                     </li>
                     <li class=""><a target="_blank" href="{% url bookmark_profile user.username %}"><i class="icon-home"></i> {% trans "My public page" %}</a></li>
                     <li><a target="_blank" href="{% url bookmark_sync %}"><i class="icon-refresh"></i> {% trans "Sync" %}</a></li>
-                    <lii class="import-menu"><a target="_blank" href="{% url bookmark_import %}"><i class="icon-signin"></i> {% trans "Import/Export" %}</a></li>
+                    <li class="import-menu"><a target="_blank" href="{% url bookmark_import %}"><i class="icon-signin"></i> {% trans "Import/Export" %}</a></li>
                     <li class="divider"></li>
                     {% if user.is_staff %}
                     <li><a target="_blank" href="/admin/"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
@@ -509,8 +509,45 @@ bookmark-app
 
     {% include 'bookmark/_tour.js' %}
 
-    // Start the tour!
-    hopscotch.startTour(tour); 
+    /* ========== */
+    /* TOUR SETUP */
+    /* ========== */
+
+    init = function() {
+      var startBtnId = '.add-bookmark-form',
+          calloutId = 'startTourCallout',
+          mgr = hopscotch.getCalloutManager(),
+          state = hopscotch.getState();
+
+      if (state && state.indexOf('hello-hopscotch:') === 0) {
+        // Already started the tour at some point!
+        hopscotch.startTour(tour);
+      }
+      else {
+        // Looking at the page for the first(?) time.
+        setTimeout(function() {
+          mgr.createCallout({
+            id: calloutId,
+            target: startBtnId,
+            placement: 'bottom',
+            title: 'Take an example tour',
+            content: 'Start by taking an example tour to see Hopscotch in action!',
+            xOffset: 'center',
+            arrowOffset: 'center',
+            width: 240
+          });
+        }, 100);
+      }
+
+      $(startBtnId).click(function() {
+        if (!hopscotch.isActive) {
+          mgr.removeAllCallouts();
+          hopscotch.startTour(tour);
+        }
+      });
+    };
+
+    init();
 </script>
 {% compressed_js 'main' %}
 {% endblock %}

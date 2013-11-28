@@ -484,6 +484,19 @@ bookmark-app
             </p>
         </div>
     </div>
+    <div class="tour-modal modal hide fade">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>{% trans "Lianpeng User Guide" %}</h3>
+      </div>
+      <div class="modal-body">
+            感谢您使用莲蓬，点击“开始向导”按钮，开始了解如何使用莲蓬。
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal">{% trans "Close" %}</a>
+        <button id="take-tour" class="btn btn-primary" data-dismiss="modal">{% trans "Take tour" %}</button>
+      </div>
+    </div>
 {% endblock %}
 {% block extra_script %}
 <script type="text/javascript" src="{{ STATIC_URL }}js/underscore-min.js" charset="utf-8"></script>
@@ -513,8 +526,12 @@ bookmark-app
     /* TOUR SETUP */
     /* ========== */
 
+    $('.tour-modal').modal();
+    $('#take-tour').click(function(){
+          hopscotch.startTour(tour);
+    });
     init = function() {
-      var startBtnId = '.add-bookmark-form',
+      var startBtnId = '#take-tour',
           calloutId = 'startTourCallout',
           mgr = hopscotch.getCalloutManager(),
           state = hopscotch.getState();
@@ -547,7 +564,6 @@ bookmark-app
       });
     };
 
-    init();
 </script>
 {% compressed_js 'main' %}
 {% endblock %}

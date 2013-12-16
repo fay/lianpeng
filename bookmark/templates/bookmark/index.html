@@ -101,6 +101,7 @@ bookmark-app
                 <hr>
             </div>
         </div>
+        {% comment %}
         {% if user.is_superuser %}
         <div id="lianbang-container" style="z-index:10;position:fixed;left:0;bottom:0;width:15%;">
             <a href="javascript:;" id="lianbang-close"><i class="icon-remove-sign" style="z-index:1;position:absolute;right:20px;top:5px;"></i></a>
@@ -109,6 +110,7 @@ bookmark-app
             </script>
         </div>
         {% endif %}
+        {% endcomment %}
         <div class="" id="lists">
             <div class="list-wrapper">
                 <form class="navbar-form search" action="/{{user.username}}/search/" tag-action="/{{ user.username }}/tag/">
@@ -173,7 +175,7 @@ bookmark-app
                 <div class="row-fluid add-bookmark-form-box">
                      <div class="span12 padbox">
                          <form action="" class="add-bookmark-form form-inline" method="post" accept-charset="utf-8">
-                             <input type="text" name="url" value="{% if not user.user_guide.finished %}http://lianpeng.me/{% endif %}" class="url span10" placeholder="{% trans "enter url here" %}" />
+                             <input type="text" name="url" value="{% if user_tour.state == 0 %}http://lianpeng.me/{% endif %}" class="url span10" placeholder="{% trans "enter url here" %}" />
                              <input type="submit" class="pull-right btn-add-bookmark btn btn-primary span2" value="{% trans "Add bookmark" %}" />
                          </form>
                      </div>
@@ -490,10 +492,10 @@ bookmark-app
         <h3>{% trans "Lianpeng User Guide" %}</h3>
       </div>
       <div class="modal-body">
-            感谢您使用莲蓬，点击“开始向导”按钮，开始了解如何使用莲蓬。
+            {% trans "Thanks for using Lianpeng, click the 'Take tour' button to learn how to use Lianpeng" %}
       </div>
       <div class="modal-footer">
-        <a href="#" class="btn" data-dismiss="modal">{% trans "Close" %}</a>
+        <a href="#" class="btn skip-tour">{% trans "Skip" %}</a>
         <button id="take-tour" class="btn btn-primary" data-dismiss="modal">{% trans "Take tour" %}</button>
       </div>
     </div>
@@ -526,10 +528,22 @@ bookmark-app
     /* TOUR SETUP */
     /* ========== */
 
-    $('.tour-modal').modal();
+    {% if user_tour.state == 0 %}
+        $('.tour-modal').modal();
+    {% endif %}
+    {% if user_tour.state == 3 %}
+        hopscotch.startTour(tour);
+    {% endif %}
     $('#take-tour').click(function(){
-          hopscotch.startTour(tour);
+        $.ajax({async:false, url: '/api/v1/usertour/' + {{ user_tour.id}} + '?format=json', type: "put",
+            data: JSON.stringify({'state': 3 }), contentType: "application/json"});
+        hopscotch.startTour(tour);
     });
+    $('.skip-tour').click(function () {
+       $('.tour-modal').modal('hide');
+        $.ajax({url: '/api/v1/usertour/' + {{ user_tour.id}} + '?format=json', type: "put",
+            data: JSON.stringify({'state': 2 }), contentType: "application/json"});
+    })
     init = function() {
       var startBtnId = '#take-tour',
           calloutId = 'startTourCallout',

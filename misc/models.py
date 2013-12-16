@@ -13,7 +13,7 @@ class Lock(models.Model):
     def __unicode__(self):
         return "{} - {}".format(self.user, self.action)
 
-class UserGuide(models.Model):
+class UserTour(models.Model):
     user = models.OneToOneField(User)
-    finished = models.BooleanField(default=False)
+    state = models.IntegerField(choices=((0, 'created'),(1, 'finished'), (2, 'skipped'), (3, 'proceeding')), default=0)
     created_time = models.DateTimeField(auto_now_add=True)

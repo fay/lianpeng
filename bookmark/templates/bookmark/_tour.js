@@ -2,6 +2,17 @@
                         var tour = {
                           id: "lianpeng_tour",
                           fixedElement: true,
+                          i18n: {
+                            nextBtn: '下一步',
+                            prevBtn: '上一步',
+                            doneBtn: '完成',
+                            skipBtn: '跳过',
+                            closeTooltip: '关闭',
+                          },
+                          onEnd: function() {
+                            $.ajax({async:false, url: '/api/v1/usertour/' + {{ user_tour.id}} + '?format=json', type: "put",
+                                data: JSON.stringify({'state': 1 }), contentType: "application/json"});
+                          },
                           steps: [
                             {
                               title: "点击右侧“添加链接”按钮，收藏你在莲蓬的第一个网页",
@@ -35,7 +46,7 @@
                                   window.location = "/" + username + "/inbox/";
                               },
                               showPrevButton: true,
-                              placement: "bottom"
+                              placement: "right"
                             },
                             {
                               title: "创建专辑",

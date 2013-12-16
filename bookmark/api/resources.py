@@ -35,6 +35,7 @@ from bookmark.forms import BookmarkForm, ListForm, FeedbackForm, FollowForm, \
         CommentForm, ListInvitationForm
 from market.models import UserApp, App
 from tagging.managers import ModelTaggedItemManager
+from misc.models import UserTour
 
 class PermissionValidation(Validation):
     def is_valid(self, bundle, request=None):
@@ -441,3 +442,15 @@ class ListInvitationResource(ModelResource):
     def dehydrate(self, bundle):
         bundle.data['user_name'] = bundle.obj.invitee
         return bundle
+
+class UserTourResource(ModelResource):
+
+    user = fields.ForeignKey(UserResource, 'user', readonly=True)
+
+    class Meta:
+        model = UserTour
+        queryset = UserTour.objects.all()
+        allowed_methods = ['get', 'put']
+        always_return_data = True
+        authentication = SessionAuthentication()
+        authorization = PermissionAuthorization()

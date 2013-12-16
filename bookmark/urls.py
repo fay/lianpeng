@@ -23,5 +23,6 @@ urlpatterns = patterns('bookmark.views',
     url(r'^(?P<username>[\w]+)/list/recent$', "index"),
     url(r'^(?P<username>[\w]+)/search/(?P<query>.+)$', "index", name="bookmark_search"),
     url(r'^(?P<username>[\w]+)/tag/(?P<tag>.+)$', "index", name="bookmark_tag"),
-    url(r'^(?P<username>[\w]+)/list/(?P<id>\d+)$', "index"),
+    url(r'^(?P<username>[\w]+)/list/(?P<id>\d+)$', "index", name="bookmark_user_list"),
+    url(r'^(?P<username>[\w]+)/inbox/$', "inbox"),
 )

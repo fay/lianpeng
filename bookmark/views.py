@@ -24,8 +24,9 @@ from account.models import EmailAddress
 
 from bookmark.forms import ImportForm, FeedbackForm
 from bookmark.models import List, Bookmark, PickedList, ListInvitation,\
-        SyncState
+        SyncState, LIST_KIND_CHOICES
 from bookmark.tasks import handle_imported_file, sync_github
+from misc.models import UserTour
 
 def index(request, username=None, id=None, query=None, tag=None):
     user = request.user
@@ -46,9 +47,16 @@ def index(request, username=None, id=None, query=None, tag=None):
             messages.error(request, _("You need to verify your email address to continue to use Lianpeng.You can check your email inbox. You can also <a href='%s'>resend email confirmation</a>.") % (resend_url,)) 
             return redirect('account_settings')
         context = {}
+        user_tour, created = UserTour.objects.get_or_create(user=user)
+        context['user_tour'] = user_tour
         return render(request, 'bookmark/index.html', context)
     else:
         return render(request, "homepage.html")
+
+@login_required
+def inbox(request, username=None):
+    inbox_list = get_object_or_404(List, kind=LIST_KIND_CHOICES.INBOX, user=request.user)
+    return redirect('bookmark_user_list', username=username, id=inbox_list.id)
 
 def explore(request):
     filter = request.GET.get('filter')

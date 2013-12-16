@@ -2,6 +2,10 @@
 {% load i18n %}
 {% load bootstrap_tags %}
 
+{% block extra_style %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/hopscotch-0.1.2.min.css" type="text/css" media="screen" charset="utf-8">
+{% endblock %}
+
 {% block head_title %}{% trans "Import/Export" %}{% endblock %}
 
 {% block body %}
@@ -34,4 +38,14 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block extra_script %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/hopscotch-0.1.2.min.js" charset="utf-8"></script>
+    <script type="text/javascript" charset="utf-8">
+        {% include 'bookmark/_tour.js' %}
+        if (hopscotch.getState() === "lianpeng_tour:2") {
+          hopscotch.startTour(tour);
+        }
+    </script>
 {% endblock %}

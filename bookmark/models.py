@@ -34,7 +34,7 @@ class Choice(object):
 
     def __getattr__(self, name):
         if name.lower() in self.choices:
-            return self.choices.get(name)
+            return self.choices.get(name.lower())
         else:
             return super(Choice, self).__getattr__(name)
 

@@ -21,6 +21,7 @@ bookmark-app
 
 {% block extra_style %}
 <!-- <link rel="stylesheet" href="{{ STATIC_URL }}css/flat-ui.css" type="text/css" media="screen" charset="utf-8"> -->
+<link rel="stylesheet" href="{{ STATIC_URL }}css/hopscotch-0.1.2.min.css" type="text/css" media="screen" charset="utf-8">
 {% endblock %}
 {% block body %}
      <div class="row-fluid" id="user-home">
@@ -84,12 +85,12 @@ bookmark-app
                     <li class="explore-menu">
                         <a target="_blank" href="{% url bookmark_explore %}"><i class="icon icon-bolt"></i>{% trans "Explore" %}</a>
                     </li>
-                    <li>
+                    <li class="tool-menu">
                         <a target="_blank" href="{% url bookmark_tools %}"><i class="icon icon-wrench"></i>{% trans "Tools" %}</a>
                     </li>
-                    <li><a target="_blank" href="{% url bookmark_profile user.username %}"><i class="icon-home"></i> {% trans "My public page" %}</a></li>
+                    <li class=""><a target="_blank" href="{% url bookmark_profile user.username %}"><i class="icon-home"></i> {% trans "My public page" %}</a></li>
                     <li><a target="_blank" href="{% url bookmark_sync %}"><i class="icon-refresh"></i> {% trans "Sync" %}</a></li>
-                    <li><a target="_blank" href="{% url bookmark_import %}"><i class="icon-signin"></i> {% trans "Import/Export" %}</a></li>
+                    <li class="import-menu"><a target="_blank" href="{% url bookmark_import %}"><i class="icon-signin"></i> {% trans "Import/Export" %}</a></li>
                     <li class="divider"></li>
                     {% if user.is_staff %}
                     <li><a target="_blank" href="/adminx/"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
@@ -100,6 +101,7 @@ bookmark-app
                 <hr>
             </div>
         </div>
+        {% comment %}
         {% if user.is_superuser %}
         <div id="lianbang-container" style="z-index:10;position:fixed;left:0;bottom:0;width:15%;">
             <a href="javascript:;" id="lianbang-close"><i class="icon-remove-sign" style="z-index:1;position:absolute;right:20px;top:5px;"></i></a>
@@ -108,6 +110,7 @@ bookmark-app
             </script>
         </div>
         {% endif %}
+        {% endcomment %}
         <div class="" id="lists">
             <div class="list-wrapper">
                 <form class="navbar-form search" action="/{{user.username}}/search/" tag-action="/{{ user.username }}/tag/">
@@ -172,16 +175,16 @@ bookmark-app
                 <div class="row-fluid add-bookmark-form-box">
                      <div class="span12 padbox">
                          <form action="" class="add-bookmark-form form-inline" method="post" accept-charset="utf-8">
-                             <input type="text" name="url" value="" class="url span10" placeholder="{% trans "enter url here" %}" />
-                             <input type="submit" class="pull-right btn btn-primary span2" value="{% trans "Add bookmark" %}" />
+                             <input type="text" name="url" value="{% if user_tour.state == 0 %}http://lianpeng.me/{% endif %}" class="url span10" placeholder="{% trans "enter url here" %}" />
+                             <input type="submit" class="pull-right btn-add-bookmark btn btn-primary span2" value="{% trans "Add bookmark" %}" />
                          </form>
                      </div>
-                </div>
-                <% } %>
-                <div class="row-fluid confirm-add-bookmark-box">
-                    <div class="span12 hide padbox confirm-add-bookmark">
+                    <div class="row-fluid confirm-add-bookmark-box">
+                        <div class="span12 hide padbox confirm-add-bookmark">
+                        </div>
                     </div>
                 </div>
+                <% } %>
                 <div class="row-fluid scrollable list-wrapper">
                     <div class="span12 list">
                         <div class="padbox">
@@ -483,6 +486,19 @@ bookmark-app
             </p>
         </div>
     </div>
+    <div class="tour-modal modal hide fade">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>{% trans "Lianpeng User Guide" %}</h3>
+      </div>
+      <div class="modal-body">
+            {% trans "Thanks for using Lianpeng, click the 'Take tour' button to learn how to use Lianpeng" %}
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn skip-tour">{% trans "Skip" %}</a>
+        <button id="take-tour" class="btn btn-primary" data-dismiss="modal">{% trans "Take tour" %}</button>
+      </div>
+    </div>
 {% endblock %}
 {% block extra_script %}
 <script type="text/javascript" src="{{ STATIC_URL }}js/underscore-min.js" charset="utf-8"></script>
@@ -493,6 +509,7 @@ bookmark-app
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery-ui-1.10.1.custom.min.js" charset="utf-8"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/noty/layouts/bottom.js"></script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.atwho.js" charset="utf-8"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/hopscotch-0.1.2.min.js" charset="utf-8"></script>
 <script type="text/javascript" charset="utf-8">
     var USER_ID = {{user.id}};
     var USER_URL = "/api/v1/user/" + USER_ID;
@@ -505,6 +522,61 @@ bookmark-app
         noty({text: '{{ message }}', type:'{{ message.tags|split|last }}', layout: 'bottom'});
     {% endfor %}
 
+    {% include 'bookmark/_tour.js' %}
+
+    /* ========== */
+    /* TOUR SETUP */
+    /* ========== */
+
+    {% if user_tour.state == 0 %}
+        $('.tour-modal').modal();
+    {% endif %}
+    {% if user_tour.state == 3 %}
+        hopscotch.startTour(tour);
+    {% endif %}
+    $('#take-tour').click(function(){
+        $.ajax({async:false, url: '/api/v1/usertour/' + {{ user_tour.id}} + '?format=json', type: "put",
+            data: JSON.stringify({'state': 3 }), contentType: "application/json"});
+        hopscotch.startTour(tour);
+    });
+    $('.skip-tour').click(function () {
+       $('.tour-modal').modal('hide');
+        $.ajax({url: '/api/v1/usertour/' + {{ user_tour.id}} + '?format=json', type: "put",
+            data: JSON.stringify({'state': 2 }), contentType: "application/json"});
+    })
+    init = function() {
+      var startBtnId = '#take-tour',
+          calloutId = 'startTourCallout',
+          mgr = hopscotch.getCalloutManager(),
+          state = hopscotch.getState();
+
+      if (state && state.indexOf('hello-hopscotch:') === 0) {
+        // Already started the tour at some point!
+        hopscotch.startTour(tour);
+      }
+      else {
+        // Looking at the page for the first(?) time.
+        setTimeout(function() {
+          mgr.createCallout({
+            id: calloutId,
+            target: startBtnId,
+            placement: 'bottom',
+            title: 'Take an example tour',
+            content: 'Start by taking an example tour to see Hopscotch in action!',
+            xOffset: 'center',
+            arrowOffset: 'center',
+            width: 240
+          });
+        }, 100);
+      }
+
+      $(startBtnId).click(function() {
+        if (!hopscotch.isActive) {
+          mgr.removeAllCallouts();
+          hopscotch.startTour(tour);
+        }
+      });
+    };
 
 </script>
 {% compressed_js 'main' %}

@@ -399,7 +399,7 @@ $(document).ready(function(){
             lists_view.render_current_list_view(feed_list_view);
             feed_list_view.bookmarks.bind("reset", function(){
                 var last_feed = feed_list_view.model.bookmarks.pluck('id');
-                var last_id = last_feed.pop();
+                var last_id = last_feed.shift();
                 feed_count.set("last_id", last_id);
                 feed_count.save();
                 $('.feed-indicator').fadeOut();

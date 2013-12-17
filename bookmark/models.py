@@ -98,6 +98,13 @@ class ListUserObjectPermission(UserObjectPermissionBase):
 class ListGroupObjectPermission(GroupObjectPermissionBase):
     content_object = models.ForeignKey(List)
 
+class BookmarkManager(models.Manager):
+
+    def feed(self, user):
+        followee_ids = user.following.all().values_list('followee__id', flat=True)
+        list_ids = List.objects.filter(public=True, user__id__in=followee_ids).values_list("id", flat=True)
+        return Bookmark.objects.filter(list__id__in=list_ids).order_by('-created_time')
+
 class Bookmark(models.Model, DiffingMixin):
     url = models.URLField()
     title = models.CharField(max_length=1024)
@@ -111,6 +118,8 @@ class Bookmark(models.Model, DiffingMixin):
     unique_key = models.CharField(max_length=32)
     user = models.ForeignKey(User, related_name="bookmarks")
     list = models.ForeignKey(List, null=True, blank=True)
+
+    objects = BookmarkManager()
 
     def tags_splited(self):
         return self.tags.split(" ")
@@ -210,6 +219,15 @@ class SyncState(models.Model):
 
     class Meta:
         unique_together = (("user", "website"), )
+
+class FeedCount(models.Model):
+    user = models.OneToOneField(User)
+    last_id = models.PositiveIntegerField(default=0)
+    updated_time = models.DateTimeField(auto_now=True)
+
+    @property
+    def count(self):
+        return Bookmark.objects.feed(self.user).filter(id__gt=self.last_id).count()
 
 @receiver(pre_delete, sender=ListInvitation)
 def delete_permission(sender, instance, **kwargs):

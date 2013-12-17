@@ -28,7 +28,7 @@ from guardian.shortcuts import get_objects_for_user
 from haystack.query import SearchQuerySet
 
 from bookmark.models import Bookmark, List, Feedback, Follow, FollowList, \
-        ListInvitation
+        ListInvitation, FeedCount
 from bookmark.api.validations import BookmarkValidation, \
         ListInvitationValidation
 from bookmark.forms import BookmarkForm, ListForm, FeedbackForm, FollowForm, \
@@ -333,10 +333,7 @@ class BookmarkResource(ModelResource):
         # user feed
         feed = bundle.request.GET.get('feed')
         if feed:
-            followee_ids = user.following.all().values_list('followee__id', flat=True)
-            list_ids = List.objects.filter(public=True, user__id__in=followee_ids).values_list("id", flat=True)
-            objects = Bookmark.objects.filter(list__id__in=list_ids).order_by('-created_time')
-
+            objects = Bookmark.objects.feed(user)
 
         # by tag
         tags = bundle.request.GET.get('tag')
@@ -450,6 +447,18 @@ class UserTourResource(ModelResource):
     class Meta:
         model = UserTour
         queryset = UserTour.objects.all()
+        allowed_methods = ['get', 'put']
+        always_return_data = True
+        authentication = SessionAuthentication()
+        authorization = PermissionAuthorization()
+
+class FeedCountResource(ModelResource):
+
+    user = fields.ForeignKey(UserResource, 'user', readonly=True)
+
+    class Meta:
+        model = FeedCount
+        queryset = FeedCount.objects.all()
         allowed_methods = ['get', 'put']
         always_return_data = True
         authentication = SessionAuthentication()

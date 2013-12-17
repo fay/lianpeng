@@ -24,7 +24,7 @@ from account.models import EmailAddress
 
 from bookmark.forms import ImportForm, FeedbackForm
 from bookmark.models import List, Bookmark, PickedList, ListInvitation,\
-        SyncState, LIST_KIND_CHOICES
+        SyncState, FeedCount, LIST_KIND_CHOICES
 from bookmark.tasks import handle_imported_file, sync_github
 from misc.models import UserTour
 
@@ -48,7 +48,9 @@ def index(request, username=None, id=None, query=None, tag=None):
             return redirect('account_settings')
         context = {}
         user_tour, created = UserTour.objects.get_or_create(user=user)
+        user_feed_count, created = FeedCount.objects.get_or_create(user=user)
         context['user_tour'] = user_tour
+        context['user_feed_count'] = user_feed_count
         return render(request, 'bookmark/index.html', context)
     else:
         return render(request, "homepage.html")

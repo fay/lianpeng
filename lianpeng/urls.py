@@ -15,7 +15,7 @@ admin.autodiscover()
 from bookmark.api.resources import BookmarkResource, \
          UserResource, ListResource, FeedbackResource, \
         FollowResource, FollowListResource, CommentResource, \
-        ListInvitationResource, UserTourResource
+        ListInvitationResource, UserTourResource, FeedCountResource
 from bookmark.forms import SignupForm, SettingsForm
 from misc.forms import LoginEmailOrUsernameForm
 
@@ -30,6 +30,7 @@ v1_api.register(CommentResource())
 v1_api.register(FollowListResource())
 v1_api.register(ListInvitationResource())
 v1_api.register(UserTourResource())
+v1_api.register(FeedCountResource())
 
 urlpatterns = patterns("",
     #url(r"^admin/", include(admin.site.urls)),

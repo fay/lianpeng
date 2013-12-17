@@ -923,7 +923,8 @@ body.bookmark-app{padding-top:0;}
 #lists .user-lists .list-name .name-text,#lists .sys-lists .list-name .name-text{display:inline-block;vertical-align:top;}
 #lists .user-lists .list-name .icon,#lists .sys-lists .list-name .icon{margin-top:3px;}#lists .user-lists .list-name .icon.icon-shared-list,#lists .sys-lists .list-name .icon.icon-shared-list{padding-left:2px;}
 #lists .user-lists .list-name .count,#lists .sys-lists .list-name .count{color:#888;font-size:12px;font-weight:bold;position:absolute;right:5px;top:4px;}
-#lists .sys-lists #feed .list-name .icon,#lists .sys-lists #all-list .list-name .icon{margin-top:0px;}
+#lists .sys-lists #feed .feed-indicator{color:#2ecc71;border-radius:100%;background-color:#2ecc71;width:10px;height:10px;margin-top:4px;background-image:-moz-linear-gradient(#2ecc71, #2ecc71);background-image:-webkit-linear-gradient(#2ecc71, #2ecc71);background-image:linear-gradient(#2ecc71, #2ecc71);background-repeat:repeat-x;box-shadow:inset 0 1px 0 rgba(255, 255, 255, 0.15),0 1px 0 rgba(0, 0, 0, 0.1),0 0 10px #2ecc71;}
+#lists .sys-lists #feed .list-name .icon,#lists .sys-lists #feed #all-list .list-name .icon{margin-top:0px;}
 #lists hr{margin:10px 0;}
 ::-webkit-scrollbar{width:5px;height:5px;background-color:#aaa;-webkit-border-radius:1ex;}
 ::-webkit-scrollbar-thumb{background:#999;}

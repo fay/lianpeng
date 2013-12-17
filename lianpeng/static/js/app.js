@@ -75,6 +75,9 @@ var ListInvitations = BaseCollection.extend({
     model: ListInvitation,
     url: '/api/v1/listinvitation/'
 });
+var FeedCount = Backbone.Model.extend({
+    urlRoot: '/api/v1/feedcount/'
+});
 var ListView = Backbone.View.extend({
     events : {
         'click .list-name': 'redirect'
@@ -374,6 +377,7 @@ $(document).ready(function(){
     var recent_list = new List({id:"recent"});
     var recent_list_view = new FilterView({model: recent_list, el: "#recent-viewed", fake_list: true});
     var try_times = 0;
+    var feed_count = new FeedCount({id: USER_FEED_COUNT_ID });
 
     var AppRouter = Backbone.Router.extend({
         routes: {
@@ -393,6 +397,13 @@ $(document).ready(function(){
         feed: function(username) {
             $('body').animate({scrollTop: 0});
             lists_view.render_current_list_view(feed_list_view);
+            feed_list_view.bookmarks.bind("reset", function(){
+                var last_feed = feed_list_view.model.bookmarks.pluck('id');
+                var last_id = last_feed.shift();
+                feed_count.set("last_id", last_id);
+                feed_count.save();
+                $('.feed-indicator').fadeOut();
+            });
         },
         recent: function(username) {
             $('body').animate({scrollTop: 0});

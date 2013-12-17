@@ -123,6 +123,10 @@ bookmark-app
                         <li id="feed">
                             <a class="list-name" href="javascript:;">
                                 <i class="icon icon-bullhorn"></i> {% trans "Feed" %}
+                                {% if user_feed_count.count > 0 %}
+                                <i class="feed-indicator pull-right">
+                                </i>
+                                {% endif %}
                             </a>
                         </li>
                         <li id="all-list">
@@ -514,6 +518,7 @@ bookmark-app
     var USER_ID = {{user.id}};
     var USER_URL = "/api/v1/user/" + USER_ID;
     var USER_NAME  = "{{user.username}}";
+    var USER_FEED_COUNT_ID = {{ user_feed_count.id }};
     var TEXTS = {
         search_title:"{% trans "Search for:" %}",
         tag_title:"{% trans "Tag:" %}"
@@ -540,44 +545,10 @@ bookmark-app
         hopscotch.startTour(tour);
     });
     $('.skip-tour').click(function () {
-       $('.tour-modal').modal('hide');
+        $('.tour-modal').modal('hide');
         $.ajax({url: '/api/v1/usertour/' + {{ user_tour.id}} + '?format=json', type: "put",
             data: JSON.stringify({'state': 2 }), contentType: "application/json"});
     })
-    init = function() {
-      var startBtnId = '#take-tour',
-          calloutId = 'startTourCallout',
-          mgr = hopscotch.getCalloutManager(),
-          state = hopscotch.getState();
-
-      if (state && state.indexOf('hello-hopscotch:') === 0) {
-        // Already started the tour at some point!
-        hopscotch.startTour(tour);
-      }
-      else {
-        // Looking at the page for the first(?) time.
-        setTimeout(function() {
-          mgr.createCallout({
-            id: calloutId,
-            target: startBtnId,
-            placement: 'bottom',
-            title: 'Take an example tour',
-            content: 'Start by taking an example tour to see Hopscotch in action!',
-            xOffset: 'center',
-            arrowOffset: 'center',
-            width: 240
-          });
-        }, 100);
-      }
-
-      $(startBtnId).click(function() {
-        if (!hopscotch.isActive) {
-          mgr.removeAllCallouts();
-          hopscotch.startTour(tour);
-        }
-      });
-    };
-
 </script>
 {% compressed_js 'main' %}
 {% endblock %}

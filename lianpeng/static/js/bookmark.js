@@ -199,8 +199,11 @@ var BookmarkView = Backbone.View.extend({
         self.$('.edit-bookmark-box').find('form #list')
         self.$('.edit-bookmark-box').find('form #list').append(option_html);
         self.$('.edit-bookmark-box form').submit(function(e){
-            
-            self.model.save(F.form2json(this));
+            var data = F.form2json(this);
+            if (self.model.get('list') != data.list) {
+                self.remove_bookmark_html();
+            }
+            self.model.save(data);
             return false;
         });
         self.$('.edit-bookmark-box form .cancel').click(function(){

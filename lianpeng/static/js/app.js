@@ -1,18 +1,8 @@
 var window_height;
-var resize_lists = function(height) {
-    var user_lists_height = $('.user-lists').height();
-    if (user_lists_height == 0) {
-        return;
-    }
-
+var resize_lists = function() {
     var user_lists_max_height = window_height - 198;
-    if (user_lists_max_height < user_lists_height) {
-        user_lists_height = user_lists_max_height;
-    }
-    if (height) {
-        user_lists_height += height;
-    }
-    $('.user-lists').css('height', user_lists_height);
+    $('.user-lists').css('min-height', user_lists_max_height);
+    $('.user-lists').css('height', user_lists_max_height);
 };
 function resize_bookmarks () {
     // adjust bookmark box height
@@ -271,7 +261,7 @@ var ListsView = Backbone.View.extend({
         var self = this;
         this.collection = new Lists();
         this.collection.bind('add', this.append_new_list, this);
-        this.collection.bind('destroy', function(){resize_lists(-26);}, this);// resize sidebar list height after a list is deleted
+        this.collection.bind('destroy', function(){resize_lists();}, this);// resize sidebar list height after a list is deleted
         this.collection.bind("reset", this.render, this);
         this.collection.bind("reset", this.user_lists_loaded, this);
         this.collection.fetch();
@@ -358,11 +348,7 @@ var ListsView = Backbone.View.extend({
         $('.new-list-button').show();
         $('.new-list-form').hide();
         form.find('input.list-name').val("");
-        var height = 28;
-        if(this.collection.size() <= 2) {
-            height = 48;
-        }
-        resize_lists(height);
+        resize_lists();
         return false;
     }
 });

@@ -53,7 +53,7 @@
                               content: "可以对收藏的网页进行整理分类，形成一个专辑，例如：电影，Web开发，创业等。",
                               target: ".new-list-button",
                               showPrevButton: true,
-                              placement: "bottom"
+                              placement: "top"
                             },
                             {
                               title: "分享专辑",

@@ -83,10 +83,14 @@ bookmark-app
                             <i class="icon icon-heart"></i>
                         {% trans "Invite" %} {% invites_remaining user %}</a></li>
                     <li class="explore-menu">
-                        <a target="_blank" href="{% url bookmark_explore %}"><i class="icon icon-bolt"></i>{% trans "Explore" %}</a>
+                        <a target="_blank" href="{% url bookmark_explore %}"><i class="icon icon-bolt"></i>
+                            {% trans "Explore" %}
+                        </a>
                     </li>
                     <li class="tool-menu">
-                        <a target="_blank" href="{% url bookmark_tools %}"><i class="icon icon-wrench"></i>{% trans "Tools" %}</a>
+                        <a target="_blank" href="{% url bookmark_tools %}"><i class="icon icon-wrench"></i>
+                            {% trans "Tools" %}
+                        </a>
                     </li>
                     <li class=""><a target="_blank" href="{% url bookmark_profile user.username %}"><i class="icon-home"></i> {% trans "My public page" %}</a></li>
                     <li><a target="_blank" href="{% url bookmark_sync %}"><i class="icon-refresh"></i> {% trans "Sync" %}</a></li>

@@ -388,7 +388,7 @@ $(document).ready(function(){
                 var last_id = last_feed.shift();
                 feed_count.set("last_id", last_id);
                 feed_count.save();
-                $('.feed-indicator').fadeOut();
+                $('.feed-indicator').fadeOut(3000);
             });
         },
         recent: function(username) {

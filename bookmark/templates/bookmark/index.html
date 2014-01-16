@@ -409,6 +409,11 @@ bookmark-app
                                                 <i class="icon-user"></i>&nbsp;<%-bookmark.user_name%>
                                             </a>
                                             &nbsp;
+                                            <a class="muted bookmark-list-link" href="javascript:;">
+                                                <i class="icon-circle-blank"></i>
+                                                <small><%- bookmark.list_name %></small>
+                                            </a>
+                                            &nbsp;
                                             <a href="javascript:;" class="muted comment-action">
                                                 <i class="icon-comment"></i>&nbsp;<small><%-bookmark.comments_count%> {% trans "comment" %}
                                                 </small>

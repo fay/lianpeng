@@ -19,7 +19,9 @@ var get_list_options = function(current_list) {
     return option_html; 
 };
 var Bookmark = Backbone.Model.extend({
-    urlRoot: '/api/v1/bookmark/'
+    urlRoot: '/api/v1/bookmark/',
+    initialize: function () {
+    }
 });
 
 var Bookmarks = BaseCollection.extend({
@@ -70,6 +72,7 @@ var BookmarkView = Backbone.View.extend({
             "click .shares .douban": "share_douban",
             "click .shares .weibo": "share_weibo",
             "click .comment-action": "show_comment_box",
+            "click .bookmark-list-link": "goto_list",
             "click #preview-box .close-preview": "close_preview",
             "click #preview-box .read-mode": "read_mode",
             "hover": "show_actions",
@@ -83,6 +86,17 @@ var BookmarkView = Backbone.View.extend({
         this.comments_view = new CommentsView({el:'#bookmark-' + this.model.id + " .comments-box", bookmark:this.model});
         this.$('.actions li').tooltip({placement:'bottom', animation:false, delay: { show: 0, hide: 0 }});
         this.$('.move').tooltip({placement:'right', animation:false, delay: { show: 0, hide: 0 }});
+
+        var bookmark_list = lists_view.get_list_by_uri(this.model.get('list'));
+        this.model.set('list_name', bookmark_list.get('name'));
+        this.model.set('list_id', bookmark_list.id);
+    },
+    goto_list: function () {
+        if (USER_URL == this.model.get('user')) {
+            router.navigate(USER_NAME + '/list/' + this.model.get('list_id'), {trigger:true});
+        } else {
+            window.open('/list/' + this.model.get('list_id') + '/');
+        }
     },
     show_comment_box: function() {
         if (this.list.can_comment()) {

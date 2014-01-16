@@ -265,6 +265,7 @@ var ListsView = Backbone.View.extend({
         this.collection.bind("reset", this.render, this);
         this.collection.bind("reset", this.user_lists_loaded, this);
         this.collection.fetch();
+        this.lists_uri_map = {};
 
         this.bookmarks = this.options['bookmarks'];
         this.$(".lists-ul").sortable({
@@ -278,6 +279,9 @@ var ListsView = Backbone.View.extend({
             }
         });
     },
+    get_list_by_uri: function (uri) {
+        return this.lists_uri_map[uri];
+    },
     render_current_list_view: function(list_view) {
         this.current_list_view = list_view;
         this.current_list_view.render();
@@ -290,6 +294,7 @@ var ListsView = Backbone.View.extend({
         //this.$(target).html('');
         $.each(data.models, function(index, list){
             self.append_new_list(list, data, null, target);
+            self.lists_uri_map[list.get('resource_uri')] = list;
         });
         if (!this.$('.jquery-bootstrap-pagination').html()) {
             F.show_paginator(self, 4, function(){

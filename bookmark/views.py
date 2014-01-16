@@ -94,7 +94,7 @@ def list_detail(request, id):
         except ListInvitation.DoesNotExist:
             pass
     if not l.public and not invitation: 
-        return Http404()
+        raise Http404()
     context = {}
     context['list'] = l
     context['bookmarks'] = l.bookmark_set.order_by('-created_time')
@@ -182,7 +182,7 @@ def import_to(request):
                 elif site == 'google':
                     list_name = _('Export from Google Bookmarks')
                 else:
-                    return Http404()
+                    raise Http404()
 
                 handle_imported_file.delay(data, user, site, list_name)
                 messages.info(request, 

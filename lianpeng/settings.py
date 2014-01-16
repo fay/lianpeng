@@ -189,6 +189,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'reversion',
     "haystack",
+    "sorl.thumbnail",
 
     
     # project

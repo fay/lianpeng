@@ -1,5 +1,5 @@
 {% extends 'site_base.html' %}
-{% load gravatar %}
+{% load profiles_tags %}
 {% load bookmark_tags %}
 {% load i18n %}
 {% load compressed %}
@@ -11,7 +11,7 @@
         <div class="span12 profile-box">
             <div class="row-fluid user-info-box">
                  <div class="span3  avatar-box">
-                     <div class="avatar" alt="{{ current_user }}" style="background:url({% gravatar_for_email current_user.email 128 %}&r=r) no-repeat"></div>
+                     <div class="avatar" alt="{{ current_user }}" style="background:url({% avatar current_user.email 128 %}&r=r) no-repeat"></div>
                  </div>
                  <div class="span9">
                      <h1 class="username">{{ current_user }}

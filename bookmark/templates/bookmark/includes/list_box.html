@@ -1,10 +1,10 @@
-{% load gravatar %}
+{% load profiles_tags %}
 {% load i18n %}
 {% load bookmark_tags %}
                     <div class="span4">
                         <div class="box list" data-link="{% url bookmark_list list.id %}">
                             <div class="header">
-                                <img class="avatar" alt="{{ list.user }}" src="{% gravatar_for_email list.user.email 64 %}&r=r" />
+                                <img class="avatar" alt="{{ list.user }}" src="{% avatar list.user.email 64 %}&r=r" />
                             </div>
                             <div class="detail bookmarks">
                                 <div class="title"><h4><a href="#" title="{{ list.name}}">{{ list.name }}</a> <small> - {{ list.user }}</small></h4></div>

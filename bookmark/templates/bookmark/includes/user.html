@@ -1,11 +1,11 @@
-{% load gravatar %}
+{% load profiles_tags %}
 {% load bookmark_tags %}
 {% load i18n %}
     {% with user_obj.profile_set.all|first as profile %}
                     <div class="span4">
                         <div class="box list" data-link="{% url bookmark_profile username=user_obj.username %}">
                             <div class="header">
-                                <img class="avatar" alt="{{ user_obj }}" src="{% gravatar_for_email user_obj.email 64 %}&r=r" />
+                                <img class="avatar" alt="{{ user_obj }}" src="{% avatar user_obj.email 64 %}&r=r" />
                             </div>
                             <div class="detail bookmarks">
                                 <div class="title">

@@ -1,5 +1,5 @@
 {% extends 'site_base.html' %}
-{% load gravatar %}
+{% load profiles_tags %}
 {% load i18n %}
 {% load bookmark_tags %}
 {% load comments %}
@@ -13,7 +13,7 @@
             <div class="row-fluid">
                 <div class="span4">
                     <a href="{% url bookmark_profile bookmark.user %}">
-                        <img class="avatar" alt="{{ bookmark.user }}" src="{% gravatar_for_email bookmark.user.email 64 %}&r=r" />
+                        <img class="avatar" alt="{{ bookmark.user }}" src="{% avatar bookmark.user.email 64 %}&r=r" />
                     </a>
                 </div>
                 <div class="span8">

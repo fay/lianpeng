@@ -1,5 +1,5 @@
 {% extends 'site_base.html' %}
-{% load gravatar %}
+{% load profiles_tags %}
 {% load i18n %}
 {% load bookmark_tags %}
 {% load compressed %}
@@ -13,7 +13,7 @@
             </div>
             {% for contributor in contributors %}
                 <a href="{% url bookmark_profile contributor %}" title="{{ contributor }}">
-                    <img class="avatar" alt="{{ contributor }}" src="{% gravatar_for_email contributor.email 32 %}&r=r" />
+                    <img class="avatar" alt="{{ contributor }}" src="{% avatar contributor.email 32 %}&r=r" />
                 </a>
             {% endfor %}
         </div>

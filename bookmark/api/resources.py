@@ -20,7 +20,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.contrib.contenttypes import generic
 from django.contrib.humanize.templatetags import humanize
 
-from gravatar.templatetags.gravatar import gravatar_for_email
+from profiles.templatetags.profiles_tags import avatar
 from fluent_comments.templatetags.fluent_comments_tags import comments_count
 
 from guardian.shortcuts import get_perms
@@ -248,7 +248,7 @@ class ListResource(ModelResource):
         user = bundle.request.user
         bundle.data['perms'] = get_perms(user, bundle.obj)
         try:
-            avatar = gravatar_for_email(bundle.obj.user.email, 14)
+            avatar = avatar(bundle.obj.user.email, 14)
         except Exception:
             avatar = ""
         bundle.data['user_avatar'] = avatar
@@ -303,7 +303,7 @@ class BookmarkResource(ModelResource):
 
     def dehydrate(self, bundle):
         user = bundle.obj.user
-        bundle.data['user_avatar'] = gravatar_for_email(user.email, 64)
+        bundle.data['user_avatar'] = avatar(user.email, 64)
         bundle.data['user_name'] = user.username
         bundle.data['timesince'] = humanize.naturaltime(bundle.data['created_time'])
         bundle.data['comments_count'] = comments_count(bundle.obj)
@@ -414,7 +414,7 @@ class CommentResource(ModelResource):
 
     def dehydrate(self, bundle):
         user = bundle.obj.user
-        bundle.data['avatar'] = gravatar_for_email(user.email, 32)
+        bundle.data['avatar'] = avatar(user.email, 32)
         bundle.data['user_name'] = user.username
         bundle.data['submit_date'] = humanize.naturaltime(bundle.data['submit_date'])
         return bundle

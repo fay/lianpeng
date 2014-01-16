@@ -1,5 +1,5 @@
 {% load i18n %}
-{% load gravatar %}
+{% load profiles_tags %}
 {% load fluent_comments_tags %}
                         <hr>
                         <div class="row-fluid bookmark-entry-box" id="bookmark-{{ bookmark.id }}"  data-id="{{  bookmark.id  }}"
@@ -7,7 +7,7 @@
                             data-url="{{ bookmark.url }}" data-domain="{{ bookmark.domain }}">
                             <div class="span1">
                                 <a title="{{ bookmark.user }}" href="{% url bookmark_profile bookmark.user %}">
-                                    <img class="avatar" alt="{{ bookmark.user }}" src="{% gravatar_for_email bookmark.user.email %}&r=r" alt="{{ bookmark.user }}"/>
+                                    <img class="avatar" alt="{{ bookmark.user }}" src="{% avatar bookmark.user.email 64 %}&r=r" alt="{{ bookmark.user }}"/>
                                 </a>
                             </div>
                             <div class="span11 bookmark-entry">

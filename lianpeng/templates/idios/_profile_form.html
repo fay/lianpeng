@@ -1,0 +1,24 @@
+{% load i18n %}
+{% load bootstrap_tags %}
+{% load url from future %}
+{% load profiles_tags %}
+
+{% if profile_form.is_multipart %}
+    <form method="POST" enctype="multipart/form-data" action="{% url "profile_edit" %}" class="form-horizontal">
+{% else %}
+    <form method="POST" action="{% url "profile_edit" %}" class="form-horizontal">
+{% endif %}
+    {% csrf_token %}
+    <legend>{% trans "Edit Profile" %}</legend>
+        <div id="div_id_avatar" class="control-group">
+            <label for="id_avatar" class="control-label ">
+            </label>
+            <div class="controls">
+                <img class="avatar" alt="{{ user }}" src="{% avatar user.email 64 %}&r=r" />
+            </div>
+        </div>
+    {{ profile_form|as_bootstrap }}
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">{% trans "Update" %}</button>
+    </div>
+</form>

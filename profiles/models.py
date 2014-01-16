@@ -10,6 +10,7 @@ from idios.models import ProfileBase
 
 
 class Profile(ProfileBase):
+    avatar = models.ImageField(upload_to='avatars', verbose_name=_("Avatar"))
     location = models.CharField(max_length=64, null=True, blank=True, verbose_name=_("Location"))
     website = models.URLField(null=True, blank=True, verbose_name=_("Website"))
     signature = models.CharField(max_length=128, null=True, blank=True, verbose_name=_("Signature"))

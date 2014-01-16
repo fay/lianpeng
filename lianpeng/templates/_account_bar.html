@@ -1,7 +1,7 @@
 {% load account_tags %}
 {% load i18n %}
 {% load notifications_tags %}
-{% load gravatar %}
+{% load profiles_tags %}
 {% load agon_tags %}
 {% load kaleo_tags %}
 
@@ -33,7 +33,7 @@
         <li><a href="{% url invite_user %}">{% trans "Invite" %} {% invites_remaining user %}</a></li>
         <li class="dropdown">
             <a href="#" class="dropdown-toggle avatar-nav" data-toggle="dropdown">
-                <img class="avatar" alt="{{ user }}" src="{% gravatar_for_email user.email 32 %}&r=r" />
+                <img class="avatar" alt="{{ user }}" src="{% avatar user.email 32 %}&r=r" />
                 {% user_display request.user %}
                 <b class="caret"></b>
             </a>

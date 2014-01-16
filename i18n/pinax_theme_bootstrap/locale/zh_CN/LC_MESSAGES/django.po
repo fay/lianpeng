@@ -435,11 +435,15 @@ msgstr "抱歉，我们无法为您找到合适的页面。"
 msgid "Server Error"
 msgstr "服务器不给力，出错了 :("
 
-#: templates/500.html:8
+#: templates/500.html:9
+msgid "Something went wrong"
+msgstr "服务器出了差错"
+
+#: templates/500.html:10
 msgid ""
 "We're sorry but a server error has occurred. We've been notified and will "
 "look into it as soon as possible."
-msgstr ""
+msgstr "很抱歉服务器发生了错误，我们已经悉知并将尽快查明原因。"
 
 #: templates/account/_terms.html:5
 #, python-format

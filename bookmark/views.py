@@ -203,6 +203,7 @@ def export(request):
         <!--This is an automatically generated file.
         It will be read and overwritten.
         Do Not Edit! -->
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <Title>lianpeng.me bookmarks</Title>
         <H1>Bookmarks</H1>
         <DL>

@@ -939,7 +939,8 @@ body.bookmark-app{padding-top:0;}
 .box .header .avatar{position:absolute;top:-42px;left:50%;margin-left:-35px;border:0;-moz-box-shadow:0 1px 2px #999;-webkit-box-shadow:0 1px 2px #999;box-shadow:0 1px 2px #999;}
 .page-title{text-align:center;}.page-title h1{color:#666;}
 hr.soften{height:1px;margin:40px 0;background-image:-webkit-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));background-image:-moz-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));background-image:-ms-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));background-image:-o-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));border:0;}
-.avatar{margin-right:10px;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;}
+.avatar-wrapper img,.avatar-change label img,.avatar{margin-right:10px;-webkit-border-radius:50%;-moz-border-radius:50%;border-radius:50%;}
+.avatar-change ul{margin:0;list-style:none;}.avatar-change ul li{display:inline-block;}
 #profile .profile-box{background:url(../img/profile_bg.png) #dddddd no-repeat 0px -8px;border-radius:8px;border:1px solid #eee;padding-top:100px;}#profile .profile-box .user-data{background:white;border-radius:8px;}
 #profile .username{color:white;margin:0;}#profile .username small{color:white;font-size:14px;}
 #profile .user-info-box .signature{color:white;margin-top:5px;font-size:14px;}

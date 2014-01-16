@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-07 21:39+0800\n"
+"POT-Creation-Date: 2014-01-02 14:29+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,9 +157,25 @@ msgstr ""
 msgid "[%(site_name)s] Invitation to join from friend."
 msgstr "[%(site_name)s] 好友邀请"
 
+#: templates/avatar/change.html:7
+msgid "Avatar"
+msgstr "头像"
+
+#: templates/avatar/change.html:25
+msgid "You haven't uploaded an avatar yet. Please upload one now."
+msgstr "您还没有上传任何头像图片，请现在上传。"
+
+#: templates/avatar/change.html:29
+msgid "Choose new Default"
+msgstr "设为默认头像"
+
+#: templates/avatar/change.html:36
+msgid "Upload New Image"
+msgstr ""
+
 #: templates/notifications/list.html:9
 msgid "All"
-msgstr ""
+msgstr "全部"
 
 #: templates/notifications/list.html:10
 msgid "Unread"
@@ -184,6 +200,9 @@ msgstr "前"
 #: templates/notifications/notice.txt:4
 msgid "Click link below to view the detail notification."
 msgstr "点击下面的链接查看通知详细信息："
+
+#~ msgid "Your current avatar: "
+#~ msgstr "您当前的头像"
 
 #~ msgid "Welcome"
 #~ msgstr "欢迎"

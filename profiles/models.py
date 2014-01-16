@@ -1,13 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.db.models import F
 from django.utils.translation import ugettext as _
 
 # Create your models here.
 from idios.models import ProfileBase
-
+from sorl.thumbnail import delete
 
 class Profile(ProfileBase):
     avatar = models.ImageField(upload_to='avatars', verbose_name=_("Avatar"))
@@ -22,3 +22,11 @@ class Profile(ProfileBase):
     github = models.CharField(max_length=56, verbose_name=_("Github"), null=True, blank=True)
     dribbble = models.CharField(max_length=56, verbose_name=_("Dribbble"), null=True, blank=True)
 
+@receiver(pre_save, sender=Profile)
+def delete_old_avatar(sender, instance, **kwargs):
+    if instance.avatar:
+        if not str(instance.avatar).startswith('avatars'):
+            user = instance.user
+            profile = user.get_profile()
+            if profile.avatar:
+                delete(profile.avatar)

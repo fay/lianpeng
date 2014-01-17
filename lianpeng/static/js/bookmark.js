@@ -87,9 +87,6 @@ var BookmarkView = Backbone.View.extend({
         this.$('.actions li').tooltip({placement:'bottom', animation:false, delay: { show: 0, hide: 0 }});
         this.$('.move').tooltip({placement:'right', animation:false, delay: { show: 0, hide: 0 }});
 
-        var bookmark_list = lists_view.get_list_by_uri(this.model.get('list'));
-        this.model.set('list_name', bookmark_list.get('name'));
-        this.model.set('list_id', bookmark_list.id);
     },
     goto_list: function () {
         if (USER_URL == this.model.get('user')) {

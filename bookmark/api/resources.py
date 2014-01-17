@@ -308,6 +308,8 @@ class BookmarkResource(ModelResource):
         bundle.data['timesince'] = humanize.naturaltime(bundle.data['created_time'])
         bundle.data['comments_count'] = comments_count(bundle.obj)
         bundle.data['favicon'] = bundle.obj.favicon
+        bundle.data['list_name'] = bundle.obj.list.name
+        bundle.data['list_id'] = bundle.obj.list.id
         return bundle
 
     def apply_authorization_limits(self, request, object_list):

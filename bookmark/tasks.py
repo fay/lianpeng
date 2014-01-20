@@ -124,7 +124,10 @@ def handle_imported_file(data, user, site, list_name):
                     existed_bookmark.save()
                     continue
                 except Bookmark.DoesNotExist:
-                    bookmark.tags = bookmark.tags + " " + tag
+                    try:
+                        bookmark.tags = bookmark.tags + " " + tag
+                    except UnboundLocalError:
+                        pass
                 except:
                     continue
             

@@ -421,4 +421,4 @@ def create_snapshot(sender, instance, created, **kwargs):
         except UserApp.DoesNotExist, e:
             return
         else:
-            create_snapshot_task(instance)
+            create_snapshot_task.delay(instance)

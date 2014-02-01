@@ -255,6 +255,6 @@ def bookmark_snapshot(request, unique_key):
     try:
          UserApp.objects.get(user=user, app__key='snapshot')
     except UserApp.DoesNotExist, e:
-         return render('bookmark/developing.html')
+         return render(request, 'bookmark/developing.html')
     else:
          return redirect('/snapshot/{}.html'.format(unique_key))

@@ -14,6 +14,7 @@ urlpatterns = patterns('bookmark.views',
     url(r'^list/accept/(?P<id>\d+)/$', "list_accept_invitation", name='bookmark_list_accept'),
     url(r'^list/ignore/(?P<id>\d+)/$', "list_ignore_invitation", name='bookmark_list_ignore'),
     url(r'^bookmark/(?P<id>\d+)/$', "bookmark_detail", name='bookmark_detail'),
+    url(r'^bookmark/snapshot/(?P<unique_key>.+).html$', "bookmark_snapshot", name='bookmark_snapshot'),
     url(r'^bookmark/viewed/(?P<id>\d+)/$', "bookmark_viewed", name='bookmark_viewed'),
     url(r'^tools/$', direct_to_template, {"template": "bookmark/tools.html"}, name="bookmark_tools"),
 

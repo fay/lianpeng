@@ -288,7 +288,7 @@ class BookmarkResource(ModelResource):
     class Meta:
         model = Bookmark
         queryset = Bookmark.objects.order_by('-created_time')
-        fields = ['id', 'title', 'domain', 'tags', 'url', 'note', 'user', 'list', 'created_time']
+        fields = ['id', 'title', 'domain', 'tags', 'url', 'note', 'user', 'list', 'created_time', 'unique_key']
         allowed_methods = ['get', 'put', 'post', 'delete']
         always_return_data = True #: when new object is created return the data with all fields
         authentication = SessionAuthentication()

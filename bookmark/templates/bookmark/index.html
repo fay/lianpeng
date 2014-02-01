@@ -420,6 +420,11 @@ bookmark-app
                                             </a>
                                             &nbsp;
                                             <i class="icon-time"></i>&nbsp;<small class=""><%-bookmark.timesince%></small>
+                                            &nbsp;
+                                            <a href="/bookmark/snapshot/<%-bookmark.unique_key%>.html" class="muted">
+                                                <i class="icon-camera"></i>&nbsp;<small> {% trans "Snapshot" %}
+                                                </small>
+                                            </a>
                                         </div>
                                     </div>
                                     <%if(bookmark.note) {%>

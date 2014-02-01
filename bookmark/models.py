@@ -409,3 +409,17 @@ def send_feedback_notfication(sender, instance, created, **kwargs):
         notify.send(instance.user, recipient=admin_user, verb=_('feedback'), 
                     action_object=instance,
                     description=instance.text)
+
+@receiver(post_save, sender=Bookmark)
+def create_snapshot(sender, instance, created, **kwargs):
+    if created:
+        from bookmark.tasks import create_snapshot_task
+        from market.models import UserApp
+        user = instance.user
+        try:
+            import pdb;pdb.set_trace()
+            UserApp.objects.get(user=user, app__key='snapshot')
+        except UserApp.DoesNotExist, e:
+            return
+        else:
+            create_snapshot_task(instance)

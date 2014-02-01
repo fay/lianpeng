@@ -126,8 +126,8 @@ class Bookmark(models.Model, DiffingMixin):
 
     @property
     def favicon(self):
-        # alt - http://g.etfv.co/http://...
-        return 'https://s2.googleusercontent.com/s2/favicons?alt=site&domain={}'.format(self.domain)
+        return 'http://g.etfv.co/http://{}'.format(self.domain)
+        #return 'https://s2.googleusercontent.com/s2/favicons?alt=site&domain={}'.format(self.domain)
 
     def absolute_url(self):
         return reverse('bookmark_detail', args=[self.id])

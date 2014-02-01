@@ -120,6 +120,7 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.google.GoogleOAuth2Backend',    
     'social_auth.backends.contrib.github.GithubBackend',
     'social_auth.backends.contrib.weibo.WeiboBackend',    
+    'social_auth.backends.contrib.douban.DoubanBackend2',    
     'django.contrib.auth.backends.ModelBackend', # default
     'guardian.backends.ObjectPermissionBackend',
 )

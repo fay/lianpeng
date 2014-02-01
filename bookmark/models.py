@@ -417,7 +417,6 @@ def create_snapshot(sender, instance, created, **kwargs):
         from market.models import UserApp
         user = instance.user
         try:
-            import pdb;pdb.set_trace()
             UserApp.objects.get(user=user, app__key='snapshot')
         except UserApp.DoesNotExist, e:
             return

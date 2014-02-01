@@ -27,6 +27,7 @@ from bookmark.models import List, Bookmark, PickedList, ListInvitation,\
         SyncState, FeedCount, LIST_KIND_CHOICES
 from bookmark.tasks import handle_imported_file, sync_github
 from misc.models import UserTour
+from market.models import UserApp
 
 def index(request, username=None, id=None, query=None, tag=None):
     user = request.user
@@ -248,3 +249,12 @@ def bookmark_viewed(request, id):
     bookmark.save()
     return HttpResponse("opened")
 
+@login_required
+def bookmark_snapshot(request, unique_key):
+    user = request.user
+    try:
+         UserApp.objects.get(user=user, app__key='snapshot')
+    except UserApp.DoesNotExist, e:
+         return render('bookmark/developing.html')
+    else:
+         return redirect('/snapshot/{}.html'.format(unique_key))

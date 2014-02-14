@@ -49,16 +49,20 @@ def get_content(from_, expect_binary=False):
             return s
 
 def resolve_path(base,target):
-    if True:
+    if False:
         return urlparse.urljoin(base, target)
 
+    target = target.replace('"', '').replace("'", '')
     if is_remote(target):
         return target
 
     if target.startswith('/'):
         if is_remote(base):
             protocol,rest = base.split('://')
-            return '%s://%s%s' % (protocol, rest.split('/')[0],target)
+            if target.startswith('//'):
+                return '%s:%s' % (protocol, target)
+            else:
+                return '%s://%s%s' % (protocol, rest.split('/')[0],target)
         else:
             return target
     else:
@@ -123,6 +127,12 @@ def snapshot(url, output_filename):
     replaceJavascript(url, bs)
     replaceCss(url, bs)
     replaceImages(url, bs)
+
+
+    base_tag = Tag(bs, 'base')
+    base_tag['target'] = '_blank'
+    base_tag['href'] = url
+    bs.html.head.insert(0, base_tag)
 
     res = open(os.path.join(settings.WEBPAGE_SNAPSHOT_ROOT, output_filename), 'wb')
     print >> res, str(bs)

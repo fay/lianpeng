@@ -8,7 +8,6 @@
 
 import sys, re, urllib2, base64, mimetypes, urlparse, os
 from BeautifulSoup import BeautifulSoup, Tag, NavigableString
-
 from django.conf import settings
 
 #feedparse has a _kick ass_ charset detection function!
@@ -36,15 +35,15 @@ def get_content(from_, expect_binary=False):
 
         ct = urllib2.urlopen(from_)
         if not expect_binary:
-            s = ct.read()
+			s = ct.read()
             return unicode(s, 'utf-8')
         else:
             return ct.read()
     else:
         s = open(from_).read()
         if not expect_binary:
-            encodings = feedparser._getCharacterEncoding({}, s)
-            return unicode(s, encodings[0])
+            encodings = feedparser.convert_to_utf8({}, s)
+            return unicode(s, encodings[1])
         else:
             return s
 
@@ -128,15 +127,17 @@ def snapshot(url, output_filename):
     replaceCss(url, bs)
     replaceImages(url, bs)
 
-
     base_tag = Tag(bs, 'base')
     base_tag['target'] = '_blank'
     base_tag['href'] = url
     bs.html.head.insert(0, base_tag)
 
-    res = open(os.path.join(settings.WEBPAGE_SNAPSHOT_ROOT, output_filename), 'wb')
-    print >> res, str(bs)
-    res.close()
+    try:
+        res = open(os.path.join(settings.WEBPAGE_SNAPSHOT_ROOT, output_filename), 'wb')
+        res.write(str(bs))
+        res.close()
+    except Exception, e:
+       print e
 
 if __name__ == '__main__':
     main(sys.argv[1], sys.argv[2])

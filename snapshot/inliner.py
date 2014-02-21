@@ -15,7 +15,7 @@ from django.conf import settings
 def is_remote(address):
     return urlparse.urlparse(address)[0] in ('http', 'https')
 
-def data_encode_image(name,content):
+def data_encode_image(name, content):
     return u'data:%s;base64,%s' % (mimetypes.guess_type(name)[0],base64.standard_b64encode(content))
 
 def ignore_url(address):
@@ -33,9 +33,9 @@ def get_content(from_, expect_binary=False):
         if ignore_url(from_):
             return u''
 
-        ct = urllib2.urlopen(from_)
+        ct = urllib2.urlopen(from_, timeout=10)
         if not expect_binary:
-			s = ct.read()
+            s = ct.read()
             return unicode(s, 'utf-8')
         else:
             return ct.read()
@@ -47,7 +47,7 @@ def get_content(from_, expect_binary=False):
         else:
             return s
 
-def resolve_path(base,target):
+def resolve_path(base, target):
     if False:
         return urlparse.urljoin(base, target)
 

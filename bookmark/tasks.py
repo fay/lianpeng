@@ -17,13 +17,7 @@ from BeautifulSoup import BeautifulSoup
 from celery.task import task
 
 from bookmark.models import List, Bookmark, SyncState
-from bookmark.inliner import snapshot
 from social_auth.models import UserSocialAuth
-
-@task
-def create_snapshot_task(bookmark):
-    url = bookmark.url
-    snapshot(url, "{}.html".format(bookmark.unique_key))
 
 @task
 def sync():

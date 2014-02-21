@@ -201,6 +201,7 @@ INSTALLED_APPS = [
     "profiles",
     "avatar",
     "market",
+    "snapshot",
 ]
 
 # A sample logging configuration. The only tangible logging

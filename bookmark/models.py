@@ -229,6 +229,7 @@ class FeedCount(models.Model):
     def count(self):
         return Bookmark.objects.feed(self.user).filter(id__gt=self.last_id).count()
 
+
 @receiver(pre_delete, sender=ListInvitation)
 def delete_permission(sender, instance, **kwargs):
     try:
@@ -410,15 +411,3 @@ def send_feedback_notfication(sender, instance, created, **kwargs):
                     action_object=instance,
                     description=instance.text)
 
-@receiver(post_save, sender=Bookmark)
-def create_snapshot(sender, instance, created, **kwargs):
-    if created:
-        from bookmark.tasks import create_snapshot_task
-        from market.models import UserApp
-        user = instance.user
-        try:
-            UserApp.objects.get(user=user, app__key='snapshot')
-        except UserApp.DoesNotExist, e:
-            return
-        else:
-            create_snapshot_task.delay(instance)

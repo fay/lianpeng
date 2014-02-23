@@ -53,6 +53,7 @@ urlpatterns = patterns("",
     url(r'^notifications/', include('notifications.urls', namespace="notifications")),
     url(r'^avatar/', include('avatar.urls')),
     url(r'^apps/', include('market.urls')),
+    url(r'^snapshot/', include('snapshot.urls')),
     url(r'^500/$', direct_to_template, {'template': '500.html'}),
     url(r'^', include("bookmark.urls")),
 )

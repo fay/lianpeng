@@ -17,7 +17,7 @@ def snapshot_upload_to(instance, filename):
 
 
 class Snapshot(models.Model):
-    bookmark = models.ForeignKey(Bookmark)
+    bookmark = models.OneToOneField(Bookmark)
     html_file = models.FileField(upload_to=snapshot_upload_to)
     created_time = models.DateTimeField(auto_now_add=True)
 

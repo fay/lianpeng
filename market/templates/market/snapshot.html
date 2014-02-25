@@ -6,7 +6,7 @@
         <h2>网页快照，永久保存收藏网页的内容</h2>
         <h4 class="muted">再也不用担心网页内容的变化，和<code>404</code>说再见吧 :)</h4>
         <br>
-        <a href="" class="btn btn-success btn-large"><i class="icon-camera"></i> 订购网页快照服务</a>
+        <a href="#order-modal" data-toggle="modal" class="btn btn-success btn-large"><i class="icon-camera"></i> 订购网页快照服务</a>
         <h6 class="text-warning">邀请好友获得一个月免费网页快照服务</h6>
         <hr>
     </div>
@@ -24,5 +24,27 @@
             <small class="muted">如果你需要取消快照服务，可以选择下载您的所有快照打包文件，存放到你自己的电脑中。</small>
         </div>
     </div>
+</div>
+<div class="modal hide fade" id="order-modal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>选择付费计划</h3>
+  </div>
+  <form method="post">
+      <div class="modal-body">
+        {% for plan in plans %}
+        <h3>
+            <label class="radio">
+                <input type="radio" name="plan" value="{{ plan.id }}">
+                <big class="text-success"><strong>{{ plan.price }}元/{% if plan.period == 30 %}月{% else %}{% if plan.period == 365 %}年{% endif %}{% endif %}</strong></big>
+            </label>
+        </h3>
+        {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">取消</a>
+        <button class="btn btn-primary">用支付宝支付</button>
+      </div>
+  </form>
 </div>
 {% endblock %}

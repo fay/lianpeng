@@ -9,7 +9,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext
 from django.utils.translation import ugettext, ugettext as _
 
-from market.models import App, UserApp
+from market.models import App, UserApp, AppPlan
 
 def index(request):
     context = {}
@@ -17,14 +17,17 @@ def index(request):
 
 @login_required
 def order(request, app_key):
-    user = user
+    user = request.user
     app = get_object_or_404(App, key=app_key)
     try:
         user_app = UserApp.objects.get(user=user, app__key=app_key)
     except UserApp.DoesNotExist:
+        plans = AppPlan.objects.filter(app=app, available=True)
         context = {}
         context['app'] = app
-        return render(request, 'market_price', context)
+        context['plans'] = plans
+
+        return render(request, 'market/{}.html'.format(app_key), context)
         #return redirect('market_app', app_key=app_key)
     else:
         pass

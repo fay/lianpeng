@@ -422,10 +422,12 @@ bookmark-app
                                             <i class="icon-time"></i>&nbsp;<small class=""><%-bookmark.timesince%></small>
                                             {% if user.is_staff %}
                                             &nbsp;
+                                            <% if(bookmark.has_snapshot && list.id != 'feed') { %>
                                             <a href="/bookmark/snapshot/<%-bookmark.id%>.html" target="_blank" class="muted">
                                                 <i class="icon-camera"></i>&nbsp;<small> {% trans "Snapshot" %}
                                                 </small>
                                             </a>
+                                            <% } %>
                                             {% endif %}
                                         </div>
                                     </div>

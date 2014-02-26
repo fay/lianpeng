@@ -36,6 +36,7 @@ from bookmark.forms import BookmarkForm, ListForm, FeedbackForm, FollowForm, \
 from market.models import UserApp, App
 from tagging.managers import ModelTaggedItemManager
 from misc.models import UserTour
+from snapshot.models import Snapshot
 
 class PermissionValidation(Validation):
     def is_valid(self, bundle, request=None):
@@ -310,6 +311,17 @@ class BookmarkResource(ModelResource):
         bundle.data['favicon'] = bundle.obj.favicon
         bundle.data['list_name'] = bundle.obj.list.name
         bundle.data['list_id'] = bundle.obj.list.id
+
+        #: snapshot
+        has_snapshot = False
+        try:
+            bundle.obj.snapshot
+        except Snapshot.DoesNotExist:
+            pass
+        else:
+            has_snapshot = True
+        bundle.data['has_snapshot'] = has_snapshot
+
         return bundle
 
     def apply_authorization_limits(self, request, object_list):

@@ -11,6 +11,8 @@ from django.utils.translation import ugettext, ugettext as _
 
 from market.models import App, UserApp, AppPlan
 
+import alipay
+
 def index(request):
     context = {}
     return render(request, 'market/index.html', context)
@@ -19,17 +21,25 @@ def index(request):
 def order(request, app_key):
     user = request.user
     app = get_object_or_404(App, key=app_key)
-    try:
-        user_app = UserApp.objects.get(user=user, app__key=app_key)
-    except UserApp.DoesNotExist:
-        plans = AppPlan.objects.filter(app=app, available=True)
-        context = {}
-        context['app'] = app
-        context['plans'] = plans
+    if request.method == 'GET':
+        try:
+            user_app = UserApp.objects.get(user=user, app__key=app_key)
+        except UserApp.DoesNotExist:
+            plans = AppPlan.objects.filter(app=app, available=True)
+            context = {}
+            context['app'] = app
+            context['plans'] = plans
 
-        return render(request, 'market/{}.html'.format(app_key), context)
-        #return redirect('market_app', app_key=app_key)
+            return render(request, 'market/{}.html'.format(app_key), context)
+            #return redirect('market_app', app_key=app_key)
+        else:
+            pass
     else:
-        pass
-        
-    
+        plan_id = request.POST.get('plan')
+        amount = int(request.POST.get('amount'))
+        plan = AppPlan.objects.get(id=int(plan_id))
+        price = plan.price
+        total = amount * price
+        print total
+        payurl = alipay.create_direct_pay_by_user('12345', u'', u' %d ' % total, total)
+        return redirect(payurl)

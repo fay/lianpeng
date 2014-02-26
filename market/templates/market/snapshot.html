@@ -31,13 +31,14 @@
     <h3>选择付费计划</h3>
   </div>
   <form method="post" class="form-inline">
+      {% csrf_token %}
       <div class="modal-body">
           价格：
         <h3 class="row-fluid">
             {% for plan in plans %}
                 <div class="well span3">
                 <label class="radio">
-                    <input type="radio" name="plan" value="{{ plan.id }}" {% if forloop.counter == 1 %}checked{% endif %}>
+                    <input class="plan-input" type="radio" data-price="{{ plan.price}}" name="plan" value="{{ plan.id }}" {% if forloop.counter == 1 %}checked{% endif %}>
                     <big class="text-success"><strong><span class="price">{{ plan.price }}</span>元 / 
                             {% if plan.period == 30 %}月{% else %}{% if plan.period == 365 %}年{% endif %}{% endif %}</strong></big>
                 </label>
@@ -47,18 +48,18 @@
         <label>
             数量：
             <div class="input-append input-prepend">
-              <button class="btn decrease" type="button">-</button>
-              <input class="span1 center" id="quantity-input" type="text" value="1">
+              <button class="disabled btn decrease" type="button">-</button>
+              <input name="amount" class="span1 center" id="quantity-input" type="text" value="1">
               <button class="btn increase" type="button">+</button>
             </div>
         </label>
       </div>
       <div class="modal-footer">
         <h3>
-            <small>小计：</small><span class="unit"></span> x <span class="quantity"></span> = ￥<span class="total text-success"></span>
+            <small>小计：<span class="unit"></span> x <span class="quantity"></span> = ￥</small><span class="total text-success"></span>
         </h3>
         <a href="#" class="btn" data-dismiss="modal" aria-hidden="true">取消</a>
-        <button class="btn btn-primary">用支付宝支付</button>
+        <button class="btn btn-primary">支付宝付款</button>
       </div>
   </form>
 </div>
@@ -67,8 +68,7 @@
 {% block extra_script %}
     <script type="text/javascript" charset="utf-8">
         function calculate() {
-            var price = $('form input[type="radio"][checked]').next().find('.price').text();
-             
+            var price = $('form input[type="radio"]:checked').data('price');
             var quantity = $('form #quantity-input').val();
             $('.unit').html(price);
             $('.quantity').html(quantity);
@@ -76,19 +76,30 @@
             $('.total').html(total);
         }
         calculate();
+        $('.plan-input').change(function(){
+            calculate();
+        });
         $('#quantity-input').change(function(){
             calculate();
         });
         $('.increase').click(function(){
-            var current_value = parseInt($('#quantity-input').val());       
+            var current_value = parseInt($('#quantity-input').val());
             if(current_value < 6) {
                 $('#quantity-input').val(current_value + 1); 
+                $('#quantity-input').change(); 
+                $('.decrease').removeClass('disabled');
+            } else {
+                $(this).addClass('disabled');
             }
         });
         $('.decrease').click(function(){
-            var current_value = parseInt($('#quantity-input').val());       
+            var current_value = parseInt($('#quantity-input').val());
             if(current_value > 1) {
                 $('#quantity-input').val(current_value - 1); 
+                $('#quantity-input').change(); 
+                $('.increase').removeClass('disabled');
+            } else {
+                $(this).addClass('disabled');
             }
         });
     </script>

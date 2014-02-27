@@ -91,7 +91,7 @@ $('#feedback .confirm').click(function(){
         contentType: "application/json",
         dataType: "application/json"
     }).complete(function(){
-        $('#feedback textarea').hide();
+        $('#feedback .feedback-input-area').hide();
         $('#feedback .success').show();
     });
     return false;

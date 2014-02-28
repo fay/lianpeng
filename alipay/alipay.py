@@ -7,9 +7,7 @@ Created on 2011-4-21
 import types
 from urllib import urlencode, urlopen
 from hashcompat import md5_constructor as md5
-
 from django.conf import settings
-
 
 def smart_str(s, encoding='utf-8', strings_only=False, errors='strict'):
     """
@@ -38,7 +36,7 @@ def smart_str(s, encoding='utf-8', strings_only=False, errors='strict'):
         return s
 
 # 网关地址
-_GATEWAY = 'https://www.alipay.com/cooperate/gateway.do?'
+_GATEWAY = 'https://mapi.alipay.com/gateway.do?'
 
 
 # 对数组排序并除去数组中的空值和签名参数
@@ -109,6 +107,87 @@ def create_direct_pay_by_user(tn, subject, body, total_fee):
     return _GATEWAY + urlencode(params)
 
 
+# 纯担保交易接口
+def create_partner_trade_by_buyer (tn, subject, body, price):
+    params = {}
+    # 基本参数
+    params['service']       = 'create_partner_trade_by_buyer'
+    params['partner']           = settings.ALIPAY_PARTNER
+    params['_input_charset']    = settings.ALIPAY_INPUT_CHARSET
+    params['notify_url']        = settings.ALIPAY_NOTIFY_URL
+    params['return_url']        = settings.ALIPAY_RETURN_URL
+
+    # 业务参数
+    params['out_trade_no']  = tn        # 请与贵网站订单系统中的唯一订单号匹配
+    params['subject']       = subject   # 订单名称，显示在支付宝收银台里的“商品名称”里，显示在支付宝的交易管理的“商品名称”的列表里。
+    params['payment_type']  = '1'
+    params['logistics_type'] = 'POST'   # 第一组物流类型
+    params['logistics_fee'] = '0.00'
+    params['logistics_payment'] = 'BUYER_PAY'
+    params['price'] = price             # 订单总金额，显示在支付宝收银台里的“应付总额”里
+    params['quantity'] = 1              # 商品的数量
+    params['seller_email']      = settings.ALIPAY_SELLER_EMAIL
+    params['body']          = body      # 订单描述、订单详细、订单备注，显示在支付宝收银台里的“商品描述”里
+    params['show_url'] = settings.ALIPAY_SHOW_URL
+    
+    params,prestr = params_filter(params)
+    
+    params['sign'] = build_mysign(prestr, settings.ALIPAY_KEY, settings.ALIPAY_SIGN_TYPE)
+    params['sign_type'] = settings.ALIPAY_SIGN_TYPE
+    
+    return _GATEWAY + urlencode(params)
+
+# 双功能收款
+def trade_create_by_buyer(tn, subject, body, price):
+    params = {}
+    # 基本参数
+    params['service']       = 'trade_create_by_buyer'
+    params['partner']           = settings.ALIPAY_PARTNER
+    params['_input_charset']    = settings.ALIPAY_INPUT_CHARSET
+    params['notify_url']        = settings.ALIPAY_NOTIFY_URL
+    params['return_url']        = settings.ALIPAY_RETURN_URL
+
+    # 业务参数
+    params['out_trade_no']  = tn        # 请与贵网站订单系统中的唯一订单号匹配
+    params['subject']       = subject   # 订单名称，显示在支付宝收银台里的“商品名称”里，显示在支付宝的交易管理的“商品名称”的列表里。
+    params['payment_type']  = '1'
+    params['logistics_type'] = 'POST'   # 第一组物流类型
+    params['logistics_fee'] = '0.00'
+    params['logistics_payment'] = 'SELLER_PAY'
+    params['price'] = price             # 订单总金额，显示在支付宝收银台里的“应付总额”里
+    params['quantity'] = 1              # 商品的数量
+    params['seller_email']      = settings.ALIPAY_SELLER_EMAIL
+    params['body']          = body      # 订单描述、订单详细、订单备注，显示在支付宝收银台里的“商品描述”里
+    params['show_url'] = settings.ALIPAY_SHOW_URL
+    
+    params,prestr = params_filter(params)
+    
+    params['sign'] = build_mysign(prestr, settings.ALIPAY_KEY, settings.ALIPAY_SIGN_TYPE)
+    params['sign_type'] = settings.ALIPAY_SIGN_TYPE
+    
+    return _GATEWAY + urlencode(params)
+
+# 确认发货接口
+def send_goods_confirm_by_platform (tn):
+    params = {}
+
+    # 基本参数
+    params['service']       = 'send_goods_confirm_by_platform'
+    params['partner']           = settings.ALIPAY_PARTNER
+    params['_input_charset']    = settings.ALIPAY_INPUT_CHARSET
+
+    # 业务参数
+    params['trade_no']  = tn
+    params['logistics_name'] = u'银河列车'   # 物流公司名称
+    params['transport_type'] = u'POST'
+    
+    params,prestr = params_filter(params)
+    
+    params['sign'] = build_mysign(prestr, settings.ALIPAY_KEY, settings.ALIPAY_SIGN_TYPE)
+    params['sign_type'] = settings.ALIPAY_SIGN_TYPE
+    
+    return _GATEWAY + urlencode(params)
+
 def notify_verify(post):
     # 初级验证--签名
     _,prestr = params_filter(post)
@@ -122,13 +201,11 @@ def notify_verify(post):
     params['notify_id'] = post.get('notify_id')
     if settings.ALIPAY_TRANSPORT == 'https':
         params['service'] = 'notify_verify'
-        gateway = 'https://www.alipay.com/cooperate/gateway.do'
+        gateway = 'https://mapi.alipay.com/gateway.do'
     else:
         gateway = 'http://notify.alipay.com/trade/notify_query.do'
     veryfy_result = urlopen(gateway, urlencode(params)).read()
     if veryfy_result.lower().strip() == 'true':
         return True
     return False
-
-
 

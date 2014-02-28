@@ -9,9 +9,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext
 from django.utils.translation import ugettext, ugettext as _
 
-from market.models import App, UserApp, AppPlan
+from market.models import App, UserApp, AppPlan, Order
 
-import alipay
+from alipay import alipay
 
 def index(request):
     context = {}
@@ -35,11 +35,17 @@ def order(request, app_key):
         else:
             pass
     else:
-        plan_id = request.POST.get('plan')
-        amount = int(request.POST.get('amount'))
-        plan = AppPlan.objects.get(id=int(plan_id))
-        price = plan.price
-        total = amount * price
-        print total
-        payurl = alipay.create_direct_pay_by_user('12345', u'', u' %d ' % total, total)
-        return redirect(payurl)
+        try:
+            user_app = UserApp.objects.get(user=user, app__key=app_key)
+        except UserApp.DoesNotExist:
+            plan_id = request.POST.get('plan')
+            amount = int(request.POST.get('amount'))
+            plan = AppPlan.objects.get(id=int(plan_id))
+            price = plan.price
+            total = amount * price
+            days = plan.period * amount
+
+            order = Order(price=price, amount=amount, period=plan.period, user=user, app=app, plan=plan)
+            order.save()
+            payurl = alipay.trade_create_by_buyer(order.id, _("Pay for snapshot"), _('Pay for snapshot service of %(days)s days #%(order)s.') % ({'days': days, 'order': order.id}), total)
+            return redirect(payurl)

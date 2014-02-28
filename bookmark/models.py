@@ -24,22 +24,8 @@ from guardian.models import UserObjectPermissionBase
 from guardian.models import GroupObjectPermissionBase
 from guardian.shortcuts import assign_perm, remove_perm, get_perms
 from agon.models import award_points, TargetStat
-from misc.utils import find_mentions
+from misc.utils import find_mentions, Choice
 from misc.models import Lock
-
-class Choice(object):
-
-    def __init__(self, choices):
-        self.choices = choices
-
-    def __getattr__(self, name):
-        if name.lower() in self.choices:
-            return self.choices.get(name.lower())
-        else:
-            return super(Choice, self).__getattr__(name)
-
-    def to_choices(self):
-        return tuple(zip(self.choices.values(), self.choices.keys()))
 
 
 LIST_KIND_CHOICES = Choice({

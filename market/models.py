@@ -4,10 +4,16 @@ from django.db.models.signals import post_save
 from django.db.models import F
 
 from bookmark.models import List
+from misc.utils import find_mentions, Choice
 
 DIRECT_BUY = 1
 REFERRAL = 2
 CHANNEL_CHOICES = ((DIRECT_BUY, 'Direct buy'), (REFERRAL, 'Referral'))
+
+ORDER_STATES = Choice({
+        'unpaid': 0,
+        'paid': 1,
+})
 
 class App(models.Model):
 
@@ -52,11 +58,13 @@ class UserApp(models.Model):
 class Order(models.Model):
 
     user = models.ForeignKey(User)
-    user_app = models.ForeignKey(UserApp)
+    app = models.ForeignKey(App)
+    plan = models.ForeignKey(AppPlan)
     price = models.IntegerField()
     amount = models.IntegerField(default=1)
     period = models.PositiveIntegerField()
     created_time = models.DateTimeField(auto_now_add=True)
+    state = models.IntegerField(choices=ORDER_STATES.to_choices(), default=ORDER_STATES.UNPAID)
 
 
 class AppList(models.Model):

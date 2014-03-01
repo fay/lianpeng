@@ -3,7 +3,7 @@ from hashlib import md5
 
 from django.db import models
 from django.contrib.auth.models import User
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.db.models import F
 from django.dispatch import receiver
 from django.conf import settings
@@ -37,3 +37,7 @@ def create_snapshot(sender, instance, created, **kwargs):
             return
         else:
             create_snapshot_task.delay(instance)
+
+@receiver(post_delete, sender=Snapshot)
+def delete_snapshot_file(sender, instance, **kwargs):
+    instance.html_file.delete(save=False)

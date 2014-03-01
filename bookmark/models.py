@@ -118,6 +118,7 @@ class Bookmark(models.Model, DiffingMixin):
     unique_key = models.CharField(max_length=32)
     user = models.ForeignKey(User, related_name="bookmarks")
     list = models.ForeignKey(List, null=True, blank=True)
+    charset = models.CharField(null=True, max_length=10)
 
     objects = BookmarkManager()
 

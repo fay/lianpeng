@@ -2,8 +2,8 @@ import re
 
 from django.utils.text import compress_string
 from django.utils.cache import patch_vary_headers
-
 from django import http
+from django.conf import settings
 
 try:
     from django.conf import settings
@@ -28,7 +28,8 @@ class XsSharing(object):
         is_safe = False
         if origin:
             if origin.split('//')[1] == 'bookmarklet.sinaapp.com' or \
-               origin == 'chrome-extension://bdomhbcbkbldbnechblaaaopghdmdcej':
+               origin == 'chrome-extension://bdomhbcbkbldbnechblaaaopghdmdcej' or \
+               settings.DEBUG:
                 is_safe = True
         return is_safe, origin
 

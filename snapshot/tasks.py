@@ -10,7 +10,8 @@ from snapshot.models import Snapshot
 @task
 def create_snapshot_task(bookmark):
     url = bookmark.url
-    soup = snapshot(url)
+    charset = bookmark.charset
+    soup = snapshot(url, charset)
     html = ContentFile(str(soup))
     snapshot_obj = Snapshot(bookmark=bookmark)
     filename = "{}.html".format(bookmark.unique_key)

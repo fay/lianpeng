@@ -36,12 +36,9 @@ def get_content(from_, expect_binary=False, charset=None):
         ct = urllib2.urlopen(from_, timeout=10)
         if not expect_binary:
             s = ct.read()
-            return s
-            """
             if not charset:
                 charset = 'utf-8'
             return unicode(s, charset)
-            """
         else:
             return ct.read()
     else:
@@ -142,7 +139,7 @@ def snapshot(url, charset):
     #: set charset to utf-8
     charset_tag = Tag(bs, 'meta')
     charset_tag['charset'] = 'UTF-8'
-    #bs.html.head.insert(0, charset_tag)
+    bs.html.head.insert(0, charset_tag)
     return bs
 
 if __name__ == '__main__':

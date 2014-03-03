@@ -28,7 +28,7 @@ def ignore_url(address):
 
     return False
 
-def get_content(from_, expect_binary=False):
+def get_content(from_, expect_binary=False, charset=None):
     if is_remote(from_):
         if ignore_url(from_):
             return u''
@@ -36,7 +36,9 @@ def get_content(from_, expect_binary=False):
         ct = urllib2.urlopen(from_, timeout=10)
         if not expect_binary:
             s = ct.read()
-            return unicode(s, 'utf-8')
+            if not charset:
+                charset = 'utf-8'
+            return unicode(s, charset)
         else:
             return ct.read()
     else:
@@ -120,17 +122,24 @@ def replaceImages(base_url, soup):
             print e
 
 
-def snapshot(url):
-    bs = BeautifulSoup(get_content(url))
+def snapshot(url, charset):
+    bs = BeautifulSoup(get_content(url, charset=charset))
 
     replaceJavascript(url, bs)
     replaceCss(url, bs)
     replaceImages(url, bs)
 
+    #: set base uri so that the link in the page will 
+    #: point to the real website rather than lianpeng.me
     base_tag = Tag(bs, 'base')
     base_tag['target'] = '_blank'
     base_tag['href'] = url
     bs.html.head.insert(0, base_tag)
+
+    #: set charset to utf-8
+    charset_tag = Tag(bs, 'meta')
+    charset_tag['charset'] = 'UTF-8'
+    bs.html.head.insert(0, charset_tag)
     return bs
 
 if __name__ == '__main__':

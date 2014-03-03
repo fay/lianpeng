@@ -1,4 +1,9 @@
 {% extends 'site_base.html' %}
+{% load i18n  %}
+
+{% block head_title %}
+{% trans "Snapshot" %}
+{% endblock %}
 
 {% block body %}
 <div class="hero-unit">
@@ -7,7 +12,7 @@
         <h4 class="muted">再也不用担心网页内容的变化，和<code>404</code>说再见吧 :)</h4>
         <br>
         <a href="#order-modal" data-toggle="modal" class="btn btn-success btn-large"><i class="icon-camera"></i> 订购网页快照服务</a>
-        <h6 class="text-warning">邀请好友获得一个月免费网页快照服务</h6>
+        <h6 class="hide text-warning">邀请好友获得一个月免费网页快照服务</h6>
         <hr>
     </div>
     <div class="row-fluid">

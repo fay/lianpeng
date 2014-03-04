@@ -1,0 +1,1 @@
+[{"pk": 1, "model": "market.appplan", "fields": {"available": true, "app": 1, "price": 2, "name": "\u6708\u4ed8", "period": 30}}, {"pk": 2, "model": "market.appplan", "fields": {"available": true, "app": 1, "price": 30, "name": "\u5e74\u4ed8", "period": 365}}]

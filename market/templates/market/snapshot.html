@@ -44,8 +44,10 @@
                 <div class="well span3">
                 <label class="radio">
                     <input class="plan-input" type="radio" data-price="{{ plan.price}}" name="plan" value="{{ plan.id }}" {% if forloop.counter == 1 %}checked{% endif %}>
-                    <big class="text-success"><strong><span class="price">{{ plan.price }}</span>元 / 
-                            {% if plan.period == 30 %}月{% else %}{% if plan.period == 365 %}年{% endif %}{% endif %}</strong></big>
+                    <big class="text-success">
+                        <strong><span class="price">{{ plan.price }}</span>元 / {{ plan.unit }}
+                        </strong>
+                    </big>
                 </label>
                 </div>
             {% endfor %}

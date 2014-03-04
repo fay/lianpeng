@@ -169,7 +169,6 @@ INSTALLED_APPS = [
     # external
     "idios",
     'social_auth',    
-    'guardian',
     'agon',
     "account",
     "metron",
@@ -202,6 +201,7 @@ INSTALLED_APPS = [
     "avatar",
     "market",
     "snapshot",
+    'guardian',
 ]
 
 # A sample logging configuration. The only tangible logging

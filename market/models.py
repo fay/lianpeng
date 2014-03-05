@@ -93,12 +93,24 @@ class Order(models.Model):
         self.state = ORDER_STATES.PAID
         self.save()
         now = datetime.datetime.now()
-        expired_time = now + datetime.timedelta(
+        try:
+            user_app = UserApp.objects.get(user=self.user, app=self.app)
+        except UserApp.DoesNotExist:
+            #: user purchase app for the first time
+            start_time = now
+            user_app = UserApp(user=self.user, app=self.app)
+        else:
+            #: user bought the app before
+            start_time = user_app.expired_time
+            if start_time < now: #: expired already
+                start_time = now
+
+        expired_time = start_time + datetime.timedelta(
                 days=self.plan.period * self.amount)
-        userapp, created = UserApp.objects.get_or_create(
-                user=self.user,
-                app=self.app,
-                defaults={'expired_time': expired_time, 'plan': self.plan})
+
+        user_app.plan = self.plan
+        user_app.expired_time = expired_time
+        user_app.save()
 
 class OrderLock(models.Model):
     """

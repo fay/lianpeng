@@ -1,14 +1,11 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
-
-Replace this with more appropriate tests for your application.
-"""
+import datetime
 
 from django.test import TestCase
 from django.contrib.auth.models import User
+from django.utils import timezone
 
-from market.models import Order, UserApp, App, AppPlan
+from market.models import Order, UserApp, App, AppPlan,\
+        OrderLock
 
 class MarketTest(TestCase):
 
@@ -27,4 +24,12 @@ class MarketTest(TestCase):
         amount = 2
         order = Order(price=price, amount=amount, period=plan.period, user=self.user, app=app, plan=plan)
         order.save()
+        self.assertTrue(order.state == 0)
+        now = timezone.now()
         order.finish()
+        userapp = UserApp.objects.get(user=self.user, app=app)
+
+        self.assertTrue(userapp.plan == plan)
+        self.assertTrue((userapp.expired_time - now).days == 60)
+        self.assertTrue(order.state == 1)
+        self.assertTrue(OrderLock.objects.get(order=order))

@@ -20,7 +20,7 @@ def index(request):
     return render(request, 'market/index.html', context)
 
 @login_required
-def order(request, app_key):
+def detail(request, app_key):
     user = request.user
     app = get_object_or_404(App, key=app_key)
     if request.method == 'GET':
@@ -79,3 +79,9 @@ def alipay_notify(request):
             pprint ('##info: Status of %s' % trade_status)
             return HttpResponse ("success")
     return HttpResponse ("fail")
+
+def order(request):
+    context = {}
+    orders = Order.objects.all()
+    context['orders'] = orders
+    return render(request, 'market/order.html', context)

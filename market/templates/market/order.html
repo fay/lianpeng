@@ -1,0 +1,37 @@
+{% extends 'site_base.html' %}
+{% load endless %}
+{% load i18n %}
+
+{% block body %}
+<div class="page-title">
+    <h1 class="">{% trans "Orders" %}</h1>
+</div>
+<hr class="soften">
+
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>{% trans "App Name" %}</th>
+      <th>{% trans "Price" %}</th>
+      <th>{% trans "Amount" %}</th>
+      <th>{% trans "Total fees" %}</th>
+      <th>{% trans "Buy Date" %}</th>
+    </tr>
+  </thead>
+    <tbody>
+        {% paginate 20 orders %}
+        {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.app.name }}</td>
+                <td>{{ order.price }}</td>
+                <td>{{ order.amount }}</td>
+                <td>{{ order.price }}</td>
+                <td>{{ order.created_time|date:"Y.m.d H:i:s" }}</td>
+            </tr>
+        {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
+

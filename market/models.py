@@ -9,12 +9,12 @@ from django.utils.translation import ugettext as _
 from bookmark.models import List
 from misc.utils import find_mentions, Choice
 
-CHANNEL_CHOICES = Choice({'direct_buy': 1, 'referral': 2})
+CHANNEL_CHOICES = Choice(('direct_buy', 1), ('referral', 2))
 
-ORDER_STATES = Choice({
-        'unpaid': 0,
-        'paid': 1,
-})
+ORDER_STATES = Choice(
+        ('unpaid', 0),
+        ('paid', 1),
+)
 
 class App(models.Model):
 
@@ -79,6 +79,10 @@ class Order(models.Model):
     state = models.IntegerField(choices=ORDER_STATES.to_choices(),
             default=ORDER_STATES.UNPAID)
     trade_status = models.CharField(max_length=32, default="INIT")
+
+    @property
+    def total_fees(self):
+        return self.price * self.amount
 
     def finish(self):
         #: basic test

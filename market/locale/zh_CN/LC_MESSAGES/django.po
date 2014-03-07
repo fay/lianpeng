@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-28 11:16+0800\n"
+"POT-Creation-Date: 2014-03-07 09:31+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,10 +18,51 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 
-#: views.py:47
+#: models.py:42
+msgid "month"
+msgstr ""
+
+#: models.py:44
+msgid "year"
+msgstr ""
+
+#: models.py:46
+msgid "days"
+msgstr ""
+
+#: views.py:52
 msgid "Pay for snapshot"
 msgstr "莲蓬网网页快照服务付款"
 
-#: views.py:47
+#: views.py:52
+#, python-format
 msgid "Pay for snapshot service of %(days)s days #%(order)s."
 msgstr "莲蓬网网页快照服务%(days)s天 #%(order)s"
+
+#: templates/market/order.html:7
+msgid "Orders"
+msgstr "订单"
+
+#: templates/market/order.html:15
+msgid "App Name"
+msgstr "应用名称"
+
+#: templates/market/order.html:16
+msgid "Price"
+msgstr "价格"
+
+#: templates/market/order.html:17
+msgid "Amount"
+msgstr "数量"
+
+#: templates/market/order.html:18
+msgid "Total fees"
+msgstr "总费用"
+
+#: templates/market/order.html:19
+msgid "Buy Date"
+msgstr "订单时间"
+
+#: templates/market/snapshot.html:5
+msgid "Snapshot"
+msgstr ""

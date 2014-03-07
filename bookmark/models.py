@@ -28,13 +28,13 @@ from misc.utils import find_mentions, Choice
 from misc.models import Lock
 
 
-LIST_KIND_CHOICES = Choice({
-        'inbox': 0,
-        'normal': 2,
-        'shared': 3,
+LIST_KIND_CHOICES = Choice(
+        ('inbox', 0),
+        ('normal', 2),
+        ('shared', 3),
        # Note: kind: 3(shared) is not used in db,
        # but for frontend use, kind: 1 is reserved
-})
+)
 
 class DiffingMixin(object):
 

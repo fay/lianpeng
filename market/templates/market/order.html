@@ -2,6 +2,10 @@
 {% load endless %}
 {% load i18n %}
 
+{% block head_title %}
+    {% trans "Orders" %}
+{% endblock %}
+
 {% block body %}
 <div class="page-title">
     <h1 class="">{% trans "Orders" %}</h1>
@@ -16,6 +20,7 @@
       <th>{% trans "Price" %}</th>
       <th>{% trans "Amount" %}</th>
       <th>{% trans "Total fees" %}</th>
+      <th>{% trans "Status" %}</th>
       <th>{% trans "Buy Date" %}</th>
     </tr>
   </thead>
@@ -24,10 +29,11 @@
         {% for order in orders %}
             <tr>
                 <td>{{ order.id }}</td>
-                <td>{{ order.app.name }}</td>
-                <td>{{ order.price }}</td>
-                <td>{{ order.amount }}</td>
-                <td>{{ order.price }}</td>
+                <td><a href="{% url market_app order.app.key %}">{{ order.app.name }}</td>
+                <td>￥{{ order.price }}/{{ order.plan.unit }}</td>
+                <td>{{ order.amount }}{{ order.plan.unit }}</td>
+                <td><code>￥{{ order.total_fees }}</code></td>
+                <td><code>{{ order.get_display_state }}</code></td>
                 <td>{{ order.created_time|date:"Y.m.d H:i:s" }}</td>
             </tr>
         {% endfor %}

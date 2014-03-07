@@ -7,8 +7,10 @@ def find_mentions(content):
 
 class Choice(object):
 
-    def __init__(self, choices):
-        self.choices = choices
+    def __init__(self, *choice_tuples):
+        self.choices = {}
+        for choice in choice_tuples:
+            self.choices[choice[0]] = choice[1]
 
     def __getattr__(self, name):
         if name.lower() in self.choices:

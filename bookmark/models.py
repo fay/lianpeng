@@ -29,9 +29,9 @@ from misc.models import Lock
 
 
 LIST_KIND_CHOICES = Choice(
-        ('inbox', 0),
-        ('normal', 2),
-        ('shared', 3),
+        ('INBOX', 0, ),
+        ('NORMAL', 2),
+        ('SHARED', 3),
        # Note: kind: 3(shared) is not used in db,
        # but for frontend use, kind: 1 is reserved
 )
@@ -57,7 +57,7 @@ class List(models.Model):
                               upload_to="list_images")
     slug = models.SlugField(null=True, blank=True)
     public = models.BooleanField(default=False, db_index=True)
-    kind = models.IntegerField(choices=LIST_KIND_CHOICES.to_choices(),
+    kind = models.IntegerField(choices=LIST_KIND_CHOICES,
                                default=2, db_index=True)
     position = positions.PositionField(unique_for_fields=('user', 'kind'))
     count = models.PositiveIntegerField(default=0)

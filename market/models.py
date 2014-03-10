@@ -9,11 +9,11 @@ from django.utils.translation import ugettext as _
 from bookmark.models import List
 from misc.utils import find_mentions, Choice
 
-CHANNEL_CHOICES = Choice(('direct_buy', 1), ('referral', 2))
+CHANNEL_CHOICES = Choice(('DIRECT_BUY', 1), ('REFERRAL', 2))
 
 ORDER_STATES = Choice(
-        ('unpaid', 0),
-        ('paid', 1),
+        ('UNPAID', 0, _('unpaid')),
+        ('PAID', 1, _('paid')),
 )
 
 class App(models.Model):
@@ -56,7 +56,7 @@ class UserApp(models.Model):
     plan = models.ForeignKey(AppPlan)
     created_time = models.DateTimeField(auto_now_add=True)
     expired_time = models.DateTimeField()
-    channel = models.IntegerField(choices=CHANNEL_CHOICES.to_choices(),
+    channel = models.IntegerField(choices=CHANNEL_CHOICES,
             default=CHANNEL_CHOICES.DIRECT_BUY)
 
     def __unicode__(self):
@@ -76,7 +76,7 @@ class Order(models.Model):
     amount = models.IntegerField(default=1)
     period = models.PositiveIntegerField()
     created_time = models.DateTimeField(auto_now_add=True)
-    state = models.IntegerField(choices=ORDER_STATES.to_choices(),
+    state = models.IntegerField(choices=ORDER_STATES,
             default=ORDER_STATES.UNPAID)
     trade_status = models.CharField(max_length=32, default="INIT")
 

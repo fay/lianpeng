@@ -31,11 +31,8 @@ def create_snapshot(sender, instance, created, **kwargs):
         from snapshot.tasks import create_snapshot_task
         from market.models import UserApp
         user = instance.user
-        try:
-            UserApp.objects.get(user=user, app__key='snapshot')
-        except UserApp.DoesNotExist, e:
-            return
-        else:
+        is_active = UserApp.objects.is_active(user, 'snapshot')
+        if is_active:
             create_snapshot_task.delay(instance)
 
 @receiver(post_delete, sender=Snapshot)

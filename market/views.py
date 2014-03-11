@@ -35,18 +35,15 @@ def detail(request, app_key):
 
         return render(request, 'market/{}.html'.format(app_key), context)
     else:
-        try:
-            user_app = UserApp.objects.get(user=user, app__key=app_key)
-        except UserApp.DoesNotExist:
-            plan_id = request.POST.get('plan')
-            amount = int(request.POST.get('amount'))
-            plan = AppPlan.objects.get(id=int(plan_id))
-            price = plan.price
-            days = plan.period * amount
+        plan_id = request.POST.get('plan')
+        amount = int(request.POST.get('amount'))
+        plan = AppPlan.objects.get(id=int(plan_id))
+        price = plan.price
+        days = plan.period * amount
 
-            order = Order(price=price, amount=amount, period=plan.period, user=user, app=app, plan=plan)
-            order.save()
-            return redirect("market_order", id=order.id)
+        order = Order(price=price, amount=amount, period=plan.period, user=user, app=app, plan=plan)
+        order.save()
+        return redirect("market_order", id=order.id)
 
 @login_required
 def pay_order(request, id):

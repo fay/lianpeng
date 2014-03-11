@@ -253,10 +253,10 @@ def bookmark_viewed(request, id):
 @login_required
 def bookmark_snapshot(request, id):
     user = request.user
-    try:
-        UserApp.objects.get(user=user, app__key='snapshot')
-    except UserApp.DoesNotExist, e:
-        return render(request, 'bookmark/developing.html')
+    is_active = UserApp.objects.is_active(user, 'snapshot')
+    if not is_active:
+        messages.error(request, _("Snapshot service is overdue, please resume the service."))
+        return redirect('market_app', app_key='snapshot')
     else:
         snapshot = Snapshot.objects.get(bookmark__id=id)
         if settings.DEBUG:

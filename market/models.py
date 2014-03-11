@@ -17,6 +17,17 @@ ORDER_STATES = Choice(
         ('PAID', 1, _('paid')),
 )
 
+class UserAppManager(models.Manager):
+
+    def is_active(self, user, app_key):
+        try:
+            user_app = self.get(user=user, app__key=app_key)
+            if user_app.is_expired():
+                return False
+            return user_app
+        except UserApp.DoesNotExist:
+            return False
+
 class App(models.Model):
 
     user = models.ForeignKey(User) #: creator
@@ -59,6 +70,11 @@ class UserApp(models.Model):
     expired_time = models.DateTimeField()
     channel = models.IntegerField(choices=CHANNEL_CHOICES,
             default=CHANNEL_CHOICES.DIRECT_BUY)
+
+    objects = UserAppManager()
+
+    def is_expired(self):
+        return timezone.now() > self.expired_time
 
     def __unicode__(self):
         return "{} - {}".format(self.app, self.user)

@@ -11,7 +11,7 @@ class Choice(object):
         self.choices_dict = {}
         for choice in choice_tuples:
             self.choices_dict[choice[0]] = choice[1]
-        self.choices = [(item[1], item[0]) for item in choice_tuples]
+        self.choices = [(item[1], item[2]) for item in choice_tuples]
 
     def __getattr__(self, name):
         return self.choices_dict.get(name)

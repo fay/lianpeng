@@ -5,11 +5,12 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.db.models import F
 from django.utils.translation import ugettext as _
+from django.utils import timezone
 
 from bookmark.models import List
 from misc.utils import find_mentions, Choice
 
-CHANNEL_CHOICES = Choice(('DIRECT_BUY', 1), ('REFERRAL', 2))
+CHANNEL_CHOICES = Choice(('DIRECT_BUY', 1, "Direct buy"), ('REFERRAL', 2, 'Referral'))
 
 ORDER_STATES = Choice(
         ('UNPAID', 0, _('unpaid')),
@@ -84,6 +85,13 @@ class Order(models.Model):
     def total_fees(self):
         return self.price * self.amount
 
+    @property
+    def days(self):
+        return self.amount * self.period
+
+    def is_paid(self):
+        return self.state == ORDER_STATES.PAID
+
     def finish(self):
         #: basic test
         if self.state == ORDER_STATES.PAID:
@@ -96,7 +104,7 @@ class Order(models.Model):
 
         self.state = ORDER_STATES.PAID
         self.save()
-        now = datetime.datetime.now()
+        now = timezone.now()
         try:
             user_app = UserApp.objects.get(user=self.user, app=self.app)
         except UserApp.DoesNotExist:

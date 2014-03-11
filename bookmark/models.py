@@ -29,9 +29,9 @@ from misc.models import Lock
 
 
 LIST_KIND_CHOICES = Choice(
-        ('INBOX', 0, ),
-        ('NORMAL', 2),
-        ('SHARED', 3),
+        ('INBOX', 0, "Inbox"),
+        ('NORMAL', 2, "Normal"),
+        ('SHARED', 3, "Shared"),
        # Note: kind: 3(shared) is not used in db,
        # but for frontend use, kind: 1 is reserved
 )

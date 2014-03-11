@@ -22,6 +22,7 @@
       <th>{% trans "Total fees" %}</th>
       <th>{% trans "Status" %}</th>
       <th>{% trans "Buy Date" %}</th>
+      <th>{% trans "Action" %}</th>
     </tr>
   </thead>
     <tbody>
@@ -33,11 +34,37 @@
                 <td>￥{{ order.price }}/{{ order.plan.unit }}</td>
                 <td>{{ order.amount }}{{ order.plan.unit }}</td>
                 <td><code>￥{{ order.total_fees }}</code></td>
-                <td><code>{{ order.get_display_state }}</code></td>
+                <td><span class="label {% if not order.is_paid %}label-important{% else %}label-success{% endif %}">{{ order.get_state_display }}</span></td>
                 <td>{{ order.created_time|date:"Y.m.d H:i:s" }}</td>
+                <td>
+                    {% if not order.is_paid %}
+                        <a href="{% url market_pay order.id %}" target="_blank" class="alipay-btn btn btn-success">{% trans "Pay by Alipay" %}</a>
+                    {% else %}
+                    {% endif %}
+                </td>
             </tr>
         {% endfor %}
   </tbody>
 </table>
+<div class="modal hide fade" id="post-pay-modal">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>支付完成？</h3>
+  </div>
+      <div class="modal-body center">
+          <a class="btn btn-success" href="{% url market_order %}">已经成功支付</a>
+          <a class="btn feedback" href="">支付时遇到问题</a>
+      </div>
+      <div class="modal-footer">
+      </div>
+</div>
 {% endblock %}
 
+{% block extra_script %}
+    <script type="text/javascript" charset="utf-8">
+        $('.alipay-btn').click(function(){
+            $('#post-pay-modal').modal();
+        });
+    </script>
+
+{% endblock %}

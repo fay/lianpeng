@@ -27,15 +27,13 @@ def detail(request, app_key):
         try:
             user_app = UserApp.objects.get(user=user, app__key=app_key)
         except UserApp.DoesNotExist:
-            plans = AppPlan.objects.filter(app=app, available=True)
-            context = {}
-            context['app'] = app
-            context['plans'] = plans
-
-            return render(request, 'market/{}.html'.format(app_key), context)
-            #return redirect('market_app', app_key=app_key)
-        else:
             pass
+        plans = AppPlan.objects.filter(app=app, available=True)
+        context = {}
+        context['app'] = app
+        context['plans'] = plans
+
+        return render(request, 'market/{}.html'.format(app_key), context)
     else:
         try:
             user_app = UserApp.objects.get(user=user, app__key=app_key)
@@ -44,15 +42,25 @@ def detail(request, app_key):
             amount = int(request.POST.get('amount'))
             plan = AppPlan.objects.get(id=int(plan_id))
             price = plan.price
-            total = amount * price
             days = plan.period * amount
 
             order = Order(price=price, amount=amount, period=plan.period, user=user, app=app, plan=plan)
             order.save()
-            payurl = alipay.trade_create_by_buyer(order.id, _("Pay for snapshot"), _('Pay for snapshot service of %(days)s days #%(order)s.') % ({'days': days, 'order': order.id}), total)
-            return redirect(payurl)
+            return redirect("market_order", id=order.id)
 
+@login_required
+def pay_order(request, id):
+    order = get_object_or_404(Order, id=id)
+    user = request.user
+    if order.is_paid():
+        return redirect('market_order')
+    if user != order.user:
+        return redirect('market_order')
 
+    total = order.total_fees
+    days = order.days
+    payurl = alipay.trade_create_by_buyer(order.id, _("Pay for snapshot"), _('Pay for snapshot service of %(days)s days #%(order)s.') % ({'days': days, 'order': order.id}), total)
+    return redirect(payurl)
 
 def alipay_notify(request):
     print '>>notify url handler start...'
@@ -80,8 +88,12 @@ def alipay_notify(request):
             return HttpResponse ("success")
     return HttpResponse ("fail")
 
-def order(request):
+@login_required
+def order(request, id=None):
+    user = request.user
     context = {}
-    orders = Order.objects.all()
+    orders = Order.objects.filter(user=user).order_by('-id')
+    if id:
+        orders = orders.filter(id=id)
     context['orders'] = orders
     return render(request, 'market/order.html', context)

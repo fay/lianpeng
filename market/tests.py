@@ -33,3 +33,60 @@ class MarketTest(TestCase):
         self.assertTrue((userapp.expired_time - now).days == 60)
         self.assertTrue(order.state == 1)
         self.assertTrue(OrderLock.objects.get(order=order))
+
+    def test_order_finish_twice(self):
+        plan = self.plan1
+        app = self.app
+        price = plan.price
+        amount = 2
+        order = Order(price=price, amount=amount, period=plan.period, user=self.user, app=app, plan=plan)
+        order.save()
+        self.assertTrue(order.state == 0)
+        now = timezone.now()
+        order.finish()
+        userapp = UserApp.objects.get(user=self.user, app=app)
+
+        self.assertTrue(userapp.plan == plan)
+        self.assertTrue((userapp.expired_time - now).days == 60)
+        self.assertTrue(order.state == 1)
+        self.assertTrue(OrderLock.objects.get(order=order))
+
+        #: finish order again
+        order.finish()
+        userapp = UserApp.objects.get(user=self.user, app=app)
+
+        self.assertTrue(userapp.plan == plan)
+        self.assertTrue((userapp.expired_time - now).days == 60)
+        self.assertTrue(order.state == 1)
+        self.assertTrue(OrderLock.objects.get(order=order))
+
+    def test_order_twice(self):
+        plan = self.plan1
+        app = self.app
+        price = plan.price
+        amount = 2
+        order = Order(price=price, amount=amount, period=plan.period, user=self.user, app=app, plan=plan)
+        order.save()
+        self.assertTrue(order.state == 0)
+        now = timezone.now()
+        order.finish()
+        userapp = UserApp.objects.get(user=self.user, app=app)
+
+        self.assertTrue(userapp.plan == plan)
+        self.assertTrue((userapp.expired_time - now).days == 60)
+        self.assertTrue(order.state == 1)
+        self.assertTrue(OrderLock.objects.get(order=order))
+
+
+        #: order again
+        order = Order(price=price, amount=amount, period=plan.period, user=self.user, app=app, plan=plan)
+        order.save()
+        self.assertTrue(order.state == 0)
+        order.finish()
+
+        userapp = UserApp.objects.get(user=self.user, app=app)
+
+        self.assertTrue(userapp.plan == plan)
+        self.assertTrue((userapp.expired_time - now).days == 120)
+        self.assertTrue(order.state == 1)
+        self.assertTrue(OrderLock.objects.get(order=order))

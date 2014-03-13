@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-03-11 10:38+0800\n"
+"POT-Creation-Date: 2014-03-13 14:28+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,26 +26,50 @@ msgstr "待支付"
 msgid "paid"
 msgstr "已付款"
 
-#: models.py:43
+#: models.py:54
 msgid "month"
 msgstr ""
 
-#: models.py:45
+#: models.py:56
 msgid "year"
 msgstr ""
 
-#: models.py:47
+#: models.py:58
 msgid "days"
 msgstr ""
 
-#: views.py:62
+#: models.py:81
+msgid "Expired"
+msgstr "已到期"
+
+#: models.py:84
+msgid "Going to expired"
+msgstr "即将到期"
+
+#: models.py:85
+msgid "In Use"
+msgstr "使用中"
+
+#: views.py:59
 msgid "Pay for snapshot"
 msgstr "莲蓬网网页快照服务付款"
 
-#: views.py:62
+#: views.py:59
 #, python-format
 msgid "Pay for snapshot service of %(days)s days #%(order)s."
 msgstr "莲蓬网网页快照服务%(days)s天 #%(order)s"
+
+#: templates/market/myapps.html:7 templates/market/myapps.html.py:12
+msgid "My Apps"
+msgstr "我的应用"
+
+#: templates/market/myapps.html:28
+msgid "Expired Date:"
+msgstr "到期时间："
+
+#: templates/market/myapps.html:32
+msgid "Resume the app"
+msgstr "续费"
 
 #: templates/market/order.html:6 templates/market/order.html.py:11
 msgid "Orders"

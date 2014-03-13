@@ -76,6 +76,14 @@ class UserApp(models.Model):
     def is_expired(self):
         return timezone.now() > self.expired_time
 
+    def status_display(self):
+        if self.is_expired():
+            return _("Expired")
+        else:
+            if (self.expired_time - timezone.now()).days <= 7:
+                return _("Going to expired")
+            return _("In Use")
+
     def __unicode__(self):
         return "{} - {}".format(self.app, self.user)
 

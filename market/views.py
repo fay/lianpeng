@@ -94,3 +94,13 @@ def order(request, id=None):
         orders = orders.filter(id=id)
     context['orders'] = orders
     return render(request, 'market/order.html', context)
+
+@login_required
+def mine(request, id=None):
+    user = request.user
+    context = {}
+    user_apps = UserApp.objects.filter(user=user).order_by('-id')
+    if id:
+        user_apps = user_apps.filter(id=id)
+    context['user_apps'] = user_apps
+    return render(request, 'market/myapps.html', context)

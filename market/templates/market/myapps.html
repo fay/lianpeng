@@ -1,0 +1,39 @@
+{% extends 'site_base.html' %}
+{% load endless %}
+{% load i18n %}
+{% load misc_tags %}
+
+{% block head_title %}
+    {% trans "My Apps" %}
+{% endblock %}
+
+{% block body %}
+<div class="page-title">
+    <h1 class="">{% trans "My Apps" %}</h1>
+</div>
+<hr class="soften">
+{% for group in user_apps|group_by:4 %}
+<div class="row-fluid">
+    {% for user_app in group%}
+    <div class="span4">
+        <div class="center well">
+            <h3>
+                <a href="{% url market_app user_app.app.key %}">{{ user_app.app.name }}</a>
+                <span class="label {% if user_app.is_expired %}label-important{% else %}label-success{% endif %}">
+                    {{ user_app.status_display }}
+                </span>
+            </h3>
+            <div class="">
+                <div class="muted">
+                    <b>{% trans "Expired Date:" %}</b>
+                    {{ user_app.expired_time|date:"Y-m-d"}}
+                </div>
+                <br>
+                <a href="{% url market_app user_app.app.key %}" class="btn btn-primary">{% trans "Resume the app" %}</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endfor %}
+{% endblock %}

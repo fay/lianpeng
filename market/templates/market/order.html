@@ -26,7 +26,7 @@
     </tr>
   </thead>
     <tbody>
-        {% paginate 20 orders %}
+        {% paginate 10 orders %}
         {% for order in orders %}
             <tr>
                 <td>{{ order.id }}</td>
@@ -46,6 +46,11 @@
         {% endfor %}
   </tbody>
 </table>
+<div class="pull-right pagination">
+    <ul>
+        {% show_pages %}
+    </ul>
+</div>
 <div class="modal hide fade" id="post-pay-modal">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

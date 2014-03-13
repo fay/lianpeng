@@ -87,11 +87,13 @@ bookmark-app
                             {% trans "Explore" %}
                         </a>
                     </li>
+                    {% if user.is_staff %}
                     <li class="snapshot-menu">
                         <a target="_blank" href="{% url market_app 'snapshot' %}"><i class="icon icon-camera"></i>
                             {% trans "Snapshot" %} <span class="label label-success">NEW</span>
                         </a>
                     </li>
+                    {% endif %}
                     <li class="tool-menu">
                         <a target="_blank" href="{% url bookmark_tools %}"><i class="icon icon-wrench"></i>
                             {% trans "Tools" %}

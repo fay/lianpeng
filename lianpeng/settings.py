@@ -190,6 +190,7 @@ INSTALLED_APPS = [
     'reversion',
     "haystack",
     "sorl.thumbnail",
+    'emencia.django.newsletter',
 
     
     # project

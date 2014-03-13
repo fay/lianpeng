@@ -211,7 +211,8 @@ var BookmarkView = Backbone.View.extend({
         self.$('.edit-bookmark-box').find('form #list').append(option_html);
         self.$('.edit-bookmark-box form').submit(function(e){
             var data = F.form2json(this);
-            if (self.model.get('list') != data.list) {
+            var current_list = self.model.get('list');
+            if (self.list.id != 'all' && current_list != data.list) {
                 self.remove_bookmark_html();
             }
             self.model.save(data);

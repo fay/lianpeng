@@ -218,7 +218,7 @@ class ListResource(ModelResource):
 
     class Meta:
         model = List
-        queryset = List.objects.order_by("kind", "position")
+        queryset = List.objects.order_by("kind", "-modified_time", "position")
         fields = ['name', 'public', 'position', 'id', 'kind', 'count']
 
         allowed_methods = ['get', 'put', 'post', 'delete']

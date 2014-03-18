@@ -77,7 +77,7 @@ def replaceJavascript(base_url, soup):
     for js in soup.findAll('script', {'src': re.compile('.+')}):
         try:
             real_js = get_content(resolve_path(base_url, js['src']))
-            real_js = real_js.replace('<', 'u003c')
+            real_js = real_js.replace('</', 'u003c/')
             js_tag = Tag(soup, 'script')
             js_tag.insert(0, NavigableString(real_js))
             js.replaceWith(js_tag)

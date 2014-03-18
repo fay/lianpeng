@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-02-01 17:09+0800\n"
+"POT-Creation-Date: 2014-03-14 20:55+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -46,48 +46,48 @@ msgstr ""
 msgid "A user is registered with this email address."
 msgstr ""
 
-#: models.py:150
+#: models.py:137
 msgid "can not follow yourself"
 msgstr "无法关注你自己"
 
-#: models.py:170 models.py:409
+#: models.py:157 models.py:397
 msgid "feedback"
 msgstr "反馈"
 
-#: models.py:191
+#: models.py:178
 msgid "forbidden"
 msgstr ""
 
-#: models.py:197
+#: models.py:184
 msgid "Accept"
 msgstr "接受"
 
-#: models.py:201
+#: models.py:188
 msgid "Ignore"
 msgstr "忽略"
 
-#: models.py:342
+#: models.py:330
 msgid "Inbox"
 msgstr ""
 
-#: models.py:366
+#: models.py:354
 msgid "replied"
 msgstr "回复了"
 
-#: models.py:379
+#: models.py:367
 msgid "followed you"
 msgstr "关注了你"
 
-#: models.py:393
+#: models.py:381
 msgid "invited you to join"
 msgstr "邀请你参与"
 
-#: models.py:402
+#: models.py:390
 #, python-format
 msgid "[%(site_name)s] You have new notification messages"
 msgstr "[%(site_name)s] 您有新的通知消息"
 
-#: views.py:47
+#: views.py:49
 #, python-format
 msgid ""
 "You need to verify your email address to continue to use Lianpeng.You can "
@@ -98,36 +98,40 @@ msgstr ""
 "查看您的邮箱。<a href='%s' class='btn btn-primary'>点击这里重新发送验证邮件</"
 "a>。"
 
-#: views.py:145
+#: views.py:147
 msgid "Github starred project"
 msgstr "Github标星项目"
 
-#: views.py:148
+#: views.py:150
 msgid "Syncing is in progress, please wait for while."
 msgstr "正在同步，请稍等片刻。"
 
-#: views.py:177
+#: views.py:179
 msgid "Export from Chrome Browser "
 msgstr "Chrome浏览器导出书签"
 
-#: views.py:179
+#: views.py:181
 msgid "Export from Kippt"
 msgstr "Kippt导出书签"
 
-#: views.py:181
+#: views.py:183
 msgid "Export from Delicious"
 msgstr "Delicious导出书签"
 
-#: views.py:183
+#: views.py:185
 msgid "Export from Google Bookmarks"
 msgstr "谷歌导出书签"
 
-#: views.py:189
+#: views.py:191
 msgid ""
 "Upload successfully,                                 we will import your "
 "bookmarks to your account                                 in background."
 "Please wait a minute."
 msgstr "上传成功，我们将接着为您导入链接到您的帐号下，请稍等"
+
+#: views.py:258
+msgid "Snapshot service is overdue, please resume the service."
+msgstr "网页快照服务已经到期，请尽快续费以便继续使用。"
 
 #: management/__init__.py:8
 msgid "New comment"
@@ -158,7 +162,7 @@ msgid "Follow"
 msgstr "关注"
 
 #: templates/bookmark/explore.html:7 templates/bookmark/index.html:87
-#: templates/bookmark/index.html.py:203
+#: templates/bookmark/index.html.py:210
 msgid "Explore"
 msgstr ""
 
@@ -175,7 +179,7 @@ msgid "Recent bookmarked"
 msgstr "最新收藏"
 
 #: templates/bookmark/import.html:9 templates/bookmark/import.html.py:13
-#: templates/bookmark/index.html:97
+#: templates/bookmark/index.html:104
 msgid "Import/Export"
 msgstr "导入/导出"
 
@@ -203,198 +207,198 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: templates/bookmark/index.html:84 templates/bookmark/index.html.py:294
+#: templates/bookmark/index.html:84 templates/bookmark/index.html.py:301
 msgid "Invite"
 msgstr "邀请"
 
-#: templates/bookmark/index.html:92
+#: templates/bookmark/index.html:93 templates/bookmark/index.html.py:435
+msgid "Snapshot"
+msgstr "网页快照"
+
+#: templates/bookmark/index.html:99
 msgid "Tools"
-msgstr ""
-
-#: templates/bookmark/index.html:95
-#, fuzzy
-msgid "My public page"
-msgstr "所有人可见"
-
-#: templates/bookmark/index.html:96 templates/bookmark/sync.html:5
-#: templates/bookmark/sync.html.py:10 templates/bookmark/sync.html:28
-msgid "Sync"
-msgstr "同步"
-
-#: templates/bookmark/index.html:100
-msgid "Admin"
 msgstr ""
 
 #: templates/bookmark/index.html:102
 #, fuzzy
+msgid "My public page"
+msgstr "所有人可见"
+
+#: templates/bookmark/index.html:103 templates/bookmark/sync.html:5
+#: templates/bookmark/sync.html.py:10 templates/bookmark/sync.html:28
+msgid "Sync"
+msgstr "同步"
+
+#: templates/bookmark/index.html:107
+msgid "Admin"
+msgstr ""
+
+#: templates/bookmark/index.html:109
+#, fuzzy
 msgid "Feedback"
 msgstr "反馈"
 
-#: templates/bookmark/index.html:103
+#: templates/bookmark/index.html:110
 msgid "Help"
 msgstr ""
 
-#: templates/bookmark/index.html:130
+#: templates/bookmark/index.html:137
 msgid "Feed"
 msgstr "动态"
 
-#: templates/bookmark/index.html:139
+#: templates/bookmark/index.html:146
 msgid "All"
 msgstr "全部"
 
-#: templates/bookmark/index.html:148
+#: templates/bookmark/index.html:155
 msgid "Recent viewed"
 msgstr "最近浏览"
 
-#: templates/bookmark/index.html:155
+#: templates/bookmark/index.html:162
 msgid "Shared Lists"
 msgstr "共享专辑"
 
-#: templates/bookmark/index.html:164
+#: templates/bookmark/index.html:171
 msgid "New list"
 msgstr "新专辑"
 
-#: templates/bookmark/index.html:167
+#: templates/bookmark/index.html:174
 msgid "Create"
 msgstr "创建"
 
-#: templates/bookmark/index.html:187
+#: templates/bookmark/index.html:194
 msgid "enter url here"
 msgstr "输入链接地址，以http://开头"
 
-#: templates/bookmark/index.html:188
+#: templates/bookmark/index.html:195
 msgid "Add bookmark"
 msgstr "添加链接"
 
-#: templates/bookmark/index.html:202
+#: templates/bookmark/index.html:209
 msgid "No feed.You can find and follow awesome people here:"
 msgstr "您关注的家伙都太懒，没有分享任何收藏。想关注更多人，前往这里"
 
-#: templates/bookmark/index.html:204
+#: templates/bookmark/index.html:211
 msgid "No bookmarks"
 msgstr ""
 "还没有任何收藏，您可以安装 <a href=\"/tools/\" target=\"_blank\">收藏工具</"
 "a> 来保存网页"
 
-#: templates/bookmark/index.html:235 templates/bookmark/index.html.py:383
+#: templates/bookmark/index.html:242 templates/bookmark/index.html.py:390
 msgid "Edit"
 msgstr "编辑"
 
-#: templates/bookmark/index.html:237 templates/bookmark/index.html.py:268
+#: templates/bookmark/index.html:244 templates/bookmark/index.html.py:275
 msgid "Invite & Share"
 msgstr "邀请&分享"
 
-#: templates/bookmark/index.html:240 templates/bookmark/index.html.py:384
+#: templates/bookmark/index.html:247 templates/bookmark/index.html.py:391
 msgid "Delete"
 msgstr "删除"
 
-#: templates/bookmark/index.html:248
+#: templates/bookmark/index.html:255
 msgid "Edit List"
 msgstr "编辑"
 
-#: templates/bookmark/index.html:255
+#: templates/bookmark/index.html:262
 msgid "public"
 msgstr "所有人可见"
 
-#: templates/bookmark/index.html:261 templates/bookmark/index.html.py:491
+#: templates/bookmark/index.html:268 templates/bookmark/index.html.py:502
 msgid "Close"
 msgstr "关闭"
 
-#: templates/bookmark/index.html:262
+#: templates/bookmark/index.html:269
 #: templates/bookmark/js/bookmark_form.html:28
 msgid "Save"
 msgstr "保存"
 
-#: templates/bookmark/index.html:278
+#: templates/bookmark/index.html:285
 msgid "Add people, multiple username seperated by comma."
 msgstr "添加想要分享的人，多个用户名用逗号分隔。"
 
-#: templates/bookmark/index.html:280
+#: templates/bookmark/index.html:287
 msgid "Already invited"
 msgstr "已经邀请过"
 
-#: templates/bookmark/index.html:285 templates/bookmark/index.html.py:323
+#: templates/bookmark/index.html:292 templates/bookmark/index.html.py:330
 msgid "Can edit"
 msgstr "可以编辑"
 
-#: templates/bookmark/index.html:286 templates/bookmark/index.html.py:324
+#: templates/bookmark/index.html:293 templates/bookmark/index.html.py:331
 msgid "Can view"
 msgstr "可以浏览"
 
-#: templates/bookmark/index.html:293
+#: templates/bookmark/index.html:300
 #: templates/bookmark/js/bookmark_form.html:29
 msgid "Cancel"
 msgstr "取消"
 
-#: templates/bookmark/index.html:309
+#: templates/bookmark/index.html:316
 msgid "Sent"
 msgstr "已发送"
 
-#: templates/bookmark/index.html:313
+#: templates/bookmark/index.html:320
 msgid "Accepted"
 msgstr "已接受"
 
-#: templates/bookmark/index.html:317
+#: templates/bookmark/index.html:324
 msgid "Ignored"
 msgstr "已忽略"
 
-#: templates/bookmark/index.html:340
+#: templates/bookmark/index.html:347
 msgid "Assign to one list on the left by dragging onto it."
 msgstr "拖拽到左边专辑上修改收藏所在专辑"
 
-#: templates/bookmark/index.html:362 templates/bookmark/index.html.py:489
+#: templates/bookmark/index.html:369 templates/bookmark/index.html.py:500
 msgid "Read mode"
 msgstr "阅读模式"
 
-#: templates/bookmark/index.html:366
+#: templates/bookmark/index.html:373
 msgid "Share"
 msgstr "分享"
 
-#: templates/bookmark/index.html:419
+#: templates/bookmark/index.html:426
 msgid "comment"
 msgstr ""
 
-#: templates/bookmark/index.html:426
-msgid "Snapshot"
-msgstr "网页快照"
-
-#: templates/bookmark/index.html:444
+#: templates/bookmark/index.html:455
 #: templates/bookmark/includes/bookmark.html:88
 msgid "Load more"
 msgstr "加载更多"
 
-#: templates/bookmark/index.html:450
+#: templates/bookmark/index.html:461
 msgid "Enter '@' to select the user you want to reply."
 msgstr "输入“@”选择需要回复的用户"
 
-#: templates/bookmark/index.html:451
+#: templates/bookmark/index.html:462
 #: templates/bookmark/includes/bookmark.html:97
 msgid "Publish"
 msgstr "发表"
 
-#: templates/bookmark/index.html:511
+#: templates/bookmark/index.html:522
 msgid "Lianpeng User Guide"
 msgstr "莲蓬用户向导"
 
-#: templates/bookmark/index.html:514
+#: templates/bookmark/index.html:525
 msgid ""
 "Thanks for using Lianpeng, click the 'Take tour' button to learn how to use "
 "Lianpeng"
 msgstr "感谢您使用莲蓬，点击“开始向导”按钮，了解如何使用莲蓬。"
 
-#: templates/bookmark/index.html:517
+#: templates/bookmark/index.html:528
 msgid "Skip"
 msgstr "跳过"
 
-#: templates/bookmark/index.html:518
+#: templates/bookmark/index.html:529
 msgid "Take tour"
 msgstr "开始向导"
 
-#: templates/bookmark/index.html:538
+#: templates/bookmark/index.html:549
 msgid "Search for:"
 msgstr "搜索："
 
-#: templates/bookmark/index.html:539
+#: templates/bookmark/index.html:550
 msgid "Tag:"
 msgstr "标签："
 

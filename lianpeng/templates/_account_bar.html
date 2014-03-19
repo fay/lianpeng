@@ -43,7 +43,11 @@
                 <li><a href="{% url account_settings %}"><i class="icon-cog"></i> {% trans "Settings" %}</a></li>
                 <li><a href="{% url bookmark_sync %}"><i class="icon-refresh"></i> {% trans "Sync" %}</a></li>
                 <li><a href="{% url bookmark_import %}"><i class="icon-signin"></i> {% trans "Import" %}</a></li>
-                {% if user.is_staff %}
+                <li class="">
+                    <a href="{% url market_mine %}"><i class="icon icon-cogs"></i>
+                        {% trans "My Apps" %}
+                    </a>
+                </li>
                 <li class="">
                     <a href="{% url market_app 'snapshot' %}"><i class="icon icon-camera"></i>
                         {% trans "Snapshot" %}
@@ -54,7 +58,6 @@
                         {% trans "Orders" %}
                     </a>
                 </li>
-                {% endif %}
                 <li class="divider"></li>
                 {% if user.is_staff %}
                 <li><a href="/admin/" target="_blank"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>

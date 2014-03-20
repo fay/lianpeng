@@ -27,7 +27,13 @@ class Snapshot(models.Model):
 
 @receiver(post_save, sender=Bookmark)
 def create_snapshot(sender, instance, created, **kwargs):
-    if created:
+    try:
+        instance.snapshot
+    except Snapshot.DoesNotExist:
+        no_snapshot = True
+    else:
+        no_snapshot = False
+    if created or no_snapshot:
         from snapshot.tasks import create_snapshot_task
         from market.models import UserApp
         user = instance.user

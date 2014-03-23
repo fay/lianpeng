@@ -202,6 +202,8 @@ INSTALLED_APPS = [
     "avatar",
     "market",
     "snapshot",
+
+    #: put it here after any of them above for the sake of that there will be a error when run unit test
     'guardian',
 ]
 

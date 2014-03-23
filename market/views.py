@@ -10,6 +10,8 @@ from django.http import HttpResponse, HttpResponseRedirect,Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext
 from django.utils.translation import ugettext, ugettext as _
+from django.views.decorators.csrf import csrf_exempt
+
 
 from market.models import App, UserApp, AppPlan, Order, ORDER_STATES
 from pprint import pprint
@@ -59,6 +61,7 @@ def pay_order(request, id):
     payurl = alipay.trade_create_by_buyer(order.id, _("Pay for snapshot"), _('Pay for snapshot service of %(days)s days #%(order)s.') % ({'days': days, 'order': order.id}), total)
     return redirect(payurl)
 
+@csrf_exempt
 def alipay_notify(request):
     print '>>notify url handler start...'
     if request.method == 'POST':

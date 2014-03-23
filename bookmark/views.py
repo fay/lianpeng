@@ -262,4 +262,4 @@ def bookmark_snapshot(request, id):
         if settings.DEBUG:
             return redirect(snapshot.html_file.url)
         else:
-            return redirect(snapshot.url)
+            return redirect('http://snapshot.lianpeng.me' + snapshot.url)

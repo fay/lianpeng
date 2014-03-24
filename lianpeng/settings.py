@@ -1,4 +1,4 @@
-#coding: #utf-8
+#coding: utf-8
 import os
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
@@ -122,8 +122,10 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.weibo.WeiboBackend',    
     'social_auth.backends.contrib.douban.DoubanBackend2',    
     'django.contrib.auth.backends.ModelBackend', # default
+    'phileo.auth_backends.CanLikeBackend',
     'guardian.backends.ObjectPermissionBackend',
 )
+
 GOOGLE_OAUTH2_CLIENT_ID = ''
 GOOGLE_OAUTH2_CLIENT_SECRET = ''
 SOCIAL_AUTH_PIPELINE = (
@@ -190,6 +192,8 @@ INSTALLED_APPS = [
     'reversion',
     "haystack",
     "sorl.thumbnail",
+    "phileo",
+
 
     
     # project
@@ -356,6 +360,20 @@ SOCIAL_AUTH_URLOPEN_TIMEOUT = 30
 WEBPAGE_SNAPSHOT_ROOT = os.path.join(MEDIA_ROOT, 'snapshots')
 
 ADMIN_USER_ID = 1
+
+PHILEO_LIKABLE_MODELS = {
+    "bookmark.Bookmark": {},
+    "bookmark.List": {},
+}
+
+PHILEO_DEFAULT_LIKE_CONFIG = {
+    "css_class_on": "icon-heart text-error",
+    "css_class_off": "icon-heart-empty",
+    "like_text_on": "取消",
+    "like_text_off": "赞",
+    "count_text_singular": "个赞",
+    "count_text_plural": "个赞"
+}
 
 try:
     from local_settings import *

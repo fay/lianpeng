@@ -50,3 +50,4 @@ django-haystack==2.1.0
 sorl-thumbnail==11.09
 #: there will be a tagging module conflict, delete the emencia.django.newsletter dependant tagging
 emencia.django.newsletter==0.2
+phileo==1.1

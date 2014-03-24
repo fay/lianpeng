@@ -37,6 +37,7 @@ from market.models import UserApp, App
 from tagging.managers import ModelTaggedItemManager
 from misc.models import UserTour
 from snapshot.models import Snapshot
+from phileo.utils import widget_context
 
 class PermissionValidation(Validation):
     def is_valid(self, bundle, request=None):
@@ -321,6 +322,10 @@ class BookmarkResource(ModelResource):
         else:
             has_snapshot = True
         bundle.data['has_snapshot'] = has_snapshot
+
+        #: like url
+        like_info = widget_context(user, bundle.obj)
+        bundle.data['like_info'] = like_info
 
         return bundle
 

@@ -6,6 +6,8 @@
 {% load kaleo_tags %}
 {% load notifications_tags %}
 {% load bookmark_tags %}
+{% load phileo_tags %}
+{% load staticfiles %}
 
 {% block head_title %}{{ user.username }}{% endblock %}
 
@@ -365,6 +367,12 @@ bookmark-app
                                         </div>
                                         <div class="hide actions">
                                             <ul class="inline unstyled action-ul">
+                                                <li data-toggle="tooltip" title="赞">
+                                                        <a class="like-action"
+                                                           href="<%- bookmark.like_info.like_url %>">
+                                                            <i class="icon <%- bookmark.like_info.like_class %>"></i>
+                                                        </a>
+                                                </li>
                                                 <li data-toggle="tooltip" title="{% trans "Read mode" %}">
                                                     <a href="javascript:;" class="icon-eye-open preview-action"></a>
                                                 </li>

@@ -55,6 +55,7 @@ urlpatterns = patterns("",
     url(r'^snapshot/', include('snapshot.urls')),
     url(r'^app/', include('market.urls')),
     url(r'^500/$', direct_to_template, {'template': '500.html'}),
+    url(r"^likes/", include("phileo.urls")),
     url(r'^', include("bookmark.urls")),
 )
 

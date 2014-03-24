@@ -1,31 +1,42 @@
 {% extends 'site_base.html' %}
+
 {% load profiles_tags %}
 {% load i18n %}
 {% load bookmark_tags %}
 {% load compressed %}
+{% load phileo_tags %}
+{% load staticfiles %}
 
 {% block head_title %}{{ list.name }}{% endblock %}
 {% block body %}
     <div class="row bookmarks ">
         {% if list %}
         <div class="span3" id="lists">
+            <div class="row-fluid">
+                <div class="span12">
+                    <h3>{{ list.name }}</h3>
+                    {% phileo_widget user list %}
+                </div>
+            </div>
+            <hr>
             {% with list.user.profile_set.all|first as profile %}
             <div class="row-fluid">
-                <div class="span4">
+                <div class="span3">
                     <a href="{% url bookmark_profile list.user %}">
-                        <img class="avatar" alt="{{ list.user }}" src="{% avatar list.user.email 64 %}&r=r" />
+                        <img class="avatar" alt="{{ list.user }}" src="{% avatar list.user.email 32 %}&r=r" />
                     </a>
                 </div>
-                <div class="span8">
+                <div class="span9">
                     <div class="row-fluid">
                         <a href="{% url bookmark_profile list.user %}">
-                            <h4>{{ list.user }}</h4>
+                            {{ list.user }}
                         </a>
                         <small class="muted signature">{{ profile.signature|default:"" }}</small>
                     </div>
                 </div>
             </div>
             <hr>
+            {% comment %}
             {% if user != list.user %}
             <div class="row-fluid">
                 {% with user|is_user_followed:list.user as followed %}
@@ -48,6 +59,7 @@
                 {% endwith %}
             </div>
             {% endif %}
+            {% endcomment %}
             {% endwith %}
         </div>
         {% endif %}

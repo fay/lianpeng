@@ -33,8 +33,8 @@ v1_api.register(UserTourResource())
 v1_api.register(FeedCountResource())
 
 urlpatterns = patterns("",
-    #url(r"^admin/", include(admin.site.urls)),
-    url(r'adminx/', include(xadmin.site.urls)),
+    url(r"^admin/", include(admin.site.urls)),
+    #url(r'adminx/', include(xadmin.site.urls)),
     url(r'^harvest/', include("harvest.urls")),
     url(r"^accounts/signup/$", SignupView.as_view(form_class=SignupForm), name="account_signup"),
     url(r"^accounts/settings/$", SettingsView.as_view(form_class=SettingsForm), name="account_settings"),
@@ -56,6 +56,10 @@ urlpatterns = patterns("",
     url(r'^app/', include('market.urls')),
     url(r'^500/$', direct_to_template, {'template': '500.html'}),
     url(r"^likes/", include("phileo.urls")),
+    url(r'^newsletters/', include('emencia.django.newsletter.urls.newsletter')),
+    url(r'^mailing/', include('emencia.django.newsletter.urls.mailing_list')),
+    url(r'^tracking/', include('emencia.django.newsletter.urls.tracking')),
+    url(r'^statistics/', include('emencia.django.newsletter.urls.statistics')),
     url(r'^', include("bookmark.urls")),
 )
 

@@ -367,7 +367,7 @@ bookmark-app
                                         </div>
                                         <div class="hide actions">
                                             <ul class="inline unstyled action-ul">
-                                                <li data-toggle="tooltip" title="赞">
+                                                <li data-toggle="tooltip" title="<%- bookmark.like_info.like_text %>">
                                                         <a class="like-action"
                                                            href="<%- bookmark.like_info.like_url %>">
                                                             <i class="icon <%- bookmark.like_info.like_class %>"></i>
@@ -427,6 +427,11 @@ bookmark-app
                                             <a class="muted bookmark-list-link" href="javascript:;">
                                                 <i class="icon-circle-blank"></i>
                                                 <small><%- bookmark.list_name %></small>
+                                            </a>
+                                            &nbsp;
+                                            <a href="javascript:;" class="muted">
+                                                <i class="<% if(bookmark.like_info.like_count > 0){ %> icon-heart text-error <% } else { %>  icon-heart-empty <% } %> "></i>&nbsp;<small><%-bookmark.like_info.like_count %> {% trans "赞" %}
+                                                </small>
                                             </a>
                                             &nbsp;
                                             <a href="javascript:;" class="muted comment-action">

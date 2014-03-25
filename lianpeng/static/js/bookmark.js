@@ -67,6 +67,7 @@ var BookmarkView = Backbone.View.extend({
             "click .edit-action": "edit",
             "click .bookmark-title": "record_viewed",
             "click .share-action": "share",
+            "click .like-action": "like",
             "click .preview-action": "preview",
             "click .save-action": "collect",
             "click .shares .douban": "share_douban",
@@ -87,6 +88,21 @@ var BookmarkView = Backbone.View.extend({
         this.$('.actions li').tooltip({placement:'bottom', animation:false, delay: { show: 0, hide: 0 }});
         this.$('.move').tooltip({placement:'right', animation:false, delay: { show: 0, hide: 0 }});
 
+    },
+    like: function (e) {
+        var target = $(e.currentTarget);
+        $.post(target.attr('href'));
+        if(target.find('i').hasClass('icon-heart-empty')) {
+            target.find('i').removeClass('icon-heart-empty');
+            target.find('i').addClass('icon-heart text-error');
+            target.parent().attr('data-original-title', '取消');
+        } else {
+            target.find('i').addClass('icon-heart-empty');
+            target.find('i').removeClass('text-error');
+            target.find('i').removeClass('icon-heart');
+            target.parent().attr('data-original-title', '赞');
+        }
+        return false;
     },
     goto_list: function () {
         if (USER_URL == this.model.get('user')) {

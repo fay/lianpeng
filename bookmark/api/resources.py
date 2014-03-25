@@ -324,7 +324,7 @@ class BookmarkResource(ModelResource):
         bundle.data['has_snapshot'] = has_snapshot
 
         #: like url
-        like_info = widget_context(user, bundle.obj)
+        like_info = widget_context(bundle.request.user, bundle.obj)
         bundle.data['like_info'] = like_info
 
         return bundle

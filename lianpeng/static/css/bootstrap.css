@@ -976,3 +976,4 @@ footer{margin:20px 0;}
 .bs-docs-sidenav>li>a{display:block;width:190px \9;margin:0 0 -1px;padding:8px 14px;border:1px solid #e5e5e5;}
 .bs-docs-sidenav>li:last-child>a{-webkit-border-radius:0 0 6px 6px;-moz-border-radius:0 0 6px 6px;border-radius:0 0 6px 6px;}
 #feedback .icon-heart{font-size:100px;color:wheat;}
+.icon-heart.text-error{color:#e74c3c;}

@@ -101,6 +101,17 @@ a {
         border-width: 0 0 0 1px;
     }
 }
+.bookmark-home {
+    .navbar.navbar-fixed-top .brand {
+        width:220px;
+        text-align: center;
+        background: #4fccbf;
+        color: white;
+        text-shadow:none;
+        padding:10px 0;
+
+    }
+}
 .sidebar-width {
     position:fixed;
     background:#333;
@@ -158,17 +169,6 @@ a {
     white-space:nowrap;
     display:block;
 }
-#user-home #lists {
-    position: fixed;
-    height: 100%;
-    background: #eff0f2;
-    width:220px;
-    .list-wrapper {
-        padding:10px;
-    }
-    border-left: solid 1px #ddd;
-
-}
 .scrollable {
     overflow-x: hidden;
     overflow-y: hidden;
@@ -191,9 +191,8 @@ body.bookmark-app {
 }
 #user-home #bookmarks {
     border-left: solid 1px #ddd;
-    width:65%;
-    position:fixed;
-    left:35%;
+    margin-left: 220px;
+    margin-top:45px;
     .bookmarks {
         padding:0 0px;
     }
@@ -392,7 +391,17 @@ body.bookmark-app {
         margin-top:8px;
     }
 }
-#lists {
+#user-home #lists {
+    li a {
+        color: white;
+    }
+    position: fixed;
+    top:45px;
+    height: 100%;
+    background: #2A2D33;
+    width:220px;
+    .list-wrapper {
+    }
     .nav {
         margin-bottom:0;
     }
@@ -408,12 +417,12 @@ body.bookmark-app {
     .nav > .active > a,
     .nav > li > a:hover,
     .nav > .active > a:hover {
-        color: @gray;
+        color: @white;
         .icon {
             color:@lightgreen;
         }
         text-shadow:none;
-        background:#e8e8e8;
+        background:#656C7E;
     }
     .nav > li.ui-state-highlight.active > a {
         background: #27ae60;
@@ -428,9 +437,6 @@ body.bookmark-app {
         .count {
             color:white;
         }
-    }
-    .nav > li > a:hover {
-        background:#e8e8e8;
     }
     .user-lists, .sys-lists {
         .list-name {
@@ -459,6 +465,7 @@ body.bookmark-app {
         }
     }
     .sys-lists {
+        margin-top:10px;
         #feed { 
             .feed-indicator {
                 color:#2ecc71;

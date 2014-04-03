@@ -11,6 +11,7 @@
 {% load account_tags %}
 
 {% block head_title %}{{ user.username }}{% endblock %}
+{% block body-class %}bookmark-home{% endblock %}
 
 {% block nav %}
 {% endblock %}
@@ -19,7 +20,7 @@
     {% if user.is_authenticated %}
     <form class="navbar-form search pull-left" action="/{{user.username}}/search/">
         <div class="input-append">
-            <input type="text" name="query" class="span3 query"><button type="submit" class="btn"><i class="icon-search"></i></button>
+            <input type="text" name="query" placeholder="输入关键字或者#标签名" class="span3 query"><button type="submit" class="btn"><i class="icon-search"></i></button>
         </div>
     </form>
     {% endif %}
@@ -161,11 +162,6 @@ bookmark-app
         {% endcomment %}
         <div class="" id="lists">
             <div class="list-wrapper">
-                <form class="navbar-form search" action="/{{user.username}}/search/" tag-action="/{{ user.username }}/tag/">
-                    <div class="input-append">
-                        <input type="text" name="query" class="query span10" placeholder="输入关键字或者#标签名"><button type="submit" class="btn"><i class="icon-search"></i></button>
-                    </div>
-                </form>
                 <div class="sys-lists">
                     <ul class="nav">
                         <li id="feed">

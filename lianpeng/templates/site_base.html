@@ -4,18 +4,19 @@
 {% load i18n %}
 {% load staticfiles%}
 {% block style_base %}
-     <meta property="wb:webmaster" content="26edd2ff75a2a8fc" />
-     <link href="{% static "pinax/css/theme.css" %}" rel="stylesheet">
-     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
-     <link href="{% static "css/welcome.css" %}" rel="stylesheet">
-     <link href="//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
-     <!--[if IE 6]>
-     <link href="{% static "css/ie6.css" %}" rel="stylesheet">
-     <![endif]-->
-     <!--[if IE 7]>
-     <link href="//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome-ie7.css" rel="stylesheet">
-     <![endif]-->
-     <style type="text/css" media="screen">
+    <meta property="wb:webmaster" content="26edd2ff75a2a8fc" />
+    <link href="{% static "pinax/css/theme.css" %}" rel="stylesheet">
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+    <link href="{% static "css/welcome.css" %}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/bbtn.css" type="text/css" media="screen" charset="utf-8">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+    <!--[if IE 6]>
+    <link href="{% static "css/ie6.css" %}" rel="stylesheet">
+    <![endif]-->
+    <!--[if IE 7]>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome-ie7.css" rel="stylesheet">
+    <![endif]-->
+    <style type="text/css" media="screen">
         .atwho-view {
             position:absolute;
             top: 0;
@@ -99,7 +100,7 @@
     {% block extra_script %}{% endblock %}
 {% endblock %}
 {% block body_base %}
-    <div class="container">
+    <div class="container body-container">
         {% block messages %}
             {% include "_messages.html" %}
         {% endblock %}

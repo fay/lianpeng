@@ -8,10 +8,46 @@
 {% load bookmark_tags %}
 {% load phileo_tags %}
 {% load staticfiles %}
+{% load account_tags %}
 
 {% block head_title %}{{ user.username }}{% endblock %}
 
-{% block topbar_base %}
+{% block nav %}
+{% endblock %}
+{% block account_bar %}
+<ul class="nav">
+    {% if user.is_authenticated %}
+    <form class="navbar-form search pull-left" action="/{{user.username}}/search/">
+        <div class="input-append">
+            <input type="text" name="query" class="span3 query"><button type="submit" class="btn"><i class="icon-search"></i></button>
+        </div>
+    </form>
+    {% endif %}
+</ul>
+<ul class="nav pull-right">
+    {% if request.user.is_authenticated %}
+        {% notifications_unread as unread_count %}
+        <li>
+            <a href="{% url notifications:mark_all_as_read %}">{% trans "Notifications" %} 
+            {% if unread_count %}<span class="badge badge-mini badge-success">{{ unread_count }}</span>{% endif %}
+            </a>
+        </li>
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle avatar-nav" data-toggle="dropdown">
+                <img class="avatar" alt="{{ user }}" src="{% avatar user.email 32 %}&r=r" />
+                {% user_display request.user %}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+            </ul>
+        </li>
+    {% else %}
+        <li><a href="{% url account_login %}">{% trans "Log in" %}</a></li>
+        {% if ACCOUNT_OPEN_SIGNUP %}
+            <li><a href="{% url account_signup %}">{% trans "Sign up" %}</a></li>
+        {% endif %}
+    {% endif %}
+</ul>
 {% endblock %}
 
 {% block body_class %}
@@ -24,10 +60,11 @@ bookmark-app
 {% block extra_style %}
 <!-- <link rel="stylesheet" href="{{ STATIC_URL }}css/flat-ui.css" type="text/css" media="screen" charset="utf-8"> -->
 <link rel="stylesheet" href="{{ STATIC_URL }}css/hopscotch-0.1.2.min.css" type="text/css" media="screen" charset="utf-8">
+<link rel="stylesheet" href="{{ STATIC_URL }}css/responsive.css" type="text/css" media="screen" charset="utf-8">
 {% endblock %}
 {% block body %}
      <div class="row-fluid" id="user-home">
-        <div class="sidebar-width">
+        <div class="sidebar-widt hide">
             <div class="sidebar-nav-fixed">
                 <div class="row-fluid brand-wrapper">
                     <div class="span6">
@@ -585,6 +622,7 @@ bookmark-app
         $.ajax({url: '/api/v1/usertour/' + {{ user_tour.id}} + '?format=json', type: "put",
             data: JSON.stringify({'state': 2 }), contentType: "application/json"});
     })
+    $('.body-container').removeClass('container');
 </script>
 {% compressed_js 'main' %}
 {% endblock %}

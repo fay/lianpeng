@@ -384,6 +384,7 @@ def notify_invite(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Notification)
 def send_notification_email(sender, instance, created, **kwargs):
+    import pdb;pdb.set_trace()
     content = render_to_string('notifications/notice.txt', {'notice': instance})
     site = Site.objects.get_current()
     site_name = site.name 

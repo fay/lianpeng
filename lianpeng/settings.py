@@ -259,7 +259,7 @@ AUTH_PROFILE_MODULE = 'profiles.Profile'
 
 TASTYPIE_ALLOW_MISSING_SLASH = True
 
-EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+EMAIL_BACKEND = 'misc.backends.CeleryEmailWrapperBackend'
 import djcelery
 from celery.schedules import crontab
 djcelery.setup_loader()

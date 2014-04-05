@@ -1,25 +1,7 @@
-{% load account_tags %}
 {% load i18n %}
 {% load notifications_tags %}
-{% load profiles_tags %}
-{% load agon_tags %}
 {% load kaleo_tags %}
 
-<ul class="nav">
-    <li>
-        <a href="{% url bookmark_explore %}"><i class="icon icon-bolt"></i>{% trans "Explore" %}</a>
-    </li>
-    <li>
-        <a href="{% url bookmark_tools %}"><i class="icon icon-wrench"></i>{% trans "Tools" %}</a>
-    </li>
-    {% if user.is_authenticated %}
-    <form class="navbar-form search pull-left" action="/{{user.username}}/search/">
-        <div class="input-append">
-            <input type="text" name="query" class="span3 query"><button type="submit" class="btn"><i class="icon-search"></i></button>
-        </div>
-    </form>
-    {% endif %}
-</ul>
 <ul class="nav pull-right">
     {% if request.user.is_authenticated %}
         {% notifications_unread as unread_count %}
@@ -31,42 +13,7 @@
             </a>
         </li>
         <li><a href="{% url invite_user %}">{% trans "Invite" %} {% invites_remaining user %}</a></li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle avatar-nav" data-toggle="dropdown">
-                <img class="avatar" alt="{{ user }}" src="{% avatar user.email 32 %}&r=r" />
-                {% user_display request.user %}
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-                <li><a href="{% url bookmark_profile user.username %}"><i class="icon-home"></i> {% trans "My public page" %}</a></li>
-                <li><a href="{% url profile_edit %}"><i class="icon-user"></i> {% trans "Update my profile" %}</a></li>
-                <li><a href="{% url account_settings %}"><i class="icon-cog"></i> {% trans "Settings" %}</a></li>
-                <li><a href="{% url bookmark_sync %}"><i class="icon-refresh"></i> {% trans "Sync" %}</a></li>
-                <li><a href="{% url bookmark_import %}"><i class="icon-signin"></i> {% trans "Import" %}</a></li>
-                <li class="">
-                    <a href="{% url market_mine %}"><i class="icon icon-cogs"></i>
-                        {% trans "My Apps" %}
-                    </a>
-                </li>
-                <li class="">
-                    <a href="{% url market_app 'snapshot' %}"><i class="icon icon-camera"></i>
-                        {% trans "Snapshot" %}
-                    </a>
-                </li>
-                <li class="">
-                    <a href="{% url market_order %}"><i class="icon icon-credit-card"></i>
-                        {% trans "Orders" %}
-                    </a>
-                </li>
-                <li class="divider"></li>
-                {% if user.is_staff %}
-                <li><a href="/admin/" target="_blank"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
-                {% endif %}
-                <li><a href="{% url help %}" data-toggle="modal"><i class="icon-question-sign"></i> {% trans "Help" %}</a></li>
-                <li class="divider"></li>
-                <li><a href="{% url account_logout %}"><i class="icon-off"></i> {% trans "Log out" %}</a></li>
-            </ul>
-        </li>
+        {% include '_user_menu.html' %}
     {% else %}
         <li><a href="{% url account_login %}">{% trans "Log in" %}</a></li>
         {% if ACCOUNT_OPEN_SIGNUP %}

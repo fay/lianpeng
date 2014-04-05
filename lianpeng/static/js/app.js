@@ -1,6 +1,7 @@
 var window_height;
 var resize_lists = function() {
-    var user_lists_max_height = window_height - 198;
+    
+    var user_lists_max_height = window_height - 50 - $('.sys-lists').height() - $('.navbar').height();
     $('.user-lists').css('min-height', user_lists_max_height);
     $('.user-lists').css('height', user_lists_max_height);
 };

@@ -11,48 +11,58 @@
 {% load account_tags %}
 
 {% block head_title %}{{ user.username }}{% endblock %}
-{% block body-class %}bookmark-home{% endblock %}
+{% block body_class %}bookmark-app{% endblock %}
+
 
 {% block nav %}
-{% endblock %}
-{% block account_bar %}
 <ul class="nav">
     {% if user.is_authenticated %}
     <form class="navbar-form search pull-left" action="/{{user.username}}/search/">
         <div class="input-append">
-            <input type="text" name="query" placeholder="输入关键字或者#标签名" class="span3 query"><button type="submit" class="btn"><i class="icon-search"></i></button>
+            <button type="submit" class="btn"><i class="icon-search"></i></button>
+            <input type="text" name="query" placeholder="输入关键字或者#标签名" class="span3 query">
         </div>
     </form>
     {% endif %}
 </ul>
-<ul class="nav pull-right">
-    {% if request.user.is_authenticated %}
-        {% notifications_unread as unread_count %}
-        <li>
-            <a href="{% url notifications:mark_all_as_read %}">{% trans "Notifications" %} 
-            {% if unread_count %}<span class="badge badge-mini badge-success">{{ unread_count }}</span>{% endif %}
-            </a>
-        </li>
-        <li class="dropdown">
-            <a href="#" class="dropdown-toggle avatar-nav" data-toggle="dropdown">
-                <img class="avatar" alt="{{ user }}" src="{% avatar user.email 32 %}&r=r" />
-                {% user_display request.user %}
-                <b class="caret"></b>
-            </a>
-            <ul class="dropdown-menu">
-            </ul>
-        </li>
-    {% else %}
-        <li><a href="{% url account_login %}">{% trans "Log in" %}</a></li>
-        {% if ACCOUNT_OPEN_SIGNUP %}
-            <li><a href="{% url account_signup %}">{% trans "Sign up" %}</a></li>
-        {% endif %}
-    {% endif %}
-</ul>
 {% endblock %}
+{% block account_bar %}
+<ul class="nav pull-right">
+    <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="icon-th"></i>
+        </a>
+        <div class="dropdown-menu menu-box">
+            <div class="row-fluid">
+                <div class="span6">
+                    <div class="iconbox">
+                        <a class="muted" href="{% url bookmark_explore %}">
+                            <i class="icon-bolt text-info"></i>
+                            <div>探索发现</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="span6">
+                    <div class="iconbox">
+                        <a class="muted" href="{% url bookmark_tools %}">
+                            <i class="icon-wrench text-success"></i>
+                            <div>收藏工具</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+    {% notifications_unread as unread_count %}
+    <li>
+        <a href="{% url notifications:mark_all_as_read %}">
+            <i class="icon-bell-alt"></i>
+            {% if unread_count %}<span class="badge badge-mini badge-success">{{ unread_count }}</span>{% endif %}
 
-{% block body_class %}
-bookmark-app
+        </a>
+    </li>
+    {% include '_user_menu.html' %}
+</ul>
 {% endblock %}
 
 {% block messages %}
@@ -200,11 +210,13 @@ bookmark-app
                     </div>
                 </div>
                 <hr class="user-lists-sep">
-                <a href="javascript:;" class="btn new-list-button">{% trans "New list" %}</a>
-                <form action="" method="get" class="new-list-form form-inline hide" accept-charset="utf-8">
-                    <input type="text" name="name" class="list-name span8" value="">
-                    <input type="submit" class="btn btn-primary span4" value="{% trans "Create" %}">
-                </form>
+                <div class="new-list-box">
+                    <a href="javascript:;" class="btn new-list-button">{% trans "New list" %}</a>
+                    <form action="" method="get" class="new-list-form form-inline hide" accept-charset="utf-8">
+                        <input type="text" name="name" class="list-name span8" value="">
+                        <input type="submit" class="btn btn-primary span4" value="{% trans "Create" %}">
+                    </form>
+                </div>
             </div>
         </div>
         <div class="" id="bookmarks">
@@ -526,7 +538,7 @@ bookmark-app
                                 icon-inbox
                             <% } %>"><% if (list.kind == 3){ %><img class="avatar" src="<%- list.user_avatar %>"><% } %></span>
                         <span class="name-text span10"><%-list.name%></span>
-                        <small class="count"><%-list.count%></small>
+                        <small class="label label-inverse count"><%-list.count%></small>
                         <div class="clearfix">
                         </div>
                     </span>
@@ -618,7 +630,7 @@ bookmark-app
         $.ajax({url: '/api/v1/usertour/' + {{ user_tour.id}} + '?format=json', type: "put",
             data: JSON.stringify({'state': 2 }), contentType: "application/json"});
     })
-    $('.body-container').removeClass('container');
+    $('.container').removeClass('container');
 </script>
 {% compressed_js 'main' %}
 {% endblock %}

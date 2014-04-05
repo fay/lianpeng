@@ -1,0 +1,41 @@
+{% load account_tags %}
+{% load i18n %}
+{% load profiles_tags %}
+{% load agon_tags %}
+        <li class="dropdown">
+            <a href="#" class="dropdown-toggle avatar-nav" data-toggle="dropdown">
+                <img class="avatar" alt="{{ user }}" src="{% avatar user.email 32 %}&r=r" />
+                {% user_display request.user %}
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url profile_edit %}"><i class="icon-user"></i> {% trans "Update my profile" %}</a></li>
+                <li><a href="{% url bookmark_profile user.username %}"><i class="icon-home"></i> {% trans "My public page" %}</a></li>
+                <li><a href="{% url account_settings %}"><i class="icon-cog"></i> {% trans "Settings" %}</a></li>
+                <li><a href="{% url bookmark_sync %}"><i class="icon-refresh"></i> {% trans "Sync" %}</a></li>
+                <li><a href="{% url bookmark_import %}"><i class="icon-signin"></i> {% trans "Import" %}</a></li>
+                <li class="">
+                    <a href="{% url market_mine %}"><i class="icon icon-cogs"></i>
+                        {% trans "My Apps" %}
+                    </a>
+                </li>
+                <li class="">
+                    <a href="{% url market_app 'snapshot' %}"><i class="icon icon-camera"></i>
+                        {% trans "Snapshot" %}
+                    </a>
+                </li>
+                <li class="">
+                    <a href="{% url market_order %}"><i class="icon icon-credit-card"></i>
+                        {% trans "Orders" %}
+                    </a>
+                </li>
+                <li class="divider"></li>
+                {% if user.is_staff %}
+                <li><a href="/admin/" target="_blank"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>
+                {% endif %}
+                <li><a href="{% url help %}" data-toggle="modal"><i class="icon-question-sign"></i> {% trans "Help" %}</a></li>
+                <li class="divider"></li>
+                <li><a href="{% url account_logout %}"><i class="icon-off"></i> {% trans "Log out" %}</a></li>
+            </ul>
+        </li>
+

@@ -25,6 +25,7 @@
                               onNext: function() {
                                   window.location = "/tools/";
                               },
+                              fixedElement: true
                             },
                             {
                               title: "点击上方的按钮安装收藏工具",
@@ -53,20 +54,23 @@
                               content: "可以对收藏的网页进行整理分类，形成一个专辑，例如：电影，Web开发，创业等。",
                               target: ".new-list-button",
                               showPrevButton: true,
-                              placement: "top"
+                              placement: "top",
+                              fixedElement: true
                             },
                             {
                               title: "分享专辑",
                               content: "对于专辑，你可以将它公开使得大家都可以看到专辑里的收藏，也可以邀请好友、同事私享你的专辑。",
                               target: ".list-setting-box .btn",
                               showPrevButton: true,
-                              placement: "left"
+                              placement: "left",
+                              fixedElement: true
                             },
                             {
                               title: "搜索",
                               content: "在慢慢积累了很多网页后，没法一页一页很快找到，通过关键字对以前的收藏进行检索将会非常方便。",
                               target: ".search .query",
                               showPrevButton: true,
+                              fixedElement: true,
                               placement: "bottom"
                             },
                           ]

@@ -66,7 +66,24 @@
     </style>
     {% block extra_style %}{% endblock %}
 {% endblock %}
+{% block nav %}
+<ul class="nav">
+    <li>
+        <a href="{% url bookmark_explore %}"><i class="icon icon-bolt"></i>{% trans "Explore" %}</a>
+    </li>
+    <li>
+        <a href="{% url bookmark_tools %}"><i class="icon icon-wrench"></i>{% trans "Tools" %}</a>
+    </li>
+    {% if user.is_authenticated %}
+    <form class="navbar-form search pull-left" action="/{{user.username}}/search/">
+        <div class="input-append">
+            <input type="text" name="query" class="span3 query"><button type="submit" class="btn"><i class="icon-search"></i></button>
+        </div>
+    </form>
+    {% endif %}
+</ul>
 
+{% endblock %}
 {% block script_base %}
     <div class="modal hide" id="feedback">
         <div class="modal-header">

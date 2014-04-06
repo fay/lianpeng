@@ -16,14 +16,13 @@
 
 {% block nav %}
 <ul class="nav">
-    {% if user.is_authenticated %}
+    <a href="#new-link-modal" class="btn btn-danger pull-left " data-backdrop="false" data-toggle="modal"><i class="icon-plus"></i></a>
     <form class="navbar-form search pull-left" action="/{{user.username}}/search/">
         <div class="input-append">
-            <button type="submit" class="btn"><i class="icon-search"></i></button>
             <input type="text" name="query" placeholder="输入关键字或者#标签名" class="span3 query">
+            <button type="submit" class="btn"><i class="icon-search"></i></button>
         </div>
     </form>
-    {% endif %}
 </ul>
 {% endblock %}
 {% block account_bar %}
@@ -231,20 +230,6 @@
                 <div class="row-fluid list-header">
                 </div>
                 <%}%>
-                <% if(list.id == 'all' || can_edit) {%>
-                <div class="row-fluid add-bookmark-form-box">
-                     <div class="span12 padbox">
-                         <form action="" class="add-bookmark-form form-inline" method="post" accept-charset="utf-8">
-                             <input type="text" name="url" value="{% if user_tour.state == 0 %}http://lianpeng.me/{% endif %}" class="url span10" placeholder="{% trans "enter url here" %}" />
-                             <input type="submit" class="pull-right btn-add-bookmark btn btn-primary span2" value="{% trans "Add bookmark" %}" />
-                         </form>
-                     </div>
-                    <div class="row-fluid confirm-add-bookmark-box">
-                        <div class="span12 hide padbox confirm-add-bookmark">
-                        </div>
-                    </div>
-                </div>
-                <% } %>
                 <div class="row-fluid scrollable list-wrapper">
                     <div class="span12 list">
                         <div class="padbox">
@@ -445,9 +430,6 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="row-fluid edit-bookmark-box">
-                                        
-                                    </div>
                                     <% if(bookmark.tags) {%>
                                     <div class="row-fluid bookmark-tags-box">
                                         <div class="span12">
@@ -584,6 +566,39 @@
         <button id="take-tour" class="btn btn-primary" data-dismiss="modal">{% trans "Take tour" %}</button>
       </div>
     </div>
+    <!-- New link modal -->
+    <div class="fade modal hide" id="new-link-modal">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h3>收藏网页</h3>
+        </div>
+        <div class="modal-body">
+            <form action="" class="add-bookmark-form form-inline" method="post" accept-charset="utf-8">
+                <ul class="nav nav-tabs">
+                  <li class="active"><a data-toggle="tab" href="#enter-link-pane">输入网页链接</a></li>
+                  <li><a href="#bookmark-tools-pane" data-toggle="tab">使用收藏工具</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="enter-link-pane">
+                        <div class="row-fluid">
+                            <input type="text" name="url" value="{% if user_tour.state == 0 %}http://lianpeng.me/{% endif %}" class="url span10" placeholder="{% trans "enter url here" %}" />
+                            <input type="submit" class="pull-right btn-add-bookmark btn btn-primary span2" value="{% trans "Add bookmark" %}" />
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="bookmark-tools-pane">
+                        <p>
+                            安装莲蓬浏览器插件，在浏览网页的同时，一键收藏网页。
+                            <br>
+                            <a target="_blank" href="{% url bookmark_tools %}" class="btn btn-success">前往收藏工具页面</a>
+                        </p>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+        </div>
+    </div>
+
 {% endblock %}
 {% block extra_script %}
 <script type="text/javascript" src="{{ STATIC_URL }}js/underscore-min.js" charset="utf-8"></script>

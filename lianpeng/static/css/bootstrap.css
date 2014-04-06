@@ -869,9 +869,10 @@ a{color:#000000;}a:hover{color:#1dc499;text-decoration:none;}
 .navbar-fixed-top .navbar-inner .avatar-nav .avatar{margin-right:0;}
 .navbar-fixed-top.navbar .nav>li>a{border:solid #ddd;border-width:0 0 0 1px;}
 .bookmark-app .navbar .nav>li>a{padding:20px 15px 20px;}
-.bookmark-app .navbar.navbar-fixed-top .navbar-inner{border:none;min-height:60px;}.bookmark-app .navbar.navbar-fixed-top .navbar-inner .navbar-form .input-append{margin:16px 0;}.bookmark-app .navbar.navbar-fixed-top .navbar-inner .navbar-form .input-append input{border:none;}
-.bookmark-app .navbar.navbar-fixed-top .navbar-inner .navbar-form .input-append .btn{border:none;background:none;}
+.bookmark-app .navbar.navbar-fixed-top .navbar-inner{border:none;min-height:60px;}.bookmark-app .navbar.navbar-fixed-top .navbar-inner .navbar-form .input-append{margin:16px 0;}.bookmark-app .navbar.navbar-fixed-top .navbar-inner .navbar-form .input-append input{border:none;background:#f7f7f7;}
+.bookmark-app .navbar.navbar-fixed-top .navbar-inner .navbar-form .input-append .btn{border:none;background:#BDC2CA;}.bookmark-app .navbar.navbar-fixed-top .navbar-inner .navbar-form .input-append .btn i{color:white;}
 .bookmark-app .navbar.navbar-fixed-top .navbar-inner .avatar-nav{padding:14px 16px 14px 16px;}
+.bookmark-app .navbar.navbar-fixed-top .navbar-inner .nav a.btn{border:none;background:#e33244;margin:16px 0 0 15px;}
 .bookmark-app .navbar.navbar-fixed-top.navbar .nav>li>a{border:none;}
 .bookmark-app .navbar.navbar-fixed-top .brand{width:220px;text-align:center;background:#51D2B7;color:white;text-shadow:none;padding:20px 0;margin:0;font-size:24px;font-weight:bold;}
 .bookmark-app .menu-box .iconbox{text-align:center;padding:10px;}.bookmark-app .menu-box .iconbox i{font-size:32px;padding-bottom:5px;}

@@ -142,4 +142,140 @@ $('.unfollow-button').click(function(){
     return false;
 });
 
-/*  */
+/*  new link */
+function fetch_url (e) {
+    var url = $(e.currentTarget).find('.url').val();
+    url = $.trim(url);
+    if (url.indexOf('http://') >= 0 || url.indexOf('https://') >= 0 ) {
+    } else {
+        noty({text: '请输入正确的链接', type:'warning', timeout:1000});
+        return false;
+    }
+    $(e.currentTarget).spin();
+    $(e.currentTarget).find('input').attr('disabled', 'on');
+    var self = this;
+
+    // fetch web page info
+    F.fetch_title(url, function(data) {
+        $(e.currentTarget).spin(false);
+        data = $.parseJSON(data);
+        if (data) {
+            var domain = F.url_domain(url); 
+            data.url = url;
+            data['domain'] = domain;
+            data['tags'] = '';
+            $('#new-link-modal').modal('hide').on('hidden', function () {
+                show_add_bookmark_modal(data);
+            });
+        };
+    });
+    return false;
+}
+$('#new-link-modal form').submit(function (e) {
+    fetch_url(e);
+    return false;
+});
+$('#new-link-modal').on('hide', function () {
+    $(this).find('input').removeAttr('disabled');
+    $(this).find('input.url').val("");
+});
+var get_list_options = function(current_list) {
+    var lists = lists_view.collection.toJSON();
+    var option_html = "";
+    for(var i = 0;i < lists.length;i++) {
+        var is_current = false;
+        var name = lists[i].name;
+        if (lists[i].kind == 3) {
+            name += " - " + lists[i].user_name;
+        }
+        if (current_list && current_list == lists[i].resource_uri) {
+            is_current = true;
+        }
+        option_html += '<option value="' +  lists[i].resource_uri;
+        if (is_current) {
+            option_html += '" selected="on'
+        }
+        option_html += '" >' +  name  + '</option>';
+    }
+    return option_html; 
+};
+function show_add_bookmark_modal(data, callback) {
+    $('#new-link-modal').off('hidden');
+    var bookmark_dict = {url: data.url,
+        user: USER_URL,
+        title: data.title,
+        domain: data.domain,
+        note: data.note,
+        tags: data.tags
+    };
+    var url = data.url;
+    var template = $('#bookmark-form-tmpl').html();
+    $('#bookmark-modal').remove();
+    var html = $(_.template(template, {bookmark: bookmark_dict}));
+    html.modal();
+    html.on('shown', function () {
+        render_bookmark_form(data, callback);
+    });
+};
+function render_bookmark_form(data, callback) {
+    var url = data.url;
+    var self = this;
+    var option_html = get_list_options();
+    $('#bookmark-modal form #list').html(option_html);
+
+    ////////////////////////
+    var method = "POST";
+    var action = "/api/v1/bookmark/";
+    // check if existed
+    function update_form (bookmark) {
+        $('.modal-header .existed').show();
+        $('.modal-header .new-title-text').hide();
+        $('.modal-header .edit-title-text').show();
+        
+        var fields = ['title', 'domain', 'url', 'tags', 'list'];
+        for(var i=0;i < fields.length;i ++) {
+            $('#bookmark-modal form [name="' + fields[i] + '"]').val(bookmark[fields[i]]);
+        }
+        
+        action = action + bookmark['id'];
+        method = "PUT";
+    }
+    if (data.id) {
+        $('.modal-header .spinner').hide();
+        update_form(data);
+    } else {
+        $.getJSON('/api/v1/bookmark/', {url: url}, function(data){
+            if(!data.meta) {
+                data = $.parseJSON(data);
+            }
+            if(data.meta.total_count > 0) {
+                var bookmark = data.objects[0];
+                update_form(bookmark);
+            }
+        }).complete(function (argument) {
+            $('.modal-header .spinner').hide();
+        });
+    }
+
+    // create new bookmark
+    $('#bookmark-modal' + ' form').submit(function(){
+        if ($('#bookmark-modal .save').hasClass("disabled")) {
+            return false;
+        }
+        $('#bookmark-modal .save').addClass("disabled");
+        var data = F.form2json(this);
+        var self = this;
+        var data_str = JSON.stringify(data); //TODO JSON needs to import in IE7
+        $.ajax({type: method, url: action, data: data_str, processData: false,
+            contentType: "application/json",
+            success: function (resp) {
+            },
+            dataType: "application/json"}).complete(function(xhr){
+                $('#bookmark-modal').modal('hide');
+                if (xhr.status == 202) {
+                    callback($.parseJSON(xhr.responseText));
+                }
+            });
+        return false;
+    });
+};

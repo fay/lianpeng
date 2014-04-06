@@ -1,33 +1,38 @@
 {% load i18n %}
     <!-- Create Bookmark Form Template -->
     <script type="text/html" id="bookmark-form-tmpl" charset="utf-8">
-            <div class="row-fluid">
-                <div class="existed-bookmark span10">
-                    <span class="spinner">&nbsp</span>
-                    <span class="text hide">
-                        {% trans "The link is bookmarked before." %} 
-                        <% if(list && list.id != 'feed'){ %><a href="javascript:;" class="btn edit btn-info btn-mini">{% trans "Modify existing bookmark" %}</a>
-                        <% } %>
-                    </span>
-                </div>
+        <div class="modal fade hide" id="bookmark-modal">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h3 class="">
+                    <span class="new-title-text">{% trans "Add new bookmark" %}</span> 
+                    <span class="edit-title-text hide">{% trans "Edit bookmark" %}</span> 
+                    <small>
+                        <img class="spinner" src="{{ STATIC_URL }}img/spinner.gif" />
+                        <span class="hide existed label label-success">{% trans "Already bookmarked" %}</span>
+                    </small>
+                </h3>
             </div>
-            <form action="" class="row-fluid" method="get" accept-charset="utf-8">
-                <input type="hidden" name="url" value="<%- bookmark.url %>" class="disabled span10" />
-                <label>{% trans "Webpage Title" %}</label>
-                <input type="text" name="title" value="<%- bookmark.title %>" class="span10" />
-                <label>{% trans "Note" %}</label>
-                <textarea name="note" class="span10"><%- bookmark.note %></textarea>
-                <label>{% trans "Lists" %}</label>
-                <select name="list" id="list" class="span10">
-                </select>
-                <label>{% trans "Tags" %}</label>
-                <input type="text" name="tags" placeholder="{% trans "Seperate multiple tags by space" %}" value="<%- bookmark.tags %>" class="span10" />
-                
-                <input type="hidden" name="domain" value="<%- bookmark.domain %>" />
-                <input type="hidden" name="user" value="<%- bookmark.user %>" />
-                <p><input type="submit" value="{% trans "Save" %}" class="btn save btn-success" />
-                    &nbsp;<a href="javascript:;" class="btn cancel">{% trans "Cancel" %}</a>
-                </p>
+            <form action="" class="row-fluid" method="post" accept-charset="utf-8">
+            <div class="modal-body">
+                    <input type="hidden" name="url" value="<%- bookmark.url %>" class="disabled span12" />
+                    <label>{% trans "Webpage Title" %}</label>
+                    <input type="text" name="title" value="<%- bookmark.title %>" class="span12" />
+                    <label>{% trans "Note" %}</label>
+                    <textarea name="note" class="span12"><%- bookmark.note %></textarea>
+                    <label>{% trans "Lists" %}</label>
+                    <select name="list" id="list" class="span12">
+                    </select>
+                    <label>{% trans "Tags" %}</label>
+                    <input type="text" name="tags" placeholder="{% trans "Seperate multiple tags by space" %}" value="<%- bookmark.tags %>" class="span12" />
+                    
+                    <input type="hidden" name="domain" value="<%- bookmark.domain %>" />
+                    <input type="hidden" name="user" value="<%- bookmark.user %>" />
+            </div>
+            <div class="modal-footer">
+                <a href="#" class="btn" data-dismiss="modal">{% trans "Cancel" %}</a>
+                <button type="submit" class="btn btn-primary save">{% trans "Save" %}</button>
+            </div>
             </form>
+        </div>
     </script>
-

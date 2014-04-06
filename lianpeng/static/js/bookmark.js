@@ -1,23 +1,3 @@
-var get_list_options = function(current_list) {
-    var lists = lists_view.collection.toJSON();
-    var option_html;
-    for(var i = 0;i < lists.length;i++) {
-        var is_current = false;
-        var name = lists[i].name;
-        if (lists[i].kind == 3) {
-            name += " - " + lists[i].user_name;
-        }
-        if (current_list && current_list == lists[i].resource_uri) {
-            is_current = true;
-        }
-        option_html += '<option value="' +  lists[i].resource_uri;
-        if (is_current) {
-            option_html += '" selected="on'
-        }
-        option_html += '" >' +  name  + '</option>';
-    }
-    return option_html; 
-};
 var Bookmark = Backbone.Model.extend({
     urlRoot: '/api/v1/bookmark/',
     initialize: function () {
@@ -215,27 +195,15 @@ var BookmarkView = Backbone.View.extend({
         var html = _.template(template, {bookmarks: [bookmark.toJSON()], list: this.list.toJSON(), can_edit: this.list.can_edit()});
         this.$el.html($(html).html());
     },
-    edit: function(){
+    edit: function(e){
         var self = this;
-        var template = $('#bookmark-form-tmpl').html();
-        var html = _.template(template, {bookmark: self.model.toJSON(), list: this.list.toJSON()});
-        this.$('.edit-bookmark-box').html(html);
-        this.$('.edit-bookmark-box .existed-bookmark').hide();
-        this.$('.edit-bookmark-box').show();
-        var option_html = get_list_options(this.model.get('list'));
-        self.$('.edit-bookmark-box').find('form #list')
-        self.$('.edit-bookmark-box').find('form #list').append(option_html);
-        self.$('.edit-bookmark-box form').submit(function(e){
-            var data = F.form2json(this);
+        show_add_bookmark_modal(self.model.toJSON(), function(data){
             var current_list = self.model.get('list');
             if (self.list.id != 'all' && current_list != data.list) {
                 self.remove_bookmark_html();
+            } else {
+                self.model.fetch();
             }
-            self.model.save(data);
-            return false;
-        });
-        self.$('.edit-bookmark-box form .cancel').click(function(){
-            self.$('.edit-bookmark-box').hide(); 
         });
     }
 });

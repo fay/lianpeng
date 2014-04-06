@@ -1,6 +1,5 @@
 var window_height;
 var resize_lists = function() {
-    
     var user_lists_max_height = window_height - 50 - $('.sys-lists').height() - $('.navbar').height();
     $('.user-lists').css('min-height', user_lists_max_height);
     $('.user-lists').css('height', user_lists_max_height);
@@ -11,7 +10,7 @@ function resize_bookmarks () {
 }
 var window_resize = function  (e) {
     window_height = $(window).height() - 20;
-    $('#bookmarks').css('min-height', window_height);
+    $('#bookmarks').css('min-height', window_height - 40);
     $('#lists').css('min-height', window_height);
     if (e) {
         resize_bookmarks();

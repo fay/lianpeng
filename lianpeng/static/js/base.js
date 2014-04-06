@@ -100,7 +100,7 @@ $('#feedback .confirm').click(function(){
 $('#feedback').on('hidden', function () {
     $('#feedback textarea').val("");
     $('#feedback .confirm').removeClass("disabled");
-    $('#feedback textarea').show();
+    $('#feedback .feedback-input-area').show();
     $('#feedback .success').hide();
 });
 

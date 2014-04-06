@@ -26,6 +26,7 @@ from guardian.shortcuts import assign_perm, remove_perm, get_perms
 from agon.models import award_points, TargetStat
 from misc.utils import find_mentions, Choice
 from misc.models import Lock
+from eventlog.models import log
 
 
 LIST_KIND_CHOICES = Choice(
@@ -384,7 +385,6 @@ def notify_invite(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Notification)
 def send_notification_email(sender, instance, created, **kwargs):
-    import pdb;pdb.set_trace()
     content = render_to_string('notifications/notice.txt', {'notice': instance})
     site = Site.objects.get_current()
     site_name = site.name 
@@ -394,6 +394,11 @@ def send_notification_email(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Feedback)
 def send_feedback_notfication(sender, instance, created, **kwargs):
     if created:
+        log(
+            user=instance.user,
+            action="FEEDBACK",
+            extra={}
+        )
         admin_user = User.objects.get(id=settings.ADMIN_USER_ID)
         notify.send(instance.user, recipient=admin_user, verb=_('feedback'), 
                     action_object=instance,

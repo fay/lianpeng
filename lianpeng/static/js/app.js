@@ -7,7 +7,7 @@ var resize_lists = function() {
 };
 function resize_bookmarks () {
     // adjust bookmark box height
-    $('#bookmarks .list-wrapper').css('min-height', window_height - 50 - $('.pagination-hr').height() - $('.list-header').height() - $('.add-bookmark-form-box').height());
+    $('#bookmarks .list-wrapper').css('min-height', window_height - 40 - $('.navbar').height() - $('.pagination-hr').height() - $('.list-header').height() - $('.add-bookmark-form-box').height());
 }
 var window_resize = function  (e) {
     window_height = $(window).height() - 20;

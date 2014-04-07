@@ -15,7 +15,9 @@
             <div class="row-fluid">
                 <div class="span12">
                     <h3>{{ list.name }}</h3>
+                    {% if user.is_authenticated %}
                     {% phileo_widget user list %}
+                    {% endif %}
                 </div>
             </div>
             <hr>

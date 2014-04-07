@@ -16,7 +16,7 @@
 
 {% block nav %}
 <ul class="nav">
-    <a href="#new-link-modal" class="btn btn-danger pull-left " data-backdrop="false" data-toggle="modal"><i class="icon-plus"></i></a>
+    <a href="#new-link-modal" class="new-link-btn btn btn-danger pull-left " data-backdrop="false" data-toggle="modal"><i class="icon-plus"></i></a>
     <form class="navbar-form search pull-left" action="/{{user.username}}/search/">
         <div class="input-append">
             <input type="text" name="query" placeholder="输入关键字或者#标签名" class="span3 query">
@@ -576,7 +576,7 @@
             <form action="" class="add-bookmark-form form-inline" method="post" accept-charset="utf-8">
                 <ul class="nav nav-tabs">
                   <li class="active"><a data-toggle="tab" href="#enter-link-pane">输入网页链接</a></li>
-                  <li><a href="#bookmark-tools-pane" data-toggle="tab">使用收藏工具</a></li>
+                  <li><a href="#bookmark-tools-pane" data-toggle="tab">使用收藏工具 <span class="label label-success">推荐</span></a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="enter-link-pane">

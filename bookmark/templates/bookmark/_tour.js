@@ -15,13 +15,13 @@
                           },
                           steps: [
                             {
-                              title: "点击右侧“添加链接”按钮，收藏你在莲蓬的第一个网页",
-                                     content: "在出现的表单里，点击<span class='label label-success'>保存</span>按钮即完成。",
-                              target: ".add-bookmark-form .btn-add-bookmark",
+                              title: "点击左侧红色按钮，收藏你在莲蓬的第一个网页",
+                                     content: "在出现的表单里，输入网页链接。",
+                              target: ".nav .new-link-btn",
                               //showNextButton: false,
                               //nextOnTargetClick: true,
                               multipage: true,
-                              placement: "left",
+                              placement: "right",
                               onNext: function() {
                                   window.location = "/tools/";
                               },

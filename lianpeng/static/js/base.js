@@ -180,7 +180,11 @@ $('#new-link-modal').on('hide', function () {
     $(this).find('input.url').val("");
 });
 var get_list_options = function(current_list) {
-    var lists = lists_view.collection.toJSON();
+    try {
+        var lists = lists_view.collection.toJSON();
+    } catch(e) {
+        var lists = window.lists;
+    }
     var option_html = "";
     for(var i = 0;i < lists.length;i++) {
         var is_current = false;
@@ -232,7 +236,7 @@ function render_bookmark_form(data, callback) {
         $('.modal-header .new-title-text').hide();
         $('.modal-header .edit-title-text').show();
         
-        var fields = ['title', 'domain', 'url', 'tags', 'list'];
+        var fields = ['title', 'domain', 'note', 'url', 'tags', 'list'];
         for(var i=0;i < fields.length;i ++) {
             $('#bookmark-modal form [name="' + fields[i] + '"]').val(bookmark[fields[i]]);
         }
@@ -240,7 +244,7 @@ function render_bookmark_form(data, callback) {
         action = action + bookmark['id'];
         method = "PUT";
     }
-    if (data.id) {
+    if (data.id && data.user == USER_URL) {
         $('.modal-header .spinner').hide();
         update_form(data);
     } else {

@@ -108,10 +108,15 @@ a {
     }
 }
 .bookmark-app {
-    .navbar .nav>li>a {
-        padding:20px 15px 20px;
+    .body-container.container,  .navbar-fixed-top .navbar-inner .container {
+        margin-left:0;
+        margin-right:0;
+        width: 100%;
     }
     .navbar.navbar-fixed-top  {
+        .nav>li>a {
+            padding:20px 15px 20px;
+        }
         .navbar-inner {
             border:none;
             min-height:60px;

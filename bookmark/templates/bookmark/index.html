@@ -645,7 +645,6 @@
         $.ajax({url: '/api/v1/usertour/' + {{ user_tour.id}} + '?format=json', type: "put",
             data: JSON.stringify({'state': 2 }), contentType: "application/json"});
     })
-    $('.container').removeClass('container');
 </script>
 {% compressed_js 'main' %}
 {% endblock %}

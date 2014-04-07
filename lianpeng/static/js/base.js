@@ -181,7 +181,7 @@ $('#new-link-modal').on('hide', function () {
 });
 var get_list_options = function(current_list) {
     try {
-        var lists = lists_view.collection.toJSON();
+        var lists = window.lists_view.collection.toJSON();
     } catch(e) {
         var lists = window.lists;
     }

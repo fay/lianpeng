@@ -361,6 +361,7 @@ var ListsView = Backbone.View.extend({
 
 $(document).ready(function(){ 
     lists_view = new ListsView();
+    window.lists_view = lists_view;
     var all_list = new List({id:"all"});
     var all_list_view = new FilterView({model: all_list, el: "#all-list", fake_list: true});
     var feed_list = new List({id:"feed"});

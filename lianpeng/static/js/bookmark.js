@@ -103,7 +103,7 @@ var BookmarkView = Backbone.View.extend({
         $.get('/bookmark/viewed/' + this.model.id + '/');
     },
     collect: function() {
-        this.trigger("new_bookmark", this.model.toJSON(), '', '#bookmark-' + this.model.id + ' .edit-bookmark-box');
+        show_add_bookmark_modal(this.model.toJSON());
     },
     share: function(e) {
         $(e.currentTarget).dropdown('toggle')

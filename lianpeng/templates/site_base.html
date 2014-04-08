@@ -75,7 +75,7 @@
         <a href="{% url bookmark_tools %}"><i class="icon icon-wrench"></i>{% trans "Tools" %}</a>
     </li>
     {% if user.is_authenticated %}
-    <form class="navbar-form search pull-left" action="/{{user.username}}/search/">
+    <form class="navbar-form search pull-left" tag-action="/{{user.username}}/tag/" action="/{{user.username}}/search/">
         <div class="input-append">
             <input type="text" name="query" class="span3 query"><button type="submit" class="btn"><i class="icon-search"></i></button>
         </div>

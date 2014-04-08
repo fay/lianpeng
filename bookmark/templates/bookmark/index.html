@@ -17,7 +17,7 @@
 {% block nav %}
 <ul class="nav">
     <a href="#new-link-modal" class="new-link-btn btn btn-danger pull-left " data-backdrop="false" data-toggle="modal"><i class="icon-plus"></i></a>
-    <form class="navbar-form search pull-left" action="/{{user.username}}/search/">
+    <form class="navbar-form search pull-left" tag-action="/{{user.username}}/tag/" action="/{{user.username}}/search/">
         <div class="input-append">
             <input type="text" name="query" placeholder="输入关键字或者#标签名" class="span3 query">
             <button type="submit" class="btn"><i class="icon-search"></i></button>

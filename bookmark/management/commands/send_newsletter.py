@@ -23,6 +23,19 @@ class MailMan(Mailer):
 
         return False
 
+    def build_email_content(self, contact):
+        """Generate the mail for a contact"""
+        uidb36, token = tokenize(contact)
+        context = Context({'contact': contact,
+                           'domain': Site.objects.get_current().domain,
+                           'newsletter': self.newsletter,
+                           'uidb36': uidb36, 'token': token})
+
+        content = self.newsletter_template.render(context)
+        html_body = render_to_string("misc/email_templates/default.html", {'subject': newsletter.subject, 'body': content})
+        return smart_unicode(content)
+
+
 class Command(NoArgsCommand):
     """Send the newsletter in queue"""
     help = 'Send the newsletter in queue'

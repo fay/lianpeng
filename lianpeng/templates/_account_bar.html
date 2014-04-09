@@ -12,7 +12,6 @@
             {% if unread_count %}<span class="badge badge-mini badge-success">{{ unread_count }}</span>{% endif %}
             </a>
         </li>
-        <li><a href="{% url invite_user %}">{% trans "Invite" %} {% invites_remaining user %}</a></li>
         {% include '_user_menu.html' %}
     {% else %}
         <li><a href="{% url account_login %}">{% trans "Log in" %}</a></li>

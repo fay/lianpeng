@@ -65,8 +65,6 @@ def inbox(request, username=None):
 def explore(request):
     filter = request.GET.get('filter')
     context = {}
-    if not filter:
-        filter = 'stream'
     context['filter'] = filter
     if filter:
         lists = List.objects.filter(public=True).order_by('-created_time')
@@ -83,6 +81,7 @@ def explore(request):
     else:
         list_ids = PickedList.objects.all().values_list('list_id', flat=True) 
         lists = List.objects.filter(public=True, id__in=list_ids).order_by('-created_time')
+        print lists
         context['lists'] = lists
     return render(request, 'bookmark/explore.html', context)
 

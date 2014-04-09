@@ -1,9 +1,14 @@
 """Command for sending the newsletter"""
 from django.core.management.base import NoArgsCommand
 from django.utils import timezone
+from django.template import Context, Template
+from django.template.loader import render_to_string
+from django.utils.encoding import smart_unicode
+from django.contrib.sites.models import Site
 
 from emencia.django.newsletter.mailer import Mailer
 from emencia.django.newsletter.models import Newsletter
+from emencia.django.newsletter.utils.tokens import tokenize
 
 
 class MailMan(Mailer):
@@ -32,8 +37,8 @@ class MailMan(Mailer):
                            'uidb36': uidb36, 'token': token})
 
         content = self.newsletter_template.render(context)
-        html_body = render_to_string("misc/email_templates/default.html", {'subject': newsletter.subject, 'body': content})
-        return smart_unicode(content)
+        html_body = render_to_string("misc/email_templates/default.html", {'subject': self.newsletter.title, 'body': content})
+        return smart_unicode(html_body)
 
 
 class Command(NoArgsCommand):

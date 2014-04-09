@@ -1,6 +1,7 @@
 {% load account_tags %}
 {% load i18n %}
 {% load profiles_tags %}
+{% load kaleo_tags %}
 {% load agon_tags %}
         <li class="dropdown">
             <a href="#" class="dropdown-toggle avatar-nav" data-toggle="dropdown">
@@ -14,6 +15,8 @@
                 <li><a href="{% url account_settings %}"><i class="icon-cog"></i> {% trans "Settings" %}</a></li>
                 <li><a href="{% url bookmark_sync %}"><i class="icon-refresh"></i> {% trans "Sync" %}</a></li>
                 <li><a href="{% url bookmark_import %}"><i class="icon-signin"></i> {% trans "Import" %}</a></li>
+                <li><a href="{% url invite_user %}"><i class="icon-group"></i> {% trans "Invite" %} {% invites_remaining user %}</a></li>
+                {% if user.is_staff %}
                 <li class="">
                     <a href="{% url market_mine %}"><i class="icon icon-cogs"></i>
                         {% trans "My Apps" %}
@@ -29,6 +32,7 @@
                         {% trans "Orders" %}
                     </a>
                 </li>
+                {% endif %}
                 <li class="divider"></li>
                 {% if user.is_staff %}
                 <li><a href="/admin/" target="_blank"><i class="icon-wrench"></i> {% trans "Admin" %}</a></li>

@@ -225,7 +225,8 @@ function render_bookmark_form(data, callback) {
     var url = data.url;
     var self = this;
     var option_html = get_list_options();
-    $('#bookmark-modal form #list').html(option_html);
+    $('#bookmark-modal form .list').html(option_html);
+    $("#bookmark-modal .tag").select2({tags:[], width: 'copy', separator:' ', openOnEnter: false});
 
     ////////////////////////
     var method = "POST";

@@ -21,10 +21,12 @@
                     <label>{% trans "Note" %}</label>
                     <textarea name="note" class="span12"><%- bookmark.note %></textarea>
                     <label>{% trans "Lists" %}</label>
-                    <select name="list" id="list" class="span12">
+                    <select name="list" class="list span12">
                     </select>
                     <label>{% trans "Tags" %}</label>
-                    <input type="text" name="tags" placeholder="{% trans "Seperate multiple tags by space" %}" value="<%- bookmark.tags %>" class="span12" />
+                    <div class="row-fluid">
+                    <input type="text" class="tag span12" name="tags" placeholder="{% trans "输入标签名后按回车键" %}" value="<%- bookmark.tags %>" class="span12" />
+                    </div>
                     
                     <input type="hidden" name="domain" value="<%- bookmark.domain %>" />
                     <input type="hidden" name="user" value="<%- bookmark.user %>" />

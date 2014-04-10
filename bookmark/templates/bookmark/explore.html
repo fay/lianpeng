@@ -10,13 +10,13 @@
         <h1>{% trans "Get lost & find your serendipity." %}</h1>
         <hr class="soften">
     </div>
-    <div class="row" id="explore">
+    <div class="row " id="explore">
         <div class="span12">
-            <ul class="nav nav-pills filters">
-                {% comment %}
+            <ul class="hide nav nav-pills filters">
                 <li class="{%if not filter %}active{% endif %}">
                     <a href="{% url bookmark_explore %}"><i class="icon icon-heart"></i> {% trans "Staff picks" %}</a>
                 </li>
+                {% comment %}
                 <li class="{% if filter == 'user' %}active{% endif %}">
                     <a href="?filter=user"><i class="icon icon-user"></i> {% trans "People" %}</a>
                 </li>

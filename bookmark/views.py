@@ -65,8 +65,6 @@ def inbox(request, username=None):
 def explore(request):
     filter = request.GET.get('filter')
     context = {}
-    if not filter:
-        filter = 'stream'
     context['filter'] = filter
     if filter:
         lists = List.objects.filter(public=True).order_by('-created_time')

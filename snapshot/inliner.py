@@ -33,7 +33,7 @@ def get_content(from_, expect_binary=False, charset=None):
         if ignore_url(from_):
             return u''
 
-        ct = urllib2.urlopen(from_, timeout=10)
+        ct = urllib2.urlopen(from_, timeout=30)
         if not expect_binary:
             s = ct.read()
             if not charset:

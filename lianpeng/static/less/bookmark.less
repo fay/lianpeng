@@ -1,8 +1,9 @@
 @import "bootstrap.less";
 //@import "../flat-ui/less/flat-ui.less";
 @orange: #f47c39;
+@successText:             #1dc499;
 @orangeHighlight: spin(@orange, 5%);
-@green: #4FCCBF; /*#42D7B4*/
+@green: #1dc499; /*#42D7B4*/
 @greenHighlight: spin(@green, 20%);
 @lightgreen: #2ecc71;
 @bluegray: #8C9CAF;
@@ -11,13 +12,18 @@
 @btnBackgroundHighlight: darken(@white, 5%);
 @formActionsBackground: @white;
 @heroUnitBackground: @white;
+.text-info {
+    color:#1a8ad2;
+}
 body {
     padding-top:60px;
     /* background: url(../img/bg-noise.gif);*/
     background:#fafafa;
-    font-family: 'Helvetica Neue',Helvetica, Arial,'Liberation Sans',FreeSans,'Hiragino Sans GB',sans-serif,"Microsoft YaHei","Microsoft JhengHei",STHeiti,MingLiu;
     color:#3b3b3b;
-    text-rendering: optimizelegibility;
+    font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif, "Microsoft YaHei","Microsoft JhengHei";
+    font-size: 13px;
+    color: #788288;
+    -webkit-font-smoothing: antialiased;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -101,15 +107,71 @@ a {
         border-width: 0 0 0 1px;
     }
 }
-.bookmark-home {
-    .navbar.navbar-fixed-top .brand {
-        width:220px;
-        text-align: center;
-        background: #4fccbf;
-        color: white;
-        text-shadow:none;
-        padding:10px 0;
+.bookmark-app {
+    .body-container.container,  .navbar-fixed-top .navbar-inner .container {
+        margin-left:0;
+        margin-right:0;
+        width: 100%;
+    }
+    .navbar.navbar-fixed-top  {
+        .nav>li>a {
+            padding:20px 15px 20px;
+        }
+        .navbar-inner {
+            border:none;
+            min-height:60px;
+            .navbar-form .input-append {
+                margin:16px 0;
+                input {
+                    border: none;
+                    background:#f7f7f7;
+                }
+                .btn {
+                    border: none;
+                    background: #BDC2CA;
+                    i {
+                        color: white;
+                    }
+                }
+            }
+            .avatar-nav {
+                padding:14px 16px 14px 16px;
+            }
+            .nav {
+                li a.btn {
+                    border: none;
+                    background: #e33244;
+                    margin: 16px 0 0 15px;
+                    padding:4px 6px;
+                    color: white;
 
+                }
+            }
+        }
+        &.navbar .nav>li>a {
+            border: none;
+        }
+        .brand {
+            width:220px;
+            text-align: center;
+            background: #51D2B7;
+            color: white;
+            text-shadow:none;
+            padding:20px 0;
+            margin:0;
+            font-size:24px;
+            font-weight:bold;
+        }
+    }
+    .menu-box {
+        .iconbox {
+            text-align: center;
+            padding:10px;
+            i {
+                font-size:32px;
+                padding-bottom:5px;
+            }
+        }
     }
 }
 .sidebar-width {
@@ -189,10 +251,12 @@ body.bookmark-app {
 .padbox-right {
     padding-right: 15px;
 }
+#user-home {
+    margin-top:60px;
+}
 #user-home #bookmarks {
     border-left: solid 1px #ddd;
     margin-left: 220px;
-    margin-top:45px;
     .bookmarks {
         padding:0 0px;
     }
@@ -214,6 +278,7 @@ body.bookmark-app {
         h2 {
             margin-top:0;
             margin-bottom:0px;
+            line-height: 30px;
         }
     }   
     .list-header + .add-bookmark-form-box{
@@ -416,21 +481,28 @@ body.bookmark-app {
         color: white;
     }
     position: fixed;
-    top:45px;
     height: 100%;
     background: #2A2D33;
     width:220px;
     .list-wrapper {
+        hr {
+            border-bottom:none;
+            border-top: 1px solid #414449;
+        }
     }
     .nav {
         margin-bottom:0;
     }
     .nav > li > a,
     {
-      padding:3px 5px;
+      padding:7px 10px;
       margin:1px 0;
     }
     .nav > .active > a > [class*=" icon-"] {
+    }
+    .new-list-box {
+        text-align: center;
+        margin: 0 10px;
     }
 
     // Active state
@@ -475,12 +547,11 @@ body.bookmark-app {
                 }
             }
             .count {
-                color: #888;
                 font-size: 12px;
                 font-weight: bold;
                 position:absolute;
                 right: 5px;
-                top: 4px;
+                top: 8px;
             }
         }
     }
@@ -739,6 +810,7 @@ hr.soften {
 }
 
 .search {
+    margin-left:15px;
 }
 /* welcome page */
 
@@ -778,38 +850,6 @@ body.welcome {
             font-size:16px;
             line-height:28px;
         }
-    }
-}
-body.welcome_old {
-    padding-top:0px;
-    .logo-box {
-        -webkit-animation:bodyslide 2s ease;
-        margin-top:80px;
-        margin-bottom:30px;
-    }
-    .logo {
-        background:@green; 
-        color:white;
-        display:inline-block;
-        font-size:60px;
-        padding:110px 62px;
-        border:6px solid white;
-        .border-radius(50%);
-    }
-    h1.slogan {
-        .emphasize {
-            color: #B5E9E3;
-        }
-    }
-    .features {
-        h1 {
-        }
-    }
-    .extra-big-icon {
-        font-size:200px;
-    }
-    .big-icon {
-        font-size:180px;
     }
 }
 

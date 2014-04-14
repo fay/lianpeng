@@ -9,9 +9,11 @@
 
 {% block extra_style %}
 <style type="text/css" media="screen">
+    {% if list.image %}
     #list-header {
         background-image: url("{{ list.image.url }}");
     }
+    {% endif %}
 </style>    
 {% endblock %}
 {% block body_class %}list-detail{% endblock %}
@@ -80,6 +82,7 @@
 {% block extra_script %}
 <script type="text/javascript" charset="utf-8">
     var USER_ID = {% if user.id %}{{ user.id }}{% else %}null{% endif %};
+    var USER_URL = "/api/v1/user/" + USER_ID;
     var USER_NAME  = "{{user.username}}";
 </script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/underscore-min.js" charset="utf-8"></script>

@@ -1,16 +1,16 @@
 var window_height;
 var resize_lists = function() {
-    var user_lists_max_height = window_height - 198;
+    var user_lists_max_height = window_height - 50 - $('.sys-lists').height() - $('.navbar').height();
     $('.user-lists').css('min-height', user_lists_max_height);
     $('.user-lists').css('height', user_lists_max_height);
 };
 function resize_bookmarks () {
     // adjust bookmark box height
-    $('#bookmarks .list-wrapper').css('min-height', window_height - 50 - $('.pagination-hr').height() - $('.list-header').height() - $('.add-bookmark-form-box').height());
+    $('#bookmarks .list-wrapper').css('min-height', window_height - 20 - $('.navbar').height() - $('.pagination-hr').height() - $('.list-header').height() * 2);
 }
 var window_resize = function  (e) {
     window_height = $(window).height() - 20;
-    $('#bookmarks').css('min-height', window_height);
+    $('#bookmarks').css('min-height', window_height - 40);
     $('#lists').css('min-height', window_height);
     if (e) {
         resize_bookmarks();
@@ -361,6 +361,7 @@ var ListsView = Backbone.View.extend({
 
 $(document).ready(function(){ 
     lists_view = new ListsView();
+    window.lists_view = lists_view;
     var all_list = new List({id:"all"});
     var all_list_view = new FilterView({model: all_list, el: "#all-list", fake_list: true});
     var feed_list = new List({id:"feed"});

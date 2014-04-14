@@ -1,16 +1,10 @@
 {% load i18n %}
 {% load profiles_tags %}
 {% load fluent_comments_tags %}
-                        <hr>
                         <div class="row-fluid bookmark-entry-box" id="bookmark-{{ bookmark.id }}"  data-id="{{  bookmark.id  }}"
                             data-tags="{{ bookmark.tags }}" data-note="{{ bookmark.note }}" data-title="{{ bookmark.title }}" 
                             data-url="{{ bookmark.url }}" data-domain="{{ bookmark.domain }}">
-                            <div class="span1">
-                                <a title="{{ bookmark.user }}" href="{% url bookmark_profile bookmark.user %}">
-                                    <img class="avatar" alt="{{ bookmark.user }}" src="{% avatar bookmark.user.email 64 %}&r=r" alt="{{ bookmark.user }}"/>
-                                </a>
-                            </div>
-                            <div class="span11 bookmark-entry">
+                            <div class="span12 bookmark-entry">
                                 <div class="row-fluid bookmark-title-box">
                                     <div class="span11">
                                         <div class="bookmark-title-wrapper bookmark-title-inner">
@@ -101,4 +95,5 @@
                                 </div>
                             </div>
                         </div>
+                        <hr>
 

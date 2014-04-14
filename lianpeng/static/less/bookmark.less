@@ -325,7 +325,6 @@ body.bookmark-app {
             }
             overflow:hidden;
             white-space:nowrap;
-            font-weight:normal;
             color: @gray;
             font-size:17.5px;
             display:block;
@@ -376,7 +375,28 @@ body.bookmark-app {
         margin-top:20px;
     }
 }
-
+.list-detail {
+    #list-header.hero-unit {
+        background-color: #333;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        color: white;
+        h1 {
+            color: white;
+        }
+    }
+    a.bookmark-title {
+        font-weight: bold;
+    }
+    .contributor-header {
+        border-bottom: 4px solid #ddd;
+        margin-top:0;
+        padding-bottom: 5px;
+        font-weight:bold;
+    }
+}
 .box.list {
     min-height:200px;
     height:200px;

@@ -7,35 +7,33 @@
 {% load phileo_tags %}
 {% load staticfiles %}
 
+{% block extra_style %}
+<style type="text/css" media="screen">
+    #list-header {
+        background-image: url("{{ list.image.url }}");
+    }
+</style>    
+{% endblock %}
+{% block body_class %}list-detail{% endblock %}
 {% block head_title %}{{ list.name }}{% endblock %}
 {% block body %}
-    <div class="row bookmarks ">
         {% if list %}
-        <div class="span3" id="lists">
+        <div class="page-title hero-unit" id="list-header">
             <div class="row-fluid">
                 <div class="span12">
-                    <h3>{{ list.name }}</h3>
+                    <h1 class="">
+                        <span class="list-name">{{ list.name }}</span> 
+                        &nbsp;<small class="label label-success">
+                        {% if list.public %}<i class="icon-unlock"></i> {% else %}&nbsp;<i class="icon-lock"></i>&nbsp; {% endif %}
+                        </small>
+                    </h1>
+                    <p>
+                    {% if user.is_authenticated %}
                     {% phileo_widget user list %}
+                    {% endif %}
+                    </p>
                 </div>
             </div>
-            <hr>
-            {% with list.user.profile_set.all|first as profile %}
-            <div class="row-fluid">
-                <div class="span3">
-                    <a href="{% url bookmark_profile list.user %}">
-                        <img class="avatar" alt="{{ list.user }}" src="{% avatar list.user.email 32 %}&r=r" />
-                    </a>
-                </div>
-                <div class="span9">
-                    <div class="row-fluid">
-                        <a href="{% url bookmark_profile list.user %}">
-                            {{ list.user }}
-                        </a>
-                        <small class="muted signature">{{ profile.signature|default:"" }}</small>
-                    </div>
-                </div>
-            </div>
-            <hr>
             {% comment %}
             {% if user != list.user %}
             <div class="row-fluid">
@@ -60,18 +58,19 @@
             </div>
             {% endif %}
             {% endcomment %}
-            {% endwith %}
         </div>
         {% endif %}
+    <div class="row bookmarks ">
+        <div class="span3">
+            <h5 class="contributor-header">贡献者</h5>
+            {% with list.user.profile_set.all|first as profile %}
+                    <a href="{% url bookmark_profile list.user %}">
+                        <img class="avatar" alt="{{ list.user }}" src="{% avatar list.user.email 32 %}&r=r" />
+                    </a>
+            <hr>
+            {% endwith %}
+        </div>
         <div class="span9 list">
-                <div class="row-fluid list-header">
-                    <h2 class="span10">
-                        <span class="list-name">{{ list.name }}</span> 
-                        &nbsp;<small class="label label-success">
-                        {% if list.public %}<i class="icon-unlock"></i> {% else %}&nbsp;<i class="icon-lock"></i>&nbsp; {% endif %}
-                        </small>
-                    </h2>
-                </div>
             {% include 'bookmark/includes/bookmarks.html' %}
         </div>
     </div>

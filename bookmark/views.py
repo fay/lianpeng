@@ -67,7 +67,7 @@ def explore(request):
     context = {}
     context['filter'] = filter
     if filter:
-        lists = List.objects.filter(public=True).order_by('-created_time')
+        lists = List.objects.filter(public=True).order_by('-modified_time')
         list_ids = [l.id for l in lists]
         if filter == 'stream':
             bookmarks = Bookmark.objects.filter(list__id__in=list_ids).order_by('-created_time')
@@ -80,7 +80,7 @@ def explore(request):
             pass
     else:
         list_ids = PickedList.objects.all().values_list('list_id', flat=True) 
-        lists = List.objects.filter(public=True, id__in=list_ids).order_by('-created_time')
+        lists = List.objects.filter(public=True, id__in=list_ids).order_by('-modified_time')
         context['lists'] = lists
     return render(request, 'bookmark/explore.html', context)
 

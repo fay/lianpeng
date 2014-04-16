@@ -1,9 +1,22 @@
 import re
 
+from django.template.loader import render_to_string
+from django.core.mail import send_mail
+from django.contrib.sites.models import Site
+from django.utils.translation import ugettext as _
+from django.conf import settings
+
 def find_mentions(content):
     regex = re.compile(ur"@(?P<username>(?!_)(?!.*?_$)(?!\d+)([a-zA-Z0-9_]+))(\s|$)", re.I)
     return [m.group("username") for m in regex.finditer(content)]
 
+
+def create_email(subject, recipients, template, context):
+    content = render_to_string(template, context)
+    site = Site.objects.get_current()
+    site_name = site.name 
+    send_mail(_('[%(site_name)s] %(subject)s') % {'site_name': site_name, 'subject': subject}, 
+              content, settings.DEFAULT_FROM_EMAIL, recipients, fail_silently=False)
 
 class Choice(object):
 
@@ -23,6 +36,7 @@ class Choice(object):
         return (v in self.choices_dict)
 
     def __len__(self):
+
         return len(self.choices)
 
     def __getitem__(self, v):

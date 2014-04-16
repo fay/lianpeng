@@ -8,7 +8,8 @@ import os
 import hashlib
 from urlparse import urlparse
 
-from django.utils.timezone import utc
+from django.utils.timezone import utc, now
+from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 from django.db import transaction
 from django.conf import settings
@@ -18,6 +19,7 @@ from celery.task import task
 
 from bookmark.models import List, Bookmark, SyncState
 from social_auth.models import UserSocialAuth
+from misc.utils import create_email
 
 @task
 def sync():
@@ -27,6 +29,18 @@ def sync():
         for state in states:
             if state.list:
                 _sync_github(social_auth.user, state.list, state)
+
+@task
+def new_user_care_7days():
+    seven_days_ago = now() - datetime.timedelta(days=7)
+    new_users = User.objects.filter(date_joined__year=seven_days_ago.year,
+                                   date_joined__month=seven_days_ago.month,
+                                   date_joined__day=seven_days_ago.day)
+    subject = '莲蓬网现在使用得如何？'
+    template = 'misc/emails/user_care_seven_days.txt'
+    recipients = [user.email for user in new_users]
+    context = {}
+    create_email(subject, recipients, template, context)
 
 @task
 @transaction.commit_on_success

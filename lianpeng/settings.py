@@ -269,6 +269,10 @@ CELERYBEAT_SCHEDULE = {
         "task": "bookmark.tasks.sync",
         "schedule": crontab(minute=0, hour=0),
     },
+    "user-care-seven-days": {
+        "task": "bookmark.tasks.new_user_care_7days",
+        "schedule": crontab(minute=0, hour=7),
+    },
 }
 
 EMAIL_HOST = ''#'localhost'

@@ -5,6 +5,7 @@ from django.template import Context, Template
 from django.template.loader import render_to_string
 from django.utils.encoding import smart_unicode
 from django.contrib.sites.models import Site
+from django.core.urlresolvers import reverse
 
 from emencia.django.newsletter.mailer import Mailer
 from emencia.django.newsletter.models import Newsletter
@@ -31,13 +32,18 @@ class MailMan(Mailer):
     def build_email_content(self, contact):
         """Generate the mail for a contact"""
         uidb36, token = tokenize(contact)
+        domain = Site.objects.get_current().domain
         context = Context({'contact': contact,
-                           'domain': Site.objects.get_current().domain,
+                           'domain': domain,
                            'newsletter': self.newsletter,
                            'uidb36': uidb36, 'token': token})
 
         content = self.newsletter_template.render(context)
-        html_body = render_to_string("misc/email_templates/default.html", {'subject': self.newsletter.title, 'body': content})
+        unsubscribe_link = "http://{}{}".format(domain, reverse('newsletter_mailinglist_unsubscribe',
+            args=(self.newsletter.slug, uidb36, token)))
+        html_body = render_to_string("misc/email_templates/default.html",
+                {'subject': self.newsletter.title, 'body': content,
+                    'unsubscribe_link': unsubscribe_link})
         return smart_unicode(html_body)
 
 

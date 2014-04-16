@@ -6,15 +6,15 @@
 
 {% block head_title %}{% trans "Explore" %}{% endblock %}
 {% block body %}
-    <div class="page-title hide">
-        <h1>{% trans "Get lost & find your serendipity." %}</h1>
+    <div class="page-title">
+        <h1>{% trans "探索发现" %}</h1>
         <hr class="soften">
     </div>
-    <div class="row " id="explore">
+    <div class="row" id="explore">
         <div class="span12">
-            <ul class="hide nav nav-pills filters">
+            <ul class="nav nav-pills filters">
                 <li class="{%if not filter %}active{% endif %}">
-                    <a href="{% url bookmark_explore %}"><i class="icon icon-heart"></i> {% trans "Staff picks" %}</a>
+                    <a href="{% url bookmark_explore %}"><i class="icon icon-heart"></i> {% trans "精选" %}</a>
                 </li>
                 {% comment %}
                 <li class="{% if filter == 'user' %}active{% endif %}">

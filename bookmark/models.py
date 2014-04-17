@@ -31,6 +31,7 @@ from eventlog.models import log
 
 LIST_KIND_CHOICES = Choice(
         ('INBOX', 0, "Inbox"),
+        ('NOTE', 1, "Note"),
         ('NORMAL', 2, "Normal"),
         ('SHARED', 3, "Shared"),
        # Note: kind: 3(shared) is not used in db,

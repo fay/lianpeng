@@ -115,7 +115,12 @@ def list_domain(request, domain):
     return render(request, 'bookmark/list_domain.html', context)
 
 def bookmark_detail(request, id):
-    bookmark = get_object_or_404(Bookmark, id=id, list__public=True)
+    bookmark = get_object_or_404(Bookmark, id=id)
+    if request.user == bookmark.user:
+        pass
+    else:
+        if not bookmark.list.is_public:
+            raise Http404()
     context = {}
     context['bookmark'] = bookmark
     return render(request, 'bookmark/bookmark_detail.html', context)

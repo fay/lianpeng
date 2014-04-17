@@ -22,8 +22,34 @@
 @orange: #ff725b;
 @orangeHighlight:     spin(@orange, 20%);
 @bluegray: #8C9CAF;
+@successText:             #1dc499;
+@green: #1dc499; /*#42D7B4*/
+@greenHighlight: spin(@green, 20%);
 .btn-primary {
   .buttonBackground(@orange, @orange);
+}
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+    .box-shadow(0 0 0 rgba(0,0,0,0));
+    &:focus {
+        border-color: @green;
+        @shadow: 0 0 6px lighten(@green, 1%);
+        .box-shadow(none);
+    }
 }
 body {
     background-color:transparent;

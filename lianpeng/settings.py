@@ -188,14 +188,13 @@ INSTALLED_APPS = [
     "kaleo",
     "south",
     "xadmin",
-    'crispy_forms',
-    'reversion',
+    "crispy_forms",
+    "reversion",
     "haystack",
     "sorl.thumbnail",
     "phileo",
-    'emencia.django.newsletter',
+    "emencia.django.newsletter",
 
-    
     # project
     "misc",
     "lianpeng",
@@ -205,9 +204,10 @@ INSTALLED_APPS = [
     "avatar",
     "market",
     "snapshot",
+    "note",
 
-    #: put it here after any of them above for the sake of that there will be a error when run unit test
-    'guardian',
+    #: put it here after any of apps above for the sake of that there will be a error when running unit test
+    "guardian",
 ]
 
 # A sample logging configuration. The only tangible logging

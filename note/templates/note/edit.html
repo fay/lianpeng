@@ -1,0 +1,42 @@
+{% extends "site_base.html" %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{{ STATIC_URL }}js/pen/pen.css" type="text/css" media="screen" charset="utf-8"0>
+{% endblock %}
+{% block body %}
+<div class="row-fluid">
+    <div class="span12 well">
+        <a href="javascript:;" class="save btn btn-success btn-large">保存</a>
+    </div>
+</div>
+<div id="title" class="page-title">
+    <h1>{% if bookmark.title %}{{ bookmark.title|safe }}{% else %}标题{% endif %}</h1>
+</div>
+<hr class="soften">
+<div id="editor">
+    {% if bookmark.note %}
+    {{ bookmark.note|safe }}
+    {% else %}
+    这里填写笔记
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_script %}
+<script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/pen/pen.js"></script>
+<script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/pen/markdown.js"></script>
+<script type="text/javascript" charset="utf-8">
+    var editor = new Pen('#editor')
+    var title = new Pen({editor: document.getElementById('title'), list:['bold', 'italic', 'underline']})
+    $('.save').click(function(){
+        var title = $('#title h1').html();
+        var content = $('#editor').html();
+        var data_str = JSON.stringify({title: title, note: content}); //TODO JSON needs to import in IE7
+        $.ajax({type: 'put', url: '/api/v1/bookmark/' + {{ bookmark.id }}, data: data_str, processData: false,
+            contentType: "application/json",
+            dataType: "application/json"}).complete(function(xhr){
+            });
+        return false;
+    });
+</script>
+{% endblock %}

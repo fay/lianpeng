@@ -1,6 +1,7 @@
 {% extends "site_base.html" %}
 
 {% load i18n %}
+{% load misc_tags %}
 
 {% block head_title_base %}莲蓬网 - 简单好用的网络书签{% endblock %}
 
@@ -29,37 +30,43 @@
     </div>
 </div>
 <div class="container features">
+        <div class="row-fluid">
+            <div class="span12 ">
+                <h1 class="center"><small>莲蓬网已存储</small> <big><b id="count" class="text-center"></b></big> <small>个网页链接</small></h1>
+                <hr class="">
+            </div>
+        </div>
     <div class="row-fluid">
-        <div class="span6">
+        <div class="span5">
             <h1><i class="icon-book"></i> 专辑</h1>
             <div class="row-fluid">
-                <p class="span8">
+                <p class="span12">
                     创建专辑，将相同主题的网页组织起来。自由选择公开还是私藏你的专辑。
                 </p>
             </div>
         </div>
-        <div class="span6">
+        <div class="span5 offset2">
             <h1><i class="icon-tags"></i> 标签</h1>
             <div class="row-fluid">
-                <p class="span9">
+                <p class="span12">
                     用你自己的语言组织管理链接。你可以给收藏的链接分配自己的标签，方便往后能够迅速找回。
                 </p>
             </div>
         </div>
     </div>
     <div class="row-fluid">
-        <div class="span6">
+        <div class="span5">
             <h1><i class="icon-search"></i> 搜索</h1>
             <div class="row-fluid">
-                <p class="span10">
+                <p class="span12">
                     利用搜索功能快速找到以前收藏的链接。包括对标题、笔记和标签的搜索，我们默认会将链接对应的网页摘要作为笔记保存，以保留更多额外的相关信息。
                 </p>
             </div>
         </div>
-        <div class="span6">
+        <div class="span5 offset2">
             <h1><i class="icon-refresh"></i> 同步</h1>
             <div class="row-fluid">
-                <p class="span9">
+                <p class="span12">
                     与热门网站的上收藏进行同步。包括Github标星项目、豆瓣“我的喜欢”等，更多网站的支持正在开发中。
                 </p>
             </div>
@@ -69,6 +76,15 @@
 {% endblock %}
 
 {% block extra_script %}
+<script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/countUp.min.js"></script>
 <script type="text/javascript" charset="utf-8">
+    var options = {
+      useEasing : true,
+      useGrouping : true,
+      separator : ',',
+      decimal : '.'
+    }
+var count_up = new countUp("count", 1, {% total_bookmarks %}, 0, 2, options);
+    count_up.start();
 </script>
 {% endblock %}

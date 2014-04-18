@@ -518,6 +518,8 @@
                         <span class="icon span1 <%if(list.kind == 2){ %>icon-circle-blank
                             <% } else if(list.kind == 3){ %>
                             icon-shared-list
+                            <% } else if(list.kind == 1){ %>
+                            icon-book
                             <% } else if(list.kind == 0){ %>
                                 icon-inbox
                             <% } %>"><% if (list.kind == 3){ %><img class="avatar" src="<%- list.user_avatar %>"><% } %></span>

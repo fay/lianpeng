@@ -67,7 +67,7 @@ def explore(request):
     context = {}
     context['filter'] = filter
     if filter:
-        lists = List.objects.filter(public=True).order_by('-modified_time')
+        lists = List.objects.filter(public=True).order_by('-created_time')
         list_ids = [l.id for l in lists]
         if filter == 'stream':
             bookmarks = Bookmark.objects.filter(list__id__in=list_ids).order_by('-created_time')
@@ -119,7 +119,7 @@ def bookmark_detail(request, id):
     if request.user == bookmark.user:
         pass
     else:
-        if not bookmark.list.is_public:
+        if not bookmark.list.public:
             raise Http404()
     context = {}
     context['bookmark'] = bookmark

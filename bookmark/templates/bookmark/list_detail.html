@@ -65,12 +65,10 @@
     <div class="row bookmarks ">
         <div class="span3">
             <h5 class="contributor-header">贡献者</h5>
-            {% with list.user.profile_set.all|first as profile %}
-                    <a href="{% url bookmark_profile list.user %}">
-                        <img class="avatar" alt="{{ list.user }}" src="{% avatar list.user.email 32 %}&r=r" />
-                    </a>
+            <a href="{% url bookmark_profile list.user %}">
+                <img class="avatar" alt="{{ list.user }}" src="{% avatar list.user.email 32 %}&r=r" />
+            </a>
             <hr>
-            {% endwith %}
         </div>
         <div class="span9 list">
             {% include 'bookmark/includes/bookmarks.html' %}

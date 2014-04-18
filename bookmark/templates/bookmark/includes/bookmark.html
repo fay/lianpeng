@@ -4,7 +4,14 @@
                         <div class="row-fluid bookmark-entry-box" id="bookmark-{{ bookmark.id }}"  data-id="{{  bookmark.id  }}"
                             data-tags="{{ bookmark.tags }}" data-note="{{ bookmark.note }}" data-title="{{ bookmark.title }}" 
                             data-url="{{ bookmark.url }}" data-domain="{{ bookmark.domain }}">
-                            <div class="span12 bookmark-entry">
+                            {% if has_avatar %}
+                                <div class="span1">
+                                    <a href="{% url bookmark_profile bookmark.user %}">
+                                        <img class="avatar" alt="{{ bookmark.user }}" src="{% avatar bookmark.user.email 48 %}&r=r" />
+                                    </a>
+                                </div>
+                            {% endif %}
+                            <div class="span11 bookmark-entry">
                                 <div class="row-fluid bookmark-title-box">
                                     <div class="span11">
                                         <div class="bookmark-title-wrapper bookmark-title-inner">

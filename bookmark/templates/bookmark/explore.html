@@ -29,7 +29,7 @@
                 </li>
             </ul>
             {% if bookmarks %}
-                {% include 'bookmark/includes/bookmarks.html' %}
+                {% include 'bookmark/includes/bookmarks.html' with has_avatar=1 %}
             {% endif %}
             {% if lists %}
                 {% include 'bookmark/includes/lists.html' %}

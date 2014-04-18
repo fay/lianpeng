@@ -5,7 +5,7 @@
                  <div class="row-fluid bookmarks-box">
                      <div class="span12">
                         {% for bookmark in bookmarks %}
-                            {% include 'bookmark/includes/bookmark.html'%}
+                            {% include 'bookmark/includes/bookmark.html' with has_avatar=has_avatar %}
                         {% endfor %}
                         <div class="pagination">
                             <ul>

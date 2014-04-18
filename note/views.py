@@ -25,7 +25,10 @@ def index(request):
     return redirect('note_edit', id=bookmark.id)
 
 def detail(request, id):
-    return redirect('bookmark_detail', id=id)
+    bookmark = get_object_or_404(Bookmark, id=id)
+    context = {}
+    context['bookmark'] = bookmark
+    return render(request, 'note/detail.html', context)
 
 @login_required
 def edit(request, id):

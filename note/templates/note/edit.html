@@ -1,5 +1,9 @@
 {% extends "site_base.html" %}
 
+{% block head_title %}
+笔记
+{% endblock %}
+
 {% block extra_head %}
 <link rel="stylesheet" href="{{ STATIC_URL }}js/pen/pen.css" type="text/css" media="screen" charset="utf-8"0>
 {% endblock %}
@@ -29,13 +33,19 @@
     var editor = new Pen('#editor')
     var title = new Pen({editor: document.getElementById('title'), list:['bold', 'italic', 'underline']})
     $('.save').click(function(){
+        if($(this).hasClass('disabled')) {
+            return false;
+        }
+        $(this).addClass('disabled');
         var title = $('#title h1').html();
         var content = $('#editor').html();
         var data_str = JSON.stringify({title: title, note: content}); //TODO JSON needs to import in IE7
         $.ajax({type: 'put', url: '/api/v1/bookmark/' + {{ bookmark.id }}, data: data_str, processData: false,
             contentType: "application/json",
             dataType: "application/json"}).complete(function(xhr){
-            });
+        }).complete(function(){
+            $('.save').removeClass('disabled');
+        });
         return false;
     });
 </script>

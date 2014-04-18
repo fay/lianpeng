@@ -1,0 +1,52 @@
+{% extends "site_base.html" %}
+
+{% block head_title %}
+{{ bookmark.title }}
+{% endblock %}
+
+{% block extra_head %}
+<style type="text/css" media="screen">
+    #content {
+        font-size: 16px;
+    }
+    .title {
+        color: #1dc499;
+    }
+    ul.posts li{
+        margin: 5px 0;
+    }
+</style>
+{% endblock %}
+{% block body %}
+<div class="row-fluid">
+    <div class="span9">
+        <div id="title" class="row-fluid">
+            <div class="span10">
+                <h2 class="title">{{ bookmark.title }}</h2>
+                <span class="date">{{ bookmark.created_time|date:"Y年m月d日" }} / <a href="{% url bookmark_profile bookmark.user %}">{{ bookmark.user }}</a></span>
+            </div>
+            <div class="span2">
+            <a href="{% url bookmark_profile bookmark.user %}">
+                <img class="avatar" alt="{{ bookmark.user }}" src="{% avatar bookmark.user.email 48 %}&r=r" />
+            </a>
+            </div>
+        </div>
+        <hr class="">
+        <div id="content">
+            {{ bookmark.note|safe }}
+        </div>
+    </div>
+    <div class="span3">
+        <h4><a href="{% url bookmark_list bookmark.list.id %}">{{ bookmark.list.name }}</a></h4>
+        <hr class="small">
+        <ul class="unstyled posts">
+            {% for b in  bookmark.list.top_ten %}
+            <li><a href="{% url note_detail b.id %}">{{ b.title }}</a> / 
+                <small class="muted">{{ bookmark.note|slice:"30" }}</small>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}
+

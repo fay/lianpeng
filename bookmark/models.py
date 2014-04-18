@@ -74,6 +74,9 @@ class List(models.Model):
         url = reverse('bookmark_list', args=(self.id, ))
         return url
 
+    def top_ten(self):
+        return self.bookmark_set.order_by('-created_time')[:10]
+
     class Meta:
         permissions = (
             ('can_view', 'Can view'),

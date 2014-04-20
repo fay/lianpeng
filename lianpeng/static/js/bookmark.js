@@ -180,7 +180,7 @@ var BookmarkView = Backbone.View.extend({
         this.$el.draggable( "disable" )
     },
     show_actions: function() {
-        this.$('.move').toggle();
+        //this.$('.move').toggle();
         this.$('.actions').toggle();
     },
     remove_bookmark_html: function() {

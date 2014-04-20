@@ -10,7 +10,10 @@
 {% block body %}
 <div class="row-fluid">
     <div class="span12 well">
+        <div class="btn-group">
         <a href="javascript:;" class="save btn btn-success btn-large">保存</a>
+        <a href="{% url note_detail bookmark.id %}" class="btn btn-success btn-large">查看</a>
+        </div>
     </div>
 </div>
 <div id="title" class="page-title">

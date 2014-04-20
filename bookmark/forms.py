@@ -81,6 +81,9 @@ class BookmarkForm(forms.ModelForm):
         # here is to prevent the action to happend 
         return self.data['url'].strip()
 
+    def clean_note(self):
+        return self.data['note'].strip()
+
     class Meta:
         model = Bookmark
         fields = ['url', 'title', 'note', 'tags', 'domain']

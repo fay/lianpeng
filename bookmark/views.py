@@ -88,12 +88,18 @@ def list_detail(request, id):
     l = get_object_or_404(List, id=id)
     user = request.user
     invitation = None
+    can_view = False
     if user.is_authenticated():
         try:
             invitation = ListInvitation.objects.get(list=l, invitee=user.username, status__in=(0, 1))
         except ListInvitation.DoesNotExist:
             pass
-    if not l.public and not invitation: 
+        else:
+            can_view = True
+        if user == l.user:
+            can_view = True
+
+    if not l.public and not can_view: 
         raise Http404()
     context = {}
     context['list'] = l

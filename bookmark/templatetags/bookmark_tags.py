@@ -1,16 +1,9 @@
 from django.template.defaultfilters import register
 from django.conf import settings
 
-from bookmark.models import Follow
-
-@register.filter(name="is_user_followed")
-def is_user_followed(user, followee):
-    if user.is_authenticated():
-        try:
-            return user.following.get(followee=followee)
-        except Follow.DoesNotExist:
-            pass
-    return False
+@register.filter
+def following_users(user):
+    return user.following.filter(target_user__id__gt=0)
 
 @register.filter(name="list_bookmarks")
 def list_bookmarks(l, num=3):

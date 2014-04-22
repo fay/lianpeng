@@ -194,6 +194,7 @@ INSTALLED_APPS = [
     "sorl.thumbnail",
     "phileo",
     "emencia.django.newsletter",
+    "follow",
 
     # project
     "misc",

@@ -1,6 +1,7 @@
 {% extends 'site_base.html' %}
 {% load profiles_tags %}
 {% load bookmark_tags %}
+{% load follow_tags %}
 {% load i18n %}
 {% load compressed %}
 
@@ -26,24 +27,7 @@
                     {% include 'profiles/_social_sites.html' %}
                     <hr>
                     {% if user != current_user %}
-                        {% with user|is_user_followed:current_user as followed %}
-                            <a href="{% if user.is_authenticated %}javascript:;{% else %}{% url account_login %}{% endif %}" 
-                                class="follow-buttons {% if not followed %} hide {% endif %}{%if user == current_user %}disabled {% else %}{% endif %} 
-                                {% if user.is_authenticated %}
-                                    unfollow-button
-                                {% endif %} btn btn-large " 
-                                data-id="{{ followed.id }}">
-                                {% trans "Cancel Following" %}
-                            </a>
-                            <a href="{% if user.is_authenticated %}javascript:;{% else %}{% url account_login %}{% endif %}" 
-                                class="follow-buttons {% if followed %} hide {% endif %}{%if user == current_user %}disabled {% else %} btn-primary {% endif %} 
-                                {% if user.is_authenticated %}
-                                    follow-button
-                                {% endif %} btn btn-large " 
-                                data-id="{{ current_user.id }}">
-                                {% trans "Follow" %}
-                            </a>
-                        {% endwith %}
+                        {% follow_form current_user %}
                     {% else %}
                     <a href="{% url profile_edit %}" class="btn btn-primary">{% trans "Update my profile" %}</a>
                     {% endif %}
@@ -71,7 +55,7 @@
                         </div>
                         <div class="tab-pane" id="followers">
                             <div class="row">
-                                {% with current_user.followers.all as followers %}
+                                {% with current_user.follow_user.all as followers %}
                                     {% if followers %}
                                         {% for follower in followers %}
                                             {% include 'bookmark/includes/user.html' with user_obj=follower.user %}
@@ -88,10 +72,10 @@
                         </div>
                       <div class="tab-pane" id="following">
                             <div class="row">
-                                {% with current_user.following.all as followings %}
+                                {% with current_user|following_users as followings %}
                                     {% if followings %}
                                         {% for following in followings %}
-                                            {% include 'bookmark/includes/user.html' with user_obj=following.followee %}
+                                            {% include 'bookmark/includes/user.html' with user_obj=following.target %}
                                         {% endfor %}
                                     {% else %}
                                         <div class="row-fluid empty-box">

@@ -1,0 +1,10 @@
+{% load follow_tags %}
+<form action="{% follow_url object %}" method="post">
+    {% csrf_token %}
+        <input type="hidden" class="bbtn" name="next" value="{{ request.path }}" />
+    {% if request.user|is_following:object %}
+    <input type="submit" class="btn" value="取消{% if object.username %}关注{% else %}订阅{% endif %}" />
+    {% else %}
+    <input type="submit" class="btn btn-success" value="{% if object.username %}关注{% else %}订阅{% endif %}" />
+    {% endif %}
+</form>

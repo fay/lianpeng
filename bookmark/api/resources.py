@@ -27,7 +27,7 @@ from guardian.shortcuts import get_perms
 from guardian.shortcuts import get_objects_for_user
 from haystack.query import SearchQuerySet
 
-from bookmark.models import Bookmark, List, Feedback, Follow, FollowList, \
+from bookmark.models import Bookmark, List, Feedback, Follow, \
         ListInvitation, FeedCount
 from bookmark.api.validations import BookmarkValidation, \
         ListInvitationValidation
@@ -393,23 +393,10 @@ class FollowResource(ModelResource):
         queryset = Follow.objects.order_by('-created_time')
         allowed_methods = ['get', 'post', 'delete']
         always_return_data = True
-        fields = ['follower', 'id', 'followee']
+        fields = ['user', 'id', 'target']
         authentication = SessionAuthentication()
         authorization = PermissionAuthorization()
         validation = FormValidation(form_class=FollowForm)
-
-class FollowListResource(ModelResource):
-
-    follower = fields.ForeignKey(UserResource, 'user')
-    list = fields.ForeignKey(UserResource, 'user')
-
-    class Meta:
-        model = FollowList
-        queryset = FollowList.objects.order_by('-created_time')
-        allowed_methods = ['get', 'post', 'delete']
-        always_return_data = True
-        authentication = SessionAuthentication()
-        authorization = PermissionAuthorization()
 
 class CommentResource(ModelResource):
 

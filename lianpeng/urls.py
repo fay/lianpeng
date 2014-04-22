@@ -14,7 +14,7 @@ admin.autodiscover()
 
 from bookmark.api.resources import BookmarkResource, \
          UserResource, ListResource, FeedbackResource, \
-        FollowResource, FollowListResource, CommentResource, \
+        FollowResource, CommentResource, \
         ListInvitationResource, UserTourResource, FeedCountResource
 from bookmark.forms import SignupForm, SettingsForm
 from misc.forms import LoginEmailOrUsernameForm
@@ -27,7 +27,6 @@ v1_api.register(UserResource())
 v1_api.register(FeedbackResource())
 v1_api.register(FollowResource())
 v1_api.register(CommentResource())
-v1_api.register(FollowListResource())
 v1_api.register(ListInvitationResource())
 v1_api.register(UserTourResource())
 v1_api.register(FeedCountResource())
@@ -61,6 +60,7 @@ urlpatterns = patterns("",
     url(r'^mailing/', include('emencia.django.newsletter.urls.mailing_list')),
     url(r'^tracking/', include('emencia.django.newsletter.urls.tracking')),
     url(r'^statistics/', include('emencia.django.newsletter.urls.statistics')),
+    url('^', include('follow.urls')),
     url(r'^', include("bookmark.urls")),
 )
 

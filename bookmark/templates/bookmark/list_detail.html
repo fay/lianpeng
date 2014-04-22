@@ -2,6 +2,7 @@
 
 {% load profiles_tags %}
 {% load i18n %}
+{% load follow_tags %}
 {% load bookmark_tags %}
 {% load compressed %}
 {% load phileo_tags %}
@@ -30,8 +31,8 @@
                         </small>
                     </h1>
                     <p>
-                    {% if user.is_authenticated %}
-                    {% phileo_widget user list %}
+                    {% if user != list.user %}
+                        {% follow_form list %}
                     {% endif %}
                     </p>
                 </div>

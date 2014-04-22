@@ -12,7 +12,7 @@ from account.conf import settings
 from account.models import EmailAddress
 from notifications import notify
 
-from bookmark.models import Bookmark, List, Feedback, Follow, FollowList, \
+from bookmark.models import Bookmark, List, Feedback, Follow, \
         ListInvitation
 
 RESERVED_USERNAMES = "about access account accounts add address adm admin administration adult " \

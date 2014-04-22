@@ -4,7 +4,7 @@ import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, pre_save, post_delete, pre_delete
-from django.db.models import F
+from django.db.models import F, Q
 from django.dispatch import receiver
 from django.utils.translation import ugettext as _
 from django.contrib.comments.models import Comment  
@@ -27,7 +27,8 @@ from agon.models import award_points, TargetStat
 from misc.utils import find_mentions, Choice
 from misc.models import Lock
 from eventlog.models import log
-
+from follow import utils
+from follow.models import Follow
 
 LIST_KIND_CHOICES = Choice(
         ('INBOX', 0, "Inbox"),
@@ -92,8 +93,11 @@ class ListGroupObjectPermission(GroupObjectPermissionBase):
 class BookmarkManager(models.Manager):
 
     def feed(self, user):
-        followee_ids = user.following.all().values_list('followee__id', flat=True)
-        list_ids = List.objects.filter(public=True, user__id__in=followee_ids).values_list("id", flat=True)
+        followee_ids = user.following.all().values_list('target_user__id', flat=True)
+        subscribed_lists_ids = user.following.all().values_list('target_list__id', flat=True)
+        list_ids = List.objects.filter(Q(public=True),
+                Q(id__in=subscribed_lists_ids) |
+                Q(user__id__in=followee_ids)).values_list("id", flat=True)
         return Bookmark.objects.filter(list__id__in=list_ids).order_by('-created_time')
 
 class Bookmark(models.Model, DiffingMixin):
@@ -127,6 +131,7 @@ class Bookmark(models.Model, DiffingMixin):
     def __unicode__(self):
         return u"{} - {}".format(self.title, self.user)
 
+"""
 class Follow(models.Model):
     followee = models.ForeignKey(User, related_name='followers')
     user = models.ForeignKey(User, related_name='following')
@@ -152,6 +157,7 @@ class FollowList(models.Model):
 
     class Meta:
         unique_together = (("list", "user"), )
+"""
 
 class PickedList(models.Model):
     list = models.OneToOneField(List, unique=True)
@@ -365,12 +371,20 @@ def notify_comment(sender, instance, created, **kwargs):
 def notify_follow(sender, instance, created, **kwargs):
     if created:
         from django.utils.translation import ugettext_noop as _
-        user = instance.followee
         from_user = instance.user
-        if user == from_user:
-            return
-        notify.send(from_user, recipient=user, verb=_('followed you'), 
-                    action_object=instance)
+        if instance.target_user:
+            user = instance.target
+            if user == from_user:
+                return
+            notify.send(from_user, recipient=user, verb=_('followed you'),
+                        action_object=instance)
+        elif instance.target_list:
+            user = instance.target.user
+            if user == from_user:
+                return
+            notify.send(from_user, recipient=user, verb=_('subscribed yours'),
+                        target=instance.target,
+                        action_object=instance)
 
 @receiver(post_save, sender=ListInvitation)
 def notify_invite(sender, instance, created, **kwargs):
@@ -408,3 +422,5 @@ def send_feedback_notfication(sender, instance, created, **kwargs):
                     action_object=instance,
                     description=instance.text)
 
+utils.register(User)
+utils.register(List)

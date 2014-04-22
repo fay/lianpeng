@@ -51,3 +51,4 @@ sorl-thumbnail==11.09
 #: there will be a tagging module conflict, delete the emencia.django.newsletter dependant tagging
 emencia.django.newsletter==0.2
 phileo==1.1
+django-follow==0.6.1

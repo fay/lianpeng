@@ -1,6 +1,15 @@
 var Bookmark = Backbone.Model.extend({
     urlRoot: '/api/v1/bookmark/',
     initialize: function () {
+        this.bind("change", this.note2text, this);
+        this.note2text();
+    },
+    note2text: function () {
+        var note = this.get('note');
+        if (note) {
+            var note_text = $("<div>" + note + "</div>").text();
+            this.set('note', note_text)
+        }
     }
 });
 

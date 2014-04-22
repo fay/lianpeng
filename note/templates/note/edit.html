@@ -1,11 +1,13 @@
 {% extends "site_base.html" %}
+{% load staticfiles%}
 
 {% block head_title %}
 笔记
 {% endblock %}
 
-{% block extra_head %}
-<link rel="stylesheet" href="{{ STATIC_URL }}js/pen/pen.css" type="text/css" media="screen" charset="utf-8"0>
+{% block style_base %}
+    <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ STATIC_URL }}js/pen/pen.css" type="text/css" media="screen" charset="utf-8"0>
 {% endblock %}
 {% block body %}
 <div class="row-fluid">

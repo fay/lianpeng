@@ -74,7 +74,7 @@
                                 </div>
                                 {% if bookmark.note %}
                                 <div class="row-fluid">
-                                    <blockquote class="muted">{{ bookmark.note }}</blockquote>
+                                    <blockquote class="muted">{{ bookmark.note|striptags }}</blockquote>
                                 </div>
                                 {% endif %}
                                 <div class="row-fluid comments-box hide">

@@ -27,26 +27,6 @@
             </div>
             <hr>
             {% if user != bookmark.user %}
-            <div class="row-fluid">
-                {% with user|is_user_followed:bookmark.user as followed %}
-                    <a href="{% if user.is_authenticated %}javascript:;{% else %}{% url account_login %}{% endif %}" 
-                        class="follow-buttons {% if not followed %} hide {% endif %}{%if user == bookmark.user %}disabled {% else %}{% endif %} 
-                        {% if user.is_authenticated %}
-                            unfollow-button
-                        {% endif %} btn btn-block " 
-                        data-id="{{ followed.id }}">
-                        {% trans "Cancel Following" %}
-                    </a>
-                    <a href="{% if user.is_authenticated %}javascript:;{% else %}{% url account_login %}{% endif %}" 
-                        class="follow-buttons {% if followed %} hide {% endif %}{%if user == bookmark.user %}disabled {% else %} btn-primary {% endif %} 
-                        {% if user.is_authenticated %}
-                            follow-button
-                        {% endif %} btn btn-block " 
-                            data-id="{{ bookmark.user.id }}">
-                        {% trans "Follow" %}
-                    </a>
-                {% endwith %}
-            </div>
             {% endif %}
             {% endwith %}
         </div>

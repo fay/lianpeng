@@ -98,7 +98,7 @@ class BookmarkManager(models.Manager):
         list_ids = List.objects.filter(Q(public=True),
                 Q(id__in=subscribed_lists_ids) |
                 Q(user__id__in=followee_ids)).values_list("id", flat=True)
-        return Bookmark.objects.filter(list__id__in=list_ids).order_by('-created_time')
+        return Bookmark.objects.filter(list__id__in=list_ids).order_by('-id')
 
 class Bookmark(models.Model, DiffingMixin):
     url = models.URLField()

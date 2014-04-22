@@ -26,14 +26,21 @@ def index(request):
 
 def detail(request, id):
     bookmark = get_object_or_404(Bookmark, id=id)
-    context = {}
-    context['bookmark'] = bookmark
-    return render(request, 'note/detail.html', context)
+
+    if bookmark.list.public or bookmark.user == request.user:
+        context = {}
+        context['bookmark'] = bookmark
+        return render(request, 'note/detail.html', context)
+    else:
+        raise Http404()
 
 @login_required
 def edit(request, id):
     bookmark = get_object_or_404(Bookmark, id=id, user=request.user)
-    context = {}
-    context['bookmark'] = bookmark
-    return render(request, 'note/edit.html', context)
+    if request.user == bookmark.user:
+        context = {}
+        context['bookmark'] = bookmark
+        return render(request, 'note/edit.html', context)
+    else:
+        raise Http404()
 

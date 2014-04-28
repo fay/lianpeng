@@ -8,7 +8,7 @@ var Bookmark = Backbone.Model.extend({
         var note = this.get('note');
         if (note) {
             var note_text = $("<div>" + note + "</div>").text();
-            this.set('note', note_text)
+            this.set('note_text', note_text)
         }
     }
 });

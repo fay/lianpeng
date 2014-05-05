@@ -4,9 +4,12 @@
 {% block head_title %}
 笔记
 {% endblock %}
+{% block topbar_base %}
+{% endblock %}
 
 {% block style_base %}
     <link href="{% static "css/bootstrap.css" %}" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ STATIC_URL }}js/pen/pen.css" type="text/css" media="screen" charset="utf-8"0>
     <style type="text/css" media="screen">
     #editor {

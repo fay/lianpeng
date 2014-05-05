@@ -2,6 +2,7 @@
 //@import "../flat-ui/less/flat-ui.less";
 @orange: #f47c39;
 @successText:             #1dc499;
+@errorText:             #e33244;
 @orangeHighlight: spin(@orange, 5%);
 @green: #1dc499; /*#42D7B4*/
 @greenHighlight: spin(@green, 20%);
@@ -146,6 +147,9 @@ a {
                     color: white;
 
                 }
+                .dropdown-menu {
+                    min-width:260px;
+                }
             }
         }
         &.navbar .nav>li>a {
@@ -173,63 +177,6 @@ a {
             }
         }
     }
-}
-.sidebar-width {
-    position:fixed;
-    background:#333;
-    color:white;
-    height:100%;
-    width:15%;
-    left:0;
-}
-.sidebar-nav-fixed {
-    padding:10px;
-    a {
-        color:#dee1e7;
-    }
-    hr {
-        border-bottom:none;
-        border-top:none;
-    }
-    a.brand {
-        font-size:22px;
-        line-height:22px;
-    }
-    .brand-menu li {
-    }
-    .brand-wrapper {
-        margin-top:6px;
-    }
-    .info {
-        margin-top:8px;
-        ul li {
-        }
-    }
-    .username {
-        margin-top:10px;
-    }
-    .sidebar-menu li {
-        padding:0px 0;
-        &.invite-menu a .icon{
-        }
-        &.explore-menu a .icon {
-        }
-        a {
-            padding:8px;
-            font-size:16px;
-            display:block;
-            &:hover {
-                background-color:#222;
-            }
-            & i {
-            }
-        }
-    }
-}
-.sidebar-nav-fixed  .signature, .bookmarks #lists, #profile .tab-pane .signature, .bookmark-detail .signature {
-    overflow:hidden;
-    white-space:nowrap;
-    display:block;
 }
 .scrollable {
     overflow-x: hidden;

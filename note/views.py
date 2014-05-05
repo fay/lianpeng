@@ -1,3 +1,5 @@
+#coding: utf-8
+
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -17,7 +19,7 @@ def index(request):
             user=request.user, defaults={"name": _("Note")})
     site = Site.objects.get_current()
     bookmark = Bookmark(url="http://{}/note/empty/".format(site.domain),
-            domain="note.lianpeng.me", title="", note="",
+            domain="note.lianpeng.me", title="输入标题", note="",
             user=request.user, charset="UTF-8", list=l)
     bookmark.save()
     bookmark.url = 'http://{}{}'.format(site.domain, reverse('note_detail', args=(bookmark.id, )))

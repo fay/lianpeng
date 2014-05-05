@@ -47,7 +47,7 @@
         <ul class="unstyled posts">
             {% for b in  bookmark.list.top_ten %}
             <li><a href="{% url note_detail b.id %}">{{ b.title }}</a> / 
-                <small class="muted">{{ b.note|slice:"30" }}</small>
+                <small class="muted">{{ b.note|striptags|slice:"30" }}</small>
             </li>
             {% endfor %}
         </ul>

@@ -17,7 +17,8 @@ var window_resize = function  (e) {
         resize_lists();
     }
 };
-$(window).resize(window_resize)
+$(window).resize(window_resize);
+
 var lists_view;
 var List = Backbone.Model.extend({
     urlRoot: '/api/v1/list/',

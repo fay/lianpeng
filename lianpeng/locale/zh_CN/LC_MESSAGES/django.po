@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-02 14:29+0800\n"
+"POT-Creation-Date: 2014-05-07 10:08+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,69 +17,74 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 
-#: templates/_account_bar.html:10
-msgid "Explore"
-msgstr "探索发现"
-
-#: templates/_account_bar.html:13
-msgid "Tools"
-msgstr "工具"
-
-#: templates/_account_bar.html:26 templates/site_base.html:73
+#: templates/_account_bar.html:8 templates/_user_menu.html:41
+#: templates/site_base.html:91
 msgid "Feedback"
 msgstr "反馈"
 
-#: templates/_account_bar.html:27 templates/_account_bar.html.py:50
+#: templates/_account_bar.html:9 templates/_user_menu.html:40
 msgid "Help"
 msgstr "帮助"
 
-#: templates/_account_bar.html:29 templates/notifications/list.html:3
+#: templates/_account_bar.html:11 templates/notifications/list.html:3
 #: templates/notifications/list.html:8
 msgid "Notifications"
 msgstr "通知"
 
-#: templates/_account_bar.html:33
-msgid "Invite"
-msgstr ""
-
-#: templates/_account_bar.html:41
-msgid "My public page"
-msgstr "我的主页"
-
-#: templates/_account_bar.html:42
-msgid "Update my profile"
-msgstr ""
-
-#: templates/_account_bar.html:43
-msgid "Settings"
-msgstr "设置"
-
-#: templates/_account_bar.html:44
-msgid "Sync"
-msgstr ""
-
-#: templates/_account_bar.html:45
-msgid "Import"
-msgstr ""
-
-#: templates/_account_bar.html:48
-msgid "Admin"
-msgstr ""
-
-#: templates/_account_bar.html:52
-msgid "Log out"
-msgstr ""
-
-#: templates/_account_bar.html:56
+#: templates/_account_bar.html:17
 msgid "Log in"
 msgstr ""
 
-#: templates/_account_bar.html:58
+#: templates/_account_bar.html:19
 msgid "Sign up"
 msgstr ""
 
 #: templates/_footer.html:4
-msgid "&copy; 2013 莲蓬"
+msgid "&copy; 2014 莲蓬"
+msgstr ""
+
+#: templates/_user_menu.html:13
+msgid "Update my profile"
+msgstr ""
+
+#: templates/_user_menu.html:14
+msgid "My public page"
+msgstr "我的主页"
+
+#: templates/_user_menu.html:15
+msgid "Settings"
+msgstr "设置"
+
+#: templates/_user_menu.html:16
+msgid "Sync"
+msgstr ""
+
+#: templates/_user_menu.html:17
+msgid "Import"
+msgstr ""
+
+#: templates/_user_menu.html:18
+msgid "Invite"
+msgstr ""
+
+#: templates/_user_menu.html:22
+msgid "My Apps"
+msgstr ""
+
+#: templates/_user_menu.html:27
+msgid "Snapshot"
+msgstr ""
+
+#: templates/_user_menu.html:32
+msgid "Orders"
+msgstr ""
+
+#: templates/_user_menu.html:38
+msgid "Admin"
+msgstr ""
+
+#: templates/_user_menu.html:43
+msgid "Log out"
 msgstr ""
 
 #: templates/about.html:3
@@ -90,23 +95,31 @@ msgstr ""
 msgid "帮助"
 msgstr ""
 
-#: templates/site_base.html:77
+#: templates/site_base.html:72
+msgid "Explore"
+msgstr "探索发现"
+
+#: templates/site_base.html:75
+msgid "Tools"
+msgstr "工具"
+
+#: templates/site_base.html:98
 msgid "Help us to make it better."
 msgstr "帮助我们变得更好"
 
-#: templates/site_base.html:80
+#: templates/site_base.html:101
 msgid "Thank for your feedback, we will deal with it carefully."
 msgstr "谢谢您的反馈，我们会认真对待您的建议。"
 
-#: templates/site_base.html:84
+#: templates/site_base.html:105
 msgid "Cancel"
 msgstr ""
 
-#: templates/site_base.html:85
+#: templates/site_base.html:106
 msgid "Confirm"
 msgstr ""
 
-#: templates/site_base.html:120
+#: templates/site_base.html:144
 msgid "now"
 msgstr "刚刚"
 
@@ -161,17 +174,42 @@ msgstr "[%(site_name)s] 好友邀请"
 msgid "Avatar"
 msgstr "头像"
 
-#: templates/avatar/change.html:25
+#: templates/avatar/change.html:19
 msgid "You haven't uploaded an avatar yet. Please upload one now."
 msgstr "您还没有上传任何头像图片，请现在上传。"
 
-#: templates/avatar/change.html:29
+#: templates/avatar/change.html:23
 msgid "Choose new Default"
 msgstr "设为默认头像"
 
-#: templates/avatar/change.html:36
+#: templates/avatar/change.html:30
 msgid "Upload New Image"
 msgstr ""
+
+#: templates/idios/_profile_form.html:12
+msgid "Edit Profile"
+msgstr ""
+
+#: templates/idios/_profile_form.html:22
+msgid "Update"
+msgstr ""
+
+#: templates/newsletter/mailing_list_unsubscribe.html:4
+#: templates/newsletter/mailing_list_unsubscribe.html:7
+msgid "Unsubscription"
+msgstr "取消订阅"
+
+#: templates/newsletter/mailing_list_unsubscribe.html:9
+msgid "You are unsubscribed for this mailing list."
+msgstr "您已经取消了订阅该邮件列表"
+
+#: templates/newsletter/mailing_list_unsubscribe.html:11
+msgid "Validate this form to unsubscribe to this mailing list."
+msgstr "提交该表单以确认取消订阅邮件列表"
+
+#: templates/newsletter/mailing_list_unsubscribe.html:15
+msgid "Unsubscribe"
+msgstr "取消订阅"
 
 #: templates/notifications/list.html:9
 msgid "All"

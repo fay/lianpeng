@@ -38,6 +38,7 @@ from tagging.managers import ModelTaggedItemManager
 from misc.models import UserTour
 from snapshot.models import Snapshot
 from phileo.utils import widget_context
+from screenshot.models import Screenshot
 
 class PermissionValidation(Validation):
     def is_valid(self, bundle, request=None):
@@ -312,6 +313,15 @@ class BookmarkResource(ModelResource):
         bundle.data['favicon'] = bundle.obj.favicon
         bundle.data['list_name'] = bundle.obj.list.name
         bundle.data['list_id'] = bundle.obj.list.id
+
+        #: screenshot
+        screenshot_image = ''
+        try:
+            screenshot_image = bundle.obj.screenshot.image.url
+        except Screenshot.DoesNotExist, e:
+            pass
+
+        bundle.data['screenshot_image'] = screenshot_image
 
         #: snapshot
         has_snapshot = False

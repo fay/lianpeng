@@ -309,8 +309,18 @@
                                         <img class="avatar" alt="<%-bookmark.user_name%>" src="<%-bookmark.user_avatar%>&r=r" />
                                     </a>
                                 </div>
+                                <% } else {%>
+                                    <% if(bookmark.screenshot_image){ %>
+                                    <div class="span2 padbox-left">
+                                        <img class="" src="<%-bookmark.screenshot_image%>" />
+                                    </div>
+                                    <% } else {%>
+                                        <div class="span2 padbox-left">
+                                            <img src="http://placehold.it/140x100&text=<%-bookmark.domain%>" />
+                                        </div>
+                                    <% } %>
                                 <% } %>
-                                <div class="span<% if(list.id == 'feed') { %>11<% } else { %>12 padbox-left<% }%> padbox-right">
+                                <div class="span<% if(list.id == 'feed') { %>11<% } else { %>10 padbox-left<% }%> padbox-right">
                                     <div class="row-fluid bookmark-title-box">
                                         <div class="span10">
                                             <div class="bookmark-title-wrapper bookmark-title-inner">

@@ -31,7 +31,7 @@
                         </small>
                     </h1>
                     <p>
-                    {% if user != list.user %}
+                    {% if user.is_authenticated and user != list.user %}
                         {% follow_form list %}
                     {% endif %}
                     </p>

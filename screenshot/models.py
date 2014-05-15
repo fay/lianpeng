@@ -30,7 +30,7 @@ def create_screenshot(sender, instance, created, **kwargs):
         user = instance.user
         create_screenshot_task.delay(instance)
 
-@receiver(post_delete, sender=Screenshot)
-def delete_screenshot_file(sender, instance, **kwargs):
-    instance.image.delete(save=False)
+#@receiver(post_delete, sender=Screenshot)
+#def delete_screenshot_file(sender, instance, **kwargs):
+#    instance.image.delete(save=False)
 

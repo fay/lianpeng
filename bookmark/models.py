@@ -128,6 +128,19 @@ class Bookmark(models.Model, DiffingMixin):
     def absolute_url(self):
         return reverse('bookmark_detail', args=[self.id])
 
+    @property
+    def screenshot_image(self):
+        from screenshot.models import Screenshot
+        image = ''
+        if self.domain == 'note.lianpeng.me':
+            image = settings.STATIC_URL + 'img/note_placeholder.png'
+        try:
+            image = self.screenshot.image.url
+        except Screenshot.DoesNotExist, e:
+            pass
+        return image
+
+
     def __unicode__(self):
         return u"{} - {}".format(self.title, self.user)
 

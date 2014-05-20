@@ -315,13 +315,7 @@ class BookmarkResource(ModelResource):
         bundle.data['list_id'] = bundle.obj.list.id
 
         #: screenshot
-        screenshot_image = ''
-        try:
-            screenshot_image = bundle.obj.screenshot.image.url
-        except Screenshot.DoesNotExist, e:
-            pass
-
-        bundle.data['screenshot_image'] = screenshot_image
+        bundle.data['screenshot_image'] = bundle.obj.screenshot_image
 
         #: snapshot
         has_snapshot = False

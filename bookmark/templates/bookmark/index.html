@@ -310,15 +310,13 @@
                                     </a>
                                 </div>
                                 <% } else {%>
-                                    <% if(bookmark.screenshot_image){ %>
                                     <div class="span2 padbox-left">
+                                    <% if(bookmark.screenshot_image){ %>
                                         <img class="" src="<%-bookmark.screenshot_image%>" />
-                                    </div>
                                     <% } else {%>
-                                        <div class="span2 padbox-left">
-                                            <img src="http://placehold.it/140x100&text=<%-bookmark.domain%>" />
-                                        </div>
+                                        <img src="http://placehold.it/140x100&text=<%-bookmark.domain%>" />
                                     <% } %>
+                                    </div>
                                 <% } %>
                                 <div class="span<% if(list.id == 'feed') { %>11<% } else { %>10 padbox-left<% }%> padbox-right">
                                     <div class="row-fluid bookmark-title-box">

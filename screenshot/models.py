@@ -28,6 +28,8 @@ def create_screenshot(sender, instance, created, **kwargs):
     if created or no_screenshot:
         from screenshot.tasks import create_screenshot_task
         user = instance.user
+        if instance.domain in ('note.lianpeng.me'):
+            return
         create_screenshot_task.delay(instance)
 
 #@receiver(post_delete, sender=Screenshot)

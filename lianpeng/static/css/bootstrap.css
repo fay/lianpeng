@@ -980,3 +980,6 @@ footer{margin:20px 0;}
 .bs-docs-sidenav>li:last-child>a{-webkit-border-radius:0 0 6px 6px;-moz-border-radius:0 0 6px 6px;border-radius:0 0 6px 6px;}
 #feedback .icon-heart{font-size:100px;color:wheat;}
 .icon-heart.text-error{color:#e74c3c;}
+.note-app #content{font-size:16px;line-height:24px;}
+.note-app .title{color:#1dc499;}
+.note-app ul.posts li{margin:5px 0;}

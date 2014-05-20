@@ -4,19 +4,8 @@
 {{ bookmark.title }}
 {% endblock %}
 
-{% block extra_head %}
-<style type="text/css" media="screen">
-    #content {
-        font-size: 16px;
-    }
-    .title {
-        color: #1dc499;
-    }
-    ul.posts li{
-        margin: 5px 0;
-    }
-</style>
-{% endblock %}
+{% block body_class %}note-app{% endblock %}
+
 {% block body %}
 <div class="row-fluid">
     <div class="span9">

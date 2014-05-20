@@ -134,10 +134,11 @@ class Bookmark(models.Model, DiffingMixin):
         image = ''
         if self.domain == 'note.lianpeng.me':
             image = settings.STATIC_URL + 'img/note_placeholder.png'
-        try:
-            image = self.screenshot.image.url
-        except Screenshot.DoesNotExist, e:
-            pass
+        else:
+            try:
+                image = self.screenshot.image.url
+            except Screenshot.DoesNotExist, e:
+                pass
         return image
 
 

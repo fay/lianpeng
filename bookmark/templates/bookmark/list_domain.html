@@ -1,8 +1,8 @@
 {% extends 'site_base.html' %}
+
 {% load profiles_tags %}
 {% load i18n %}
 {% load bookmark_tags %}
-{% load compressed %}
 
 {% block head_title %}{{ domain }}{% endblock %}
 {% block body %}
@@ -38,6 +38,6 @@
     var USER_NAME  = "{{user.username}}";
 </script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/underscore-min.js" charset="utf-8"></script>
-{% compressed_js 'bookmark_embed' %}
+<script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/bookmark_embed.js"></script>
 {% endblock %}
 

@@ -1,9 +1,9 @@
 {% extends 'site_base.html' %}
+
 {% load profiles_tags %}
 {% load bookmark_tags %}
 {% load follow_tags %}
 {% load i18n %}
-{% load compressed %}
 
 {% block head_title %}{{ current_user }}{% endblock %}
 {% block body %}
@@ -98,7 +98,7 @@
 
 {% block extra_script %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/underscore-min.js" charset="utf-8"></script>
-    {% compressed_js 'bookmark_embed' %}
+    <script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/bookmark_embed.js"></script>
     <script type="text/javascript" charset="utf-8">
         var USER_ID = {% if user.id %}{{ user.id }}{% else %}null{% endif %};
         var USER_URL = "/api/v1/user/" + USER_ID;

@@ -75,6 +75,8 @@ STATICFILES_DIRS = [
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder",
+
 ]
 
 # Make this unique, and don't share it with anybody.
@@ -113,7 +115,6 @@ MIDDLEWARE_CLASSES = [
     "bookmark.django-crossdomainxhr-middleware.XsSharing",
     'django.middleware.gzip.GZipMiddleware',
     'social_auth.middleware.SocialAuthExceptionMiddleware',
-    #'pipeline.middleware.MinifyHTMLMiddleware',
 ]
 
 AUTHENTICATION_BACKENDS = (
@@ -180,7 +181,6 @@ INSTALLED_APPS = [
     'raven.contrib.django.raven_compat',
     'endless_pagination',
     'gravatar',
-    'pipeline',
     "tastypie",
     "tagging",
     "notifications",
@@ -195,6 +195,8 @@ INSTALLED_APPS = [
     "phileo",
     "emencia.django.newsletter",
     "follow",
+    "compressor",
+
 
     # project
     "misc",
@@ -297,45 +299,6 @@ XS_SHARING_ALLOWED_HEADERS = ["content-type"]
 LOCALE_PATHS = [os.path.join(PROJECT_ROOT, 'i18n', app, 'locale') for app in os.listdir(os.path.join(PROJECT_ROOT,'i18n'))]
 
 #: compress static files
-STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
-PIPELINE_CSS_COMPRESSOR = 'pipeline.compressors.yui.YUICompressor'
-PIPELINE_JS_COMPRESSOR = 'pipeline.compressors.yui.YUICompressor'
-
-PIPELINE_CSS = {
-    'main': {
-        'source_filenames': (
-          'css/bootstrap.css',
-        ),
-        'output_filename': 'css/main.css',
-    },
-}
-PIPELINE_JS = {
-    'main': {
-        'source_filenames': (
-            'js/app_base.js',
-            'js/bookmark.js',
-            'js/comment.js',
-            'js/app.js',
-        ),
-        'output_filename': 'js/main.js',
-    },
-    'bookmark_embed': {
-        'source_filenames': (
-            'js/bookmark_embed.js',
-        ),
-        'output_filename': 'js/bookmark-embed-min.js',
-    },
-    'bookmark_detail': {
-        'source_filenames': (
-            'js/app_base.js',
-            'js/comment.js',
-            'js/bookmark_detail_init.js',
-            'js/bookmark_embed.js',
-        ),
-        'output_filename': 'js/bookmark-detail-min.js',
-    }
-}
-
 FLUENT_COMMENTS_EXCLUDE_FIELDS = ('name', 'email', 'url')
 COMMENTS_APP = 'fluent_comments'
 

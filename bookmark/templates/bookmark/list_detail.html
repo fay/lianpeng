@@ -4,7 +4,6 @@
 {% load i18n %}
 {% load follow_tags %}
 {% load bookmark_tags %}
-{% load compressed %}
 {% load phileo_tags %}
 {% load staticfiles %}
 
@@ -85,6 +84,6 @@
     var USER_NAME  = "{{user.username}}";
 </script>
 <script type="text/javascript" src="{{ STATIC_URL }}js/underscore-min.js" charset="utf-8"></script>
-{% compressed_js 'bookmark_embed' %}
+<script type="text/javascript" charset="utf-8" src="{{ STATIC_URL }}js/bookmark_embed.js"></script>
 {% endblock %}
 

@@ -52,4 +52,4 @@ emencia.django.newsletter==0.2
 phileo==1.1
 django-follow==0.6.1
 django-compressor==1.4
-
+beautifulsoup4==4.3.2

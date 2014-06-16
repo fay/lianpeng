@@ -4,6 +4,10 @@
 {% load bookmark_tags %}
 {% load comments %}
 
+{% block extra_head %}
+    <meta name="description" content="{{ bookmark.note|default:bookmark.title }}" />
+{% endblock %}
+
 {% block head_title %}{{ bookmark.title }}{% endblock %}
 {% block body %}
     <div class="row-fluid bookmark-detail">

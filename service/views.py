@@ -24,7 +24,7 @@ def feed_url(request):
 def favicon(request):
     url = request.GET.get('url')
     if url:
-        get_favicon(url)
+        get_favicon.delay(url)
     raise Http404()
 
 

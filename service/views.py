@@ -11,7 +11,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext
 from django.utils.translation import ugettext, ugettext as _
 
-from service.tasks import get_feed_url
+from service.tasks import get_feed_url, get_favicon
 
 def feed_url(request):
     url = request.GET.get('link')
@@ -20,5 +20,11 @@ def feed_url(request):
     if url and callback:
         get_feed_url.delay(url, callback)
     return HttpResponse("ok")
+
+def favicon(request):
+    url = request.GET.get('url')
+    if url:
+        get_favicon(url)
+    raise Http404()
 
 

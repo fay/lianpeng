@@ -15,7 +15,7 @@ django-jsonfield==0.8.11
 django-tagging
 MySQL-python
 PIL
-requests
+requests==2.3.0
 #### snapshot need 3.2.0 because of html entitie, like `>` will be &gt.
 BeautifulSoup==3.2.0
 django-tastypie==0.9.13
@@ -53,3 +53,5 @@ phileo==1.1
 django-follow==0.6.1
 django-compressor==1.4
 beautifulsoup4==4.3.2
+git+https://github.com/fay/url2feed
+pyfav==0.1

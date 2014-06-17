@@ -22,6 +22,7 @@ def index(request):
             domain="note.lianpeng.me", title="输入标题", note="",
             user=request.user, charset="UTF-8", list=l)
     bookmark.save()
+    bookmark = Bookmark.objects.get(id=bookmark.id)
     bookmark.url = 'http://{}{}'.format(site.domain, reverse('note_detail', args=(bookmark.id, )))
     bookmark.save()
     return redirect('note_edit', id=bookmark.id)

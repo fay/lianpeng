@@ -122,7 +122,8 @@ class Bookmark(models.Model, DiffingMixin):
 
     @property
     def favicon(self):
-        return 'http://g.etfv.co/http://{}?defaulticon=lightpng'.format(self.domain)
+        return 'https://icons.duckduckgo.com/ip2/{}.ico'.format(self.domain)
+        #return 'http://g.etfv.co/http://{}?defaulticon=lightpng'.format(self.domain)
         #return 'https://s2.googleusercontent.com/s2/favicons?alt=site&domain={}'.format(self.domain)
 
     def absolute_url(self):

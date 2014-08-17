@@ -209,6 +209,7 @@ INSTALLED_APPS = [
     "snapshot",
     "note",
     "screenshot",
+    "service",
 
     #: put it here after any of apps above for the sake of that there will be a error when running unit test
     "guardian",

@@ -1,3 +1,6 @@
+import os
+import hashlib
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save, post_delete
@@ -9,7 +12,7 @@ from bookmark.models import Bookmark
 
 def screenhot_upload_to(instance, filename):
     bookmark = instance.bookmark
-    user_dir = md5(bookmark.user.username + settings.SCREENSHOT_SALT).hexdigest()
+    user_dir = hashlib.md5(bookmark.user.username + settings.SCREENSHOT_SALT).hexdigest()
     return os.path.join('screenshots', user_dir, filename)
 
 class Screenshot(models.Model):

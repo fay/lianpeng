@@ -16,6 +16,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.db import IntegrityError
 
+from sorl.thumbnail import get_thumbnail
 from tagging.fields import TagField
 import positions
 from notifications import notify
@@ -137,7 +138,7 @@ class Bookmark(models.Model, DiffingMixin):
             image = settings.STATIC_URL + 'img/note_placeholder.png'
         else:
             try:
-                image = self.screenshot.image.url
+                image = get_thumbnail(self.screenshot.image, '140x100', crop='center', quality=99).url
             except Screenshot.DoesNotExist, e:
                 pass
         return image

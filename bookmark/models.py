@@ -141,6 +141,8 @@ class Bookmark(models.Model, DiffingMixin):
                 image = get_thumbnail(self.screenshot.image, '140x100', crop='center', quality=99).url
             except Screenshot.DoesNotExist, e:
                 pass
+            except:
+                pass
         return image
 
 

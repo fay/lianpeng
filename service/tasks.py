@@ -21,5 +21,5 @@ def get_favicon(url):
     favicon_saved_at = download_favicon(url,
                 file_prefix=filename + "-",
                 target_dir=target_dir)
-    print favicon_saved_at
+    return favicon_saved_at
 

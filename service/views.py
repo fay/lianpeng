@@ -41,7 +41,7 @@ def favicon(request):
         data = f.read()
         return HttpResponse(data, content_type="image/x-icon")
         """
-    raise Http404()
+    return redirect(settings.STATIC_URL + "img/default_favicon.png")
 
 @csrf_exempt
 def html2pdf(request):

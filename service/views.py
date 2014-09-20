@@ -1,5 +1,6 @@
 import os
 import json
+from urlparse import urlparse
 
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
@@ -15,6 +16,7 @@ from django.utils.translation import ugettext, ugettext as _
 from django.conf import settings
 
 from service.tasks import get_feed_url, get_favicon
+from service.models import Website
 
 def feed_url(request):
     url = request.GET.get('link')
@@ -27,7 +29,14 @@ def feed_url(request):
 def favicon(request):
     url = request.GET.get('url')
     if url:
-        get_favicon.delay(url)
+        domain = urlparse(url).netloc
+        import pdb;pdb.set_trace()
+        try:
+            site = Website.objects.get(domain=domain)
+        except Website.DoesNotExist:
+            get_favicon.delay(url)
+        else:
+            return redirect(settings.MEDIA_URL + site.favicon.url)
         """
         f = open(file_name)
         data = f.read()

@@ -20,15 +20,12 @@ def get_feed_url(url, callback):
 @task
 def get_favicon(url):
     domain = urlparse(url).netloc
-    try:
-        site = Website.objects.get(domain=domain)
-    except Website.DoesNotExist:
-        filename = hashlib.md5(domain).hexdigest()
-        target_dir = "{}/favicons/".format(settings.MEDIA_ROOT)
-        favicon_saved_at = download_favicon(url,
-                    file_prefix=filename + "-",
-                    target_dir=target_dir)
-        site = Website(domain=domain)
-        site.favicon.name = favicon_saved_at
-        site.save()
+    filename = hashlib.md5(domain).hexdigest()
+    target_dir = "{}/favicons/".format(settings.MEDIA_ROOT)
+    favicon_saved_at = download_favicon(url,
+                file_prefix=filename + "-",
+                target_dir=target_dir)
+    site = Website(domain=domain)
+    site.favicon.name = favicon_saved_at.split(settings.MEDIA_ROOT)[1]
+    site.save()
     return site.favicon.name

@@ -27,10 +27,12 @@ def feed_url(request):
 def favicon(request):
     url = request.GET.get('url')
     if url:
-        file_name = get_favicon(url)
+        get_favicon.delay(url)
+        """
         f = open(file_name)
         data = f.read()
         return HttpResponse(data, content_type="image/x-icon")
+        """
     raise Http404()
 
 @csrf_exempt

@@ -30,7 +30,6 @@ def favicon(request):
     url = request.GET.get('url')
     if url:
         domain = urlparse(url).netloc
-        import pdb;pdb.set_trace()
         try:
             site = Website.objects.get(domain=domain)
         except Website.DoesNotExist:

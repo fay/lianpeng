@@ -28,6 +28,7 @@ def feed_url(request):
 
 def favicon(request):
     url = request.GET.get('url')
+    favicon = settings.STATIC_URL + "img/default_favicon.png"
     if url:
         domain = urlparse(url).netloc
         try:
@@ -35,13 +36,16 @@ def favicon(request):
         except Website.DoesNotExist:
             get_favicon.delay(url)
         else:
-            return redirect(settings.MEDIA_URL + site.favicon.url)
+            if site.favicon.url.find('static') >= 0:
+                favicon = site.favicon.url
+            else:
+                favicon = settings.MEDIA_URL + site.favicon.url
         """
         f = open(file_name)
         data = f.read()
         return HttpResponse(data, content_type="image/x-icon")
         """
-    return redirect(settings.STATIC_URL + "img/default_favicon.png")
+    return redirect(favicon)
 
 @csrf_exempt
 def html2pdf(request):

@@ -22,10 +22,17 @@ def get_favicon(url):
     domain = urlparse(url).netloc
     filename = hashlib.md5(domain).hexdigest()
     target_dir = "{}/favicons/".format(settings.MEDIA_ROOT)
-    favicon_saved_at = download_favicon(url,
-                file_prefix=filename + "-",
-                target_dir=target_dir)
+    name = settings.STATIC_URL + "img/default_favicon.png"
     site = Website(domain=domain)
-    site.favicon.name = favicon_saved_at.split(settings.MEDIA_ROOT)[1]
+    site.favicon.name = name
     site.save()
+    try:
+        favicon_saved_at = download_favicon(url,
+                    file_prefix=filename + "-",
+                    target_dir=target_dir)
+        name = favicon_saved_at.split(settings.MEDIA_ROOT)[1]
+        site.favicon.name = name
+        site.save()
+    except:
+        pass
     return site.favicon.name

@@ -31,8 +31,9 @@ def get_favicon(url):
                     file_prefix=filename + "-",
                     target_dir=target_dir)
         name = favicon_saved_at.split(settings.MEDIA_ROOT)[1]
-        site.favicon.name = name
-        site.save()
+        if name:
+            site.favicon.name = name
+            site.save()
     except:
         pass
     return site.favicon.name

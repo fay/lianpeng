@@ -55,3 +55,4 @@ django-compressor==1.4
 beautifulsoup4==4.3.2
 git+https://github.com/fay/url2feed
 pyfav==0.1
+selenium

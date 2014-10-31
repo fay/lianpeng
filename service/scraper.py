@@ -1,7 +1,7 @@
 import requests
 import json
 import re
-from BeautifulSoup import BeautifulSoup, SoupStrainer
+from bs4 import BeautifulSoup, SoupStrainer
 import traceback
 import urllib
 import urllib2
@@ -19,26 +19,42 @@ class Scraper(object):
     def __init__(self, url, fields=None):
         self.url = url
         self.url_parts = urlparse.urlparse(self.url)
+        if fields:
+            self.fields = fields
+        else:
+            self.fields = ['domain', 'title', 'description', 'favicon', 'screenshot']
 
     def scrape(self):
+        fields = self.fields
         resp = self.fetch()
         charset = self.parse_charset(resp)
-        domain = self.parse_domain()
         content = resp.content
         html = content.decode(charset)
         dom = self.parse(html)
-        title = self.parse_title(dom)
-        desc = self.parse_description(dom)
-        favicon = self.parse_favicon(dom)
-        screenshot = self.screenshot()
-        print title
-        print desc
-        print favicon
+
+        result = {}
+
+        if 'domain' in fields:
+            domain = self.parse_domain()
+            result['domain'] = domain
+        if 'title' in fields:
+            title = self.parse_title(dom)
+            result['title'] = title
+        if 'description' in fields:
+            desc = self.parse_description(dom)
+            result['description'] = desc
+        if 'favicon' in fields:
+            favicon = self.parse_favicon(dom)
+            result['favicon'] = favicon
+        if 'screenshot' in fields:
+            screenshot = self.screenshot()
+            result['screenshot'] = screenshot
+        return result
 
     def parse(self, html):
         strainer = SoupStrainer('head')
         # gb18030 is working with both utf-8 and gb2312, see http://leeon.me/a/beautifulsoup-chinese-page-resolve
-        soup = BeautifulSoup(html, parseOnlyThese=strainer, fromEncoding="gb18030") 
+        soup = BeautifulSoup(html, parse_only=strainer, from_encoding="gb18030") 
         return soup
 
     def parse_title(self, soup):

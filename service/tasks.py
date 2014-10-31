@@ -36,21 +36,23 @@ def download_favicon(favicon_url, file_prefix='', target_dir='/tmp'):
         favicon_filepath = parsed_uri.path
         favicon_path, favicon_filename  = os.path.split(favicon_filepath)
 
-    valid_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
+        valid_chars = "-_.() %s%s" % (string.ascii_letters, string.digits)
 
-    sanitized_filename = "".join([x if valid_chars \
-        else "" for x in favicon_filename])
+        sanitized_filename = "".join([x if valid_chars \
+            else "" for x in favicon_filename])
 
-    sanitized_filename = os.path.join(target_dir, file_prefix +
-        sanitized_filename)
+        sanitized_filename = os.path.join(target_dir, file_prefix +
+            sanitized_filename)
 
-    with open(sanitized_filename, 'wb') as f:
-        for chunk in response.iter_content(chunk_size=1024):
-            if chunk: # filter out keep-alive new chunks
-                f.write(chunk)
-                f.flush()
+        with open(sanitized_filename, 'wb') as f:
+            for chunk in response.iter_content(chunk_size=1024):
+                if chunk: # filter out keep-alive new chunks
+                    f.write(chunk)
+                    f.flush()
 
-    return sanitized_filename
+        return sanitized_filename
+    else:
+        raise Exception("no favicon")
 
 @task
 def get_favicon(url):

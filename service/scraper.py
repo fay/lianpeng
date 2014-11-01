@@ -56,8 +56,7 @@ class Scraper(object):
 
     def parse(self, html):
         strainer = SoupStrainer('head')
-        # gb18030 is working with both utf-8 and gb2312, see http://leeon.me/a/beautifulsoup-chinese-page-resolve
-        soup = BeautifulSoup(html, parse_only=strainer, from_encoding="gb18030") 
+        soup = BeautifulSoup(html, parse_only=strainer) 
         return soup
 
     def parse_title(self, soup):

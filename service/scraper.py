@@ -1,3 +1,4 @@
+import os
 import requests
 import json
 import re
@@ -34,6 +35,8 @@ class Scraper(object):
 
         result = {}
 
+        if 'charset' in fields:
+            result['charset'] = charset
         if 'domain' in fields:
             domain = self.parse_domain()
             result['domain'] = domain
@@ -70,10 +73,7 @@ class Scraper(object):
         desc = ''
         if len(metas) > 0:
             meta = metas[0]
-            for attr in meta.attrs:
-                if attr[0] == 'content':
-                    description =  attr[1]
-                    desc = description.strip()
+            desc = meta.attrs.get('content').strip()
         return desc
 
     def parse_favicon(self, soup):
@@ -127,15 +127,17 @@ class Scraper(object):
         return charset
 
     def screenshot(self):
-        key = "o-" + md5("%s" % (self.url.decode('utf-8'), )).hexdigest()
+        key = "o-" + md5("%s%s" % (settings.SCREENSHOT_SALT, self.url.decode('utf-8'), )).hexdigest()
         target = "{}/screenshots/{}.png".format(settings.MEDIA_ROOT, key)
-
-        driver = webdriver.PhantomJS() # or add to your PATH
-        driver.set_window_size(1024, 800) # optional
-        driver.set_page_load_timeout(20)
-        driver.get(self.url)
-        driver.save_screenshot(target) # save a screenshot to disk
-        driver.quit()
+        if not os.path.exists(target):
+            driver = webdriver.PhantomJS() # or add to your PATH
+            driver.set_window_size(1024, 800) # optional
+            driver.set_page_load_timeout(20)
+            driver.get(self.url)
+            driver.save_screenshot(target) # save a screenshot to disk
+            driver.quit()
+        url = "http://lianpeng.me" + settings.MEDIA_URL + target.split(settings.MEDIA_ROOT + "/")[1]
+        return url
 
 
     def fetch(self):

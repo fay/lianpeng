@@ -1,0 +1,66 @@
+{% extends 'site_base.html' %}
+{% load i18n  %}
+
+{% block head_title %}
+{% trans "网页抓取服务" %}
+{% endblock %}
+
+{% block body %}
+<div class="hero-unit">
+    <div class="page-title">
+        <h2>网页信息抓取API</h2>
+        <h4 class="muted">简单无趣的事情交给API，你只一心专注核心开发。</h4>
+        <br>
+        <div class="row-fluid">
+            <div class="span4">
+                <div class="well">
+                    标题、摘要描述...
+                </div>
+            </div>
+            <div class="span4">
+                <div class="well">
+                    网页图标(Favicon)
+                </div>
+            </div>
+            <div class="span4">
+                <div class="well">
+                    网页截屏
+                </div>
+            </div>
+        </div>
+        <hr>
+    </div>
+    <div class="row-fluid">
+        <h2>API使用</h2>
+        <h3>JSON API</h3>
+        <p>
+        <code>http://lianpeng.me/service/scrape/?fields=[需要的信息字段]&url=[网页地址]</code>
+        <br>
+        <code>fields</code>的可选值：title,domain,charset,screenshot,favicon,description，多个字段用英文逗号分隔。
+        </p>
+        <p>
+            这是通用的json api，可以获取网页标题、域名、字符、网页截屏、favicon、描述信息。
+        </p>
+        <h3>favicon API</h3>
+        <p>
+            <code>http://lianpeng.me/service/favicon/?url=[网页地址]</code>
+        </p>
+        <p>
+        这是方便直接展示网页的favicon而提供的，通常用于网页前段，这也是莲蓬网收藏链接显示favicon使用的API，只需要填写网页的链接地址，即可获得对应网页的favicon。需要注意的是，这个API是异步获取并下载favicon的，对于首次调用可能只显示默认的favicon，像这样：<img src="http://lianpeng.me/service/favicon/?url=">。
+        </p>
+        <p>
+        例子：<code>&ltimg src="http://lianpeng.me/service/favicon/?url=http://lianpeng.me/"&gt</code>
+        <img src="http://lianpeng.me/service/favicon/?url=http://lianpeng.me/">
+        </p>
+        <h3>网页截屏API</h3>
+        <p>
+            与JSON API中得网页截屏是相同的，只不过返回的格式不是json，而是网页截屏后的图片地址，方便直接在网站前段展示截屏图片。
+            </p>
+        <p>
+        例子：<code>&ltimg src="http://lianpeng.me/service/screenshot/?url=http://lianpeng.me/"&gt</code>
+        <img src="http://lianpeng.me/service/screenshot/?url=http://lianpeng.me/">
+        </p>
+    </div>
+</div>
+{% endblock %}
+

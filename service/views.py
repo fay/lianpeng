@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.core.urlresolvers import reverse
 from django.db import transaction, IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect,Http404
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.template import RequestContext
 from django.utils.translation import ugettext, ugettext as _
@@ -17,13 +17,41 @@ from django.conf import settings
 
 from service.tasks import get_feed_url, get_favicon
 from service.models import Website
+from service.scraper import Scraper
+
+def index(request):
+    return render(request, "service/index.html")
+
+def scrape(request):
+    url = request.GET.get('url')
+    fields = request.GET.get('fields', '')
+    fields = fields.split(',')
+    if url:
+        scraper = Scraper(url=url, fields=fields)
+        result = scraper.scrape()
+        return HttpResponse(json.dumps(result), content_type="application/json")
+    else:
+        return HttpResponse(json.dumps({"error": "Please specify the url to scrape."}))
+
+def screenshot(request):
+    url = request.GET.get('url')
+    if url:
+        scraper = Scraper(url=url, fields=['screenshot'])
+        result = scraper.scrape()
+        return HttpResponse(result.get('screenshot'))
+    else:
+        return HttpResponse(json.dumps({"error": "Please specify the url to scrape."}))
 
 def feed_url(request):
     url = request.GET.get('link')
     callback = request.GET.get('callback')
     data = {}
-    if url and callback:
-        get_feed_url.delay(url, callback)
+    if url:
+        if callback:
+            get_feed_url.delay(url, callback)
+        else:
+            get_feed_url(url)
+
     return HttpResponse("ok")
 
 def favicon(request):

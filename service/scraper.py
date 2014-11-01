@@ -131,7 +131,7 @@ class Scraper(object):
         if not os.path.exists(target):
             driver = webdriver.PhantomJS() # or add to your PATH
             driver.set_window_size(1024, 800) # optional
-            driver.set_page_load_timeout(20)
+            driver.set_page_load_timeout(60)
             driver.get(self.url)
             driver.save_screenshot(target) # save a screenshot to disk
             driver.quit()

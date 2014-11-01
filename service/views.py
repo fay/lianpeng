@@ -38,7 +38,7 @@ def screenshot(request):
     if url:
         scraper = Scraper(url=url, fields=['screenshot'])
         result = scraper.scrape()
-        return HttpResponse(result.get('screenshot'))
+        return redirect(result.get('screenshot'))
     else:
         return HttpResponse(json.dumps({"error": "Please specify the url to scrape."}))
 

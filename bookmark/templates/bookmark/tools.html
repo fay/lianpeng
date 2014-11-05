@@ -3,6 +3,7 @@
 {% block head_title %}{% trans "Collect Tools" %}{% endblock %}
 {% block extra_head %}
     <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/bdomhbcbkbldbnechblaaaopghdmdcej">
+    <link href="//vjs.zencdn.net/4.10/video-js.css" rel="stylesheet">
 {% endblock %}
 {% block extra_style %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/hopscotch-0.1.2.min.css" type="text/css" media="screen" charset="utf-8">
@@ -11,7 +12,7 @@
 <div class="hero-unit center">
     <div class="row-fluid">
         <div class="span6 well">
-            <h2 id="chrome-bookmarklet-box"><a target="_blank" class="btn btn-large btn-primary" onclick="chrome.webstore.install()"
+            <h2 id="chrome-bookmarklet-box"><a target="_blank" class="btn btn-large btn-primary"
                     id="chrome-bookmarklet">安装莲蓬Chrome浏览器插件</a>
             </h2>
             <p>
@@ -34,11 +35,31 @@
             </p>
         </div>
     </div>
+        <hr class="">
+    <div class="alert chrome-guide">
+        <h3 class="page-title">手工安装Chrome浏览器插件</h3>
+        <p>
+            首先下载插件文件：<a href="/lianpeng.crx">这里</a>。然后按照下面的视频进行操作：
+        </p>
+        <video id="lianpeng-video" class="video-js vjs-default-skin"
+          controls preload="auto" width="100%" height="500px"
+          data-setup=''>
+         <source src="/lianpeng.mov" type='video/mp4' />
+         <p class="vjs-no-js">To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a></p>
+        </video>
+    </div>
 </div>
+    <script src="//vjs.zencdn.net/4.10/video.js"></script>
 {% endblock %}
 {% block extra_script %}
     <script type="text/javascript" src="{{ STATIC_URL }}js/hopscotch-0.1.2.min.js" charset="utf-8"></script>
+
     <script type="text/javascript">
+        $('#chrome-bookmarklet-box').click(function(){
+            chrome.webstore.install("https://chrome.google.com/webstore/detail/bdomhbcbkbldbnechblaaaopghdmdcej", function(){}, function(){alert("无法连接到谷歌商店，请参考页面下面的说明，下载安装插件")});
+        });
+
+
         var scriptPath = 'bookmarklet.sinaapp.com/harvest/bookmarklet.js';
         var postPath = 'bookmarklet.sinaapp.com/harvest/bookmarklet.html';
         var minVersion = '1.4.2';
